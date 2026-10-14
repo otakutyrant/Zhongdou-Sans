@@ -55,6 +55,21 @@ def use_half_width_quotes_by_default(font: TTFont) -> None:
         raise ValueError(f"the input font is missing curly quotes in cmap: {formatted}")
 
 
+def add_midline_ellipsis(font: TTFont) -> None:
+    """Map U+22EF to the existing full-width, vertically centered ellipsis."""
+    updated = 0
+    for table in font["cmap"].tables:
+        if not table.isUnicode() or 0x2026 not in table.cmap:
+            continue
+        if table.cmap[0x2026] != "ellipsis":
+            raise ValueError("U+2026 does not map to the expected ellipsis glyph")
+        table.cmap[0x22EF] = "ellipsis"
+        updated += 1
+
+    if updated == 0:
+        raise ValueError("the input font has no Unicode cmap containing U+2026")
+
+
 def disable_positioning_features(font: TTFont) -> None:
     """Keep kern and vkrn registered for compatibility, but make them no-ops."""
     disabled = set()
@@ -133,6 +148,7 @@ def main() -> None:
 
     font = TTFont(args.input, recalcTimestamp=False)
     use_half_width_quotes_by_default(font)
+    add_midline_ellipsis(font)
     disable_positioning_features(font)
     use_zh_tw_locl_for_zh_cn(font)
     rename_family(font)

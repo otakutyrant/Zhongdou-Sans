@@ -9471,7 +9471,7 @@ ref = periodcentered;
 width = 1000;
 }
 );
-unicode = 8230;
+unicode = (8230,8943);
 },
 {
 glyphname = periodcentered;
