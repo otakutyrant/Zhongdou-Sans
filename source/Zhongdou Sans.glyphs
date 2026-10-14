@@ -343,7 +343,7 @@ value = (
 }
 );
 date = "2022-10-25 18:24:27 +0000";
-familyName = "Zhudou Sans";
+familyName = "Zhongdou Sans";
 featurePrefixes = (
 {
 code = "languagesystem DFLT dflt; 
@@ -505,6 +505,8 @@ language KOR; # Korean
 lookup CN2JP;
 language ZHH; # Chinese, Traditional, Hong Kong SAR
 lookup CN2TW;
+language ZHS; # Chinese, Simplified; intentionally use Taiwan punctuation
+lookup CN2TW;
 language ZHT; # Chinese, Traditional
 lookup CN2TW;
 
@@ -514,6 +516,8 @@ lookup CN2JP;
 language KOR; # Korean
 lookup CN2JP;
 language ZHH; # Chinese, Traditional, Hong Kong SAR
+lookup CN2TW;
+language ZHS; # Chinese, Simplified; intentionally use Taiwan punctuation
 lookup CN2TW;
 language ZHT; # Chinese, Traditional
 lookup CN2TW;
@@ -525,6 +529,8 @@ language KOR; # Korean
 lookup CN2JP;
 language ZHH; # Chinese, Traditional, Hong Kong SAR
 lookup CN2TW;
+language ZHS; # Chinese, Simplified; intentionally use Taiwan punctuation
+lookup CN2TW;
 language ZHT; # Chinese, Traditional
 lookup CN2TW;
 
@@ -534,6 +540,8 @@ lookup CN2JP;
 language KOR; # Korean
 lookup CN2JP;
 language ZHH; # Chinese, Traditional, Hong Kong SAR
+lookup CN2TW;
+language ZHS; # Chinese, Simplified; intentionally use Taiwan punctuation
 lookup CN2TW;
 language ZHT; # Chinese, Traditional
 lookup CN2TW;";
@@ -810,6 +818,7 @@ sub exclam.full.uv002 question.full.uv002 by exclamationquestion;
 sub question.full.uv002 exclam.full.uv002 by questionexclamation;
 sub question.full.uv002 question.full.uv002 by doublequestion;
 ";
+disabled = 1;
 tag = dlig;
 },
 {
