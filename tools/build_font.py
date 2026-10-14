@@ -70,6 +70,12 @@ def add_midline_ellipsis(font: TTFont) -> None:
         raise ValueError("the input font has no Unicode cmap containing U+2026")
 
 
+def reduce_line_gaps(font: TTFont) -> None:
+    """Replace upstream's accidental one-em horizontal line gaps."""
+    font["OS/2"].sTypoLineGap = 200
+    font["hhea"].lineGap = 200
+
+
 def disable_positioning_features(font: TTFont) -> None:
     """Keep kern and vkrn registered for compatibility, but make them no-ops."""
     disabled = set()
@@ -149,6 +155,7 @@ def main() -> None:
     font = TTFont(args.input, recalcTimestamp=False)
     use_half_width_quotes_by_default(font)
     add_midline_ellipsis(font)
+    reduce_line_gaps(font)
     disable_positioning_features(font)
     use_zh_tw_locl_for_zh_cn(font)
     rename_family(font)

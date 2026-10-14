@@ -867,7 +867,7 @@ value = -120;
 },
 {
 name = typoLineGap;
-value = 1000;
+value = 200;
 },
 {
 name = winAscent;
@@ -927,7 +927,7 @@ value = -120;
 },
 {
 name = typoLineGap;
-value = 1000;
+value = 200;
 },
 {
 name = winAscent;
@@ -986,7 +986,7 @@ value = -120;
 },
 {
 name = typoLineGap;
-value = 1000;
+value = 200;
 },
 {
 name = winAscent;
