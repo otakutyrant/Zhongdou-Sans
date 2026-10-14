@@ -1,0 +1,51 @@
+name: Demo
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: demo-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Check generated image
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v6
+
+      - name: Install Nix
+        uses: DeterminateSystems/determinate-nix-action@v3
+
+      - name: Render the demo
+        run: nix develop -c nu tools/render-demo.nu
+
+      - name: Check that the committed image is current
+        run: git diff --exit-code -- images/demo.png
+
+  update:
+    name: Update generated image
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v6
+
+      - name: Install Nix
+        uses: DeterminateSystems/determinate-nix-action@v3
+
+      - name: Render the demo
+        run: nix develop -c nu tools/render-demo.nu
+
+      - name: Commit the image when stale
+        run: nix develop -c nu tools/commit-demo.nu

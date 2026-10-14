@@ -181,6 +181,16 @@
 
 上表中的符号可直接复制粘贴使用。
 
+## 生成样张
+
+首页样张的排版源码位于 [`demo/`](./demo/)，输出为 [`images/demo.png`](./images/demo.png)。在项目根目录运行：
+
+```nu
+nix develop -c nu tools/render-demo.nu
+```
+
+此命令会先从原始字体生成中豆黑体，再以固定的 2560×1440 画布渲染并压缩图片。Nix flake 锁定渲染工具和备用字体的版本。拉取请求中的样张若已过时，持续集成便会报错；推送到 `main` 后，持续集成则会在样张变化时自动创建 `docs: update generated demo` 提交，不变时不会提交。
+
 ## 授权信息
 
 本字体以〔SIL 开源字体许可证〕1.1版（SIL Open Font License 1.1，OFL）授权，可以自由使用（包括商用）、传播、修改，但不能单独出售字体文件。此外，修改版本不可使用本字体的保留名称「Zhongdou」和「中豆」，且必须同样以〔OFL〕授权。详细信息请参见 https://scripts.sil.org/OFL 。
