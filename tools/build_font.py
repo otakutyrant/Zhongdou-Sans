@@ -125,6 +125,81 @@ def use_zh_tw_locl_for_zh_cn(font: TTFont) -> None:
         raise ValueError("the input font has no matching ZHS and ZHT language systems")
 
 
+def center_zh_cn_vertical_punctuation(font: TTFont) -> None:
+    """Center ZHS and default punctuation before generic vertical substitution."""
+    substitutions = {
+        "uni3001": "uni3001.uv002",
+        "uni3002": "uni3002.uv002",
+        "uniFF01": "uniFF01.uv002",
+        "uniFF0C": "uniFF0C.uv002",
+        "uniFF0C.ss02": "uniFF0C.uv002.ss02",
+        "uniFF0E": "uniFF0E.uv002",
+        "uniFF1A": "uniFF1A.uv002",
+        "uniFF1B": "uniFF1B.uv002",
+        "uniFF1B.ss02": "uniFF1B.uv002.ss02",
+        "uniFF1F": "uniFF1F.uv002",
+    }
+    glyphs = set(font.getGlyphOrder())
+    missing = (set(substitutions) | set(substitutions.values())) - glyphs
+    if missing:
+        raise ValueError(f"missing vertical punctuation glyphs: {sorted(missing)}")
+
+    feature_records = font["GSUB"].table.FeatureList.FeatureRecord
+    lookup_list = font["GSUB"].table.LookupList.Lookup
+    localized_lookups = []
+    for lookup_index, lookup in enumerate(lookup_list):
+        if lookup.LookupType != 1 or len(lookup.SubTable) != 1:
+            continue
+        mapping = lookup.SubTable[0].mapping
+        if mapping.get("quoteleft") == "uniFE41":
+            localized_lookups.append((lookup_index, mapping))
+    if len(localized_lookups) != 1:
+        raise ValueError(
+            f"the input font has {len(localized_lookups)} localized Chinese "
+            "vertical lookups"
+        )
+
+    localized_lookup_index, mapping = localized_lookups[0]
+    conflicts = {
+        source: mapping[source]
+        for source in substitutions.keys() & mapping.keys()
+        if mapping[source] != substitutions[source]
+    }
+    if conflicts:
+        raise ValueError(f"conflicting vertical punctuation substitutions: {conflicts}")
+    mapping.update(substitutions)
+
+    matched_scripts = 0
+
+    for script_record in font["GSUB"].table.ScriptList.ScriptRecord:
+        language_records = {
+            record.LangSysTag.strip(): record
+            for record in script_record.Script.LangSysRecord or []
+        }
+        if "ZHS" not in language_records:
+            continue
+
+        zhs = language_records["ZHS"].LangSys
+        vert_features = [
+            feature_records[index].Feature
+            for index in zhs.FeatureIndex
+            if feature_records[index].FeatureTag == "vert"
+        ]
+        if len(vert_features) != 1:
+            raise ValueError(
+                f"{script_record.ScriptTag} ZHS has {len(vert_features)} vert features"
+            )
+
+        vert_feature = vert_features[0]
+        if localized_lookup_index not in vert_feature.LookupListIndex:
+            vert_feature.LookupListIndex.insert(0, localized_lookup_index)
+            vert_feature.LookupCount = len(vert_feature.LookupListIndex)
+        matched_scripts += 1
+
+    if matched_scripts == 0:
+        raise ValueError("the input font has no ZHS vertical features")
+
+
 def rename_family(font: TTFont) -> None:
     """Replace upstream's reserved family name in derivative name records."""
     for record in font["name"].names:
@@ -158,6 +233,7 @@ def main() -> None:
     reduce_line_gaps(font)
     disable_positioning_features(font)
     use_zh_tw_locl_for_zh_cn(font)
+    center_zh_cn_vertical_punctuation(font)
     rename_family(font)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     font.save(args.output)

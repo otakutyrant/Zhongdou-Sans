@@ -425,6 +425,16 @@ sub semicolon.full.ss02 by semicolon.full.uv002.ss02;
 } cpct;
 
 lookup vert_CN {
+sub comma-han by comma-han.uv002;
+sub period-han by period-han.uv002;
+sub exclam.full by exclam.full.uv002;
+sub comma.full by comma.full.uv002;
+sub period.full by period.full.uv002;
+sub colon.full by colon.full.uv002;
+sub semicolon.full by semicolon.full.uv002;
+sub question.full by question.full.uv002;
+sub comma.full.ss02 by comma.full.uv002.ss02;
+sub semicolon.full.ss02 by semicolon.full.uv002.ss02;
 sub quoteleft by cornerbracketleft.vert;
 sub quoteright by cornerbracketright.vert;
 sub quotedblleft by whitecornerbracketleft.vert;
@@ -629,6 +639,8 @@ language KOR exclude_dflt; # Korean
 lookup vert_KR;
 language ZHH exclude_dflt; # Chinese, Traditional, Hong Kong SAR
 lookup vert_TW;
+language ZHS exclude_dflt; # Chinese, Simplified; use centered punctuation
+lookup vert_CN;
 language ZHT exclude_dflt; # Chinese, Traditional
 lookup vert_TW;
 
@@ -640,6 +652,8 @@ language KOR exclude_dflt; # Korean
 lookup vert_KR;
 language ZHH exclude_dflt; # Chinese, Traditional, Hong Kong SAR
 lookup vert_TW;
+language ZHS exclude_dflt; # Chinese, Simplified; use centered punctuation
+lookup vert_CN;
 language ZHT exclude_dflt; # Chinese, Traditional
 lookup vert_TW;
 
@@ -651,6 +665,8 @@ language KOR exclude_dflt; # Korean
 lookup vert_KR;
 language ZHH exclude_dflt; # Chinese, Traditional, Hong Kong SAR
 lookup vert_TW;
+language ZHS exclude_dflt; # Chinese, Simplified; use centered punctuation
+lookup vert_CN;
 language ZHT exclude_dflt; # Chinese, Traditional
 lookup vert_TW;
 
@@ -662,6 +678,8 @@ language KOR exclude_dflt; # Korean
 lookup vert_KR;
 language ZHH exclude_dflt; # Chinese, Traditional, Hong Kong SAR
 lookup vert_TW;
+language ZHS exclude_dflt; # Chinese, Simplified; use centered punctuation
+lookup vert_CN;
 language ZHT exclude_dflt; # Chinese, Traditional
 lookup vert_TW;
 ";
