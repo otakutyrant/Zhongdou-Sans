@@ -200,6 +200,84 @@ def center_zh_cn_vertical_punctuation(font: TTFont) -> None:
         raise ValueError("the input font has no ZHS vertical features")
 
 
+def translate_glyph(font: TTFont, glyph_name: str, dx: int, dy: int) -> None:
+    """Translate a TrueType glyph without changing its advance metrics."""
+    glyph = font["glyf"][glyph_name]
+    if glyph.isComposite():
+        for component in glyph.components:
+            component.x += dx
+            component.y += dy
+    else:
+        glyph.coordinates.translate((dx, dy))
+    glyph.recalcBounds(font["glyf"])
+
+
+def translate_glyphs_once(
+    font: TTFont,
+    glyph_names: tuple[str, ...],
+    dx: int,
+    dy: int,
+    marker_name: str,
+    before_bounds: tuple[int, int, int, int],
+    after_bounds: tuple[int, int, int, int],
+) -> None:
+    """Apply a checked, idempotent translation to a related glyph set."""
+    marker = font["glyf"][marker_name]
+    marker.recalcBounds(font["glyf"])
+    bounds = (marker.xMin, marker.yMin, marker.xMax, marker.yMax)
+    if bounds == after_bounds:
+        return
+    if bounds != before_bounds:
+        raise ValueError(
+            f"unexpected {marker_name} bounds: {bounds}; expected {before_bounds}"
+        )
+    for glyph_name in glyph_names:
+        translate_glyph(font, glyph_name, dx, dy)
+
+
+def refine_punctuation_glyphs(font: TTFont) -> None:
+    """Apply restrained optical corrections to punctuation and brackets."""
+    centered_marks = (
+        "uni3001.uv002",
+        "uni3002.uv002",
+        "uniFF01.uv002",
+        "uniFF0C.uv002",
+        "uniFF0C.uv002.ss02",
+        "uniFF0E.uv002",
+        "uniFF1A.uv002",
+        "uniFF1B.uv002",
+        "uniFF1B.uv002.ss02",
+        "uniFF1F.uv002",
+    )
+    translate_glyphs_once(
+        font,
+        centered_marks,
+        0,
+        20,
+        "uniFF0E.uv002",
+        (463, 338, 537, 422),
+        (463, 358, 537, 442),
+    )
+    translate_glyphs_once(
+        font,
+        ("uni3014",),
+        -20,
+        0,
+        "uni3014",
+        (721, -91, 954, 851),
+        (701, -91, 934, 851),
+    )
+    translate_glyphs_once(
+        font,
+        ("uni300C",),
+        -20,
+        -20,
+        "uni300C",
+        (660, 186, 965, 840),
+        (640, 166, 945, 820),
+    )
+
+
 def rename_family(font: TTFont) -> None:
     """Replace upstream's reserved family name in derivative name records."""
     for record in font["name"].names:
@@ -234,6 +312,7 @@ def main() -> None:
     disable_positioning_features(font)
     use_zh_tw_locl_for_zh_cn(font)
     center_zh_cn_vertical_punctuation(font)
+    refine_punctuation_glyphs(font)
     rename_family(font)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     font.save(args.output)
