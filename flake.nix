@@ -21,14 +21,48 @@
         let
           pkgs = import nixpkgs { inherit system; };
           python = pkgs.python3.withPackages (pythonPackages: [ pythonPackages.fonttools ]);
+
+          # Nur bundles a matching Nushell runtime. Pin its official binary so
+          # contributors do not need the task runner in their global profile.
+          nurVersion = "0.30.2+0.115.1";
+          nurRelease =
+            {
+              x86_64-linux = {
+                target = "x86_64-unknown-linux-gnu";
+                hash = "sha256-z3tGydpAvg5uinfmZYH/fr6uB+nok2ajVK77C/tgDV4=";
+              };
+              aarch64-linux = {
+                target = "aarch64-unknown-linux-gnu";
+                hash = "sha256-hFOd+XN5/gPvZ0F7CPnAQlyBK1f3rB+Gge2ePjgTPk4=";
+              };
+            }
+            .${system};
+          nur = pkgs.stdenvNoCC.mkDerivation {
+            pname = "nur";
+            version = nurVersion;
+            src = pkgs.fetchurl {
+              url = "https://github.com/nur-taskrunner/nur/releases/download/v${nurVersion}/nur-${nurVersion}-${nurRelease.target}.tar.gz";
+              inherit (nurRelease) hash;
+            };
+            sourceRoot = "nur-${nurVersion}-${nurRelease.target}";
+            nativeBuildInputs = [ pkgs.autoPatchelfHook ];
+            buildInputs = [ pkgs.stdenv.cc.cc.lib ];
+            installPhase = ''
+              runHook preInstall
+              install -Dm755 nur $out/bin/nur
+              runHook postInstall
+            '';
+          };
         in
         {
           default = pkgs.mkShell {
             packages = [
               pkgs.chromium
               pkgs.fontconfig
+              pkgs.git
               pkgs.nushell
               pkgs.oxipng
+              nur
               python
             ];
 
@@ -37,6 +71,10 @@
             FONTCONFIG_FILE = pkgs.makeFontsConf {
               fontDirectories = [ pkgs.source-han-sans ];
             };
+
+            shellHook = ''
+              echo "Zhongdou Sans dev shell ready: use 'nur --help' to list project tasks."
+            '';
           };
         }
       );

@@ -10,6 +10,7 @@ import argparse
 from pathlib import Path
 
 from fontTools.ttLib import TTFont
+from fontTools.varLib.iup import iup_delta
 
 
 FAMILY_REPLACEMENTS = {
@@ -77,15 +78,16 @@ def reduce_line_gaps(font: TTFont) -> None:
 
 
 def disable_positioning_features(font: TTFont) -> None:
-    """Keep kern and vkrn registered for compatibility, but make them no-ops."""
+    """Keep spacing feature tags registered, but make them no-ops."""
+    feature_tags = {"halt", "kern", "vhal", "vkrn"}
     disabled = set()
     for record in font["GPOS"].table.FeatureList.FeatureRecord:
-        if record.FeatureTag in {"kern", "vkrn"}:
+        if record.FeatureTag in feature_tags:
             record.Feature.LookupListIndex = []
             record.Feature.LookupCount = 0
             disabled.add(record.FeatureTag)
-    if disabled != {"kern", "vkrn"}:
-        raise ValueError(f"missing positioning features: {sorted({'kern', 'vkrn'} - disabled)}")
+    if disabled != feature_tags:
+        raise ValueError(f"missing positioning features: {sorted(feature_tags - disabled)}")
 
 
 def use_zh_tw_locl_for_zh_cn(font: TTFont) -> None:
@@ -235,8 +237,74 @@ def translate_glyphs_once(
         translate_glyph(font, glyph_name, dx, dy)
 
 
+def translate_variable_glyph_once(
+    font: TTFont,
+    glyph_name: str,
+    dx: int,
+    variation_dx: tuple[int, ...],
+    before_bounds: tuple[int, int, int, int],
+    after_bounds: tuple[int, int, int, int],
+) -> None:
+    """Center a variable glyph at every master while retaining its metrics."""
+    glyph = font["glyf"][glyph_name]
+    glyph.recalcBounds(font["glyf"])
+    bounds = (glyph.xMin, glyph.yMin, glyph.xMax, glyph.yMax)
+    if bounds == after_bounds:
+        return
+    if bounds != before_bounds:
+        raise ValueError(
+            f"unexpected {glyph_name} bounds: {bounds}; expected {before_bounds}"
+        )
+
+    variations = font["gvar"].variations[glyph_name]
+    if len(variations) != len(variation_dx):
+        raise ValueError(
+            f"unexpected {glyph_name} variation count: {len(variations)}; "
+            f"expected {len(variation_dx)}"
+        )
+
+    coordinates, controls = font["glyf"]._getCoordinatesAndControls(
+        glyph_name,
+        font["hmtx"].metrics,
+        font["vmtx"].metrics,
+    )
+    outline_length = len(coordinates) - 4
+    for variation, tuple_dx in zip(variations, variation_dx, strict=True):
+        deltas = iup_delta(variation.coordinates, coordinates, controls.endPts)
+        variation.coordinates = [
+            (x + tuple_dx, y) if index < outline_length else (x, y)
+            for index, (x, y) in enumerate(deltas)
+        ]
+
+    translate_glyph(font, glyph_name, dx, 0)
+
+
+def sync_dependent_glyph_metrics(font: TTFont, translated: set[str]) -> None:
+    """Synchronize side bearings after moving outlines and their composites."""
+    affected = set(translated)
+    changed = True
+    while changed:
+        changed = False
+        for glyph_name in font.getGlyphOrder():
+            glyph = font["glyf"][glyph_name]
+            if glyph_name in affected or not glyph.isComposite():
+                continue
+            if any(component.glyphName in affected for component in glyph.components):
+                affected.add(glyph_name)
+                changed = True
+
+    vertical_origin = font["OS/2"].sTypoAscender
+    for glyph_name in affected:
+        glyph = font["glyf"][glyph_name]
+        glyph.recalcBounds(font["glyf"])
+        horizontal_advance, _ = font["hmtx"][glyph_name]
+        vertical_advance, _ = font["vmtx"][glyph_name]
+        font["hmtx"][glyph_name] = (horizontal_advance, glyph.xMin)
+        font["vmtx"][glyph_name] = (vertical_advance, vertical_origin - glyph.yMax)
+
+
 def refine_punctuation_glyphs(font: TTFont) -> None:
-    """Apply restrained optical corrections to punctuation and brackets."""
+    """Center punctuation ink in its em square without changing advances."""
     centered_marks = (
         "uni3001.uv002",
         "uni3002.uv002",
@@ -258,24 +326,23 @@ def refine_punctuation_glyphs(font: TTFont) -> None:
         (463, 338, 537, 422),
         (463, 358, 537, 442),
     )
-    translate_glyphs_once(
+    translate_variable_glyph_once(
         font,
-        ("uni3014",),
-        -20,
-        0,
         "uni3014",
+        -337,
+        (14, 30),
         (721, -91, 954, 851),
-        (701, -91, 934, 851),
+        (384, -91, 617, 851),
     )
-    translate_glyphs_once(
+    translate_variable_glyph_once(
         font,
-        ("uni300C",),
-        -20,
-        -20,
         "uni300C",
+        -312,
+        (5, 7),
         (660, 186, 965, 840),
-        (640, 166, 945, 820),
+        (348, 186, 653, 840),
     )
+    sync_dependent_glyph_metrics(font, set(centered_marks) | {"uni300C", "uni3014"})
 
 
 def rename_family(font: TTFont) -> None:

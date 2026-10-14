@@ -26,7 +26,7 @@ jobs:
         uses: DeterminateSystems/determinate-nix-action@v3
 
       - name: Render the demo
-        run: nix develop -c nu tools/render-demo.nu
+        run: nix develop -c nur demo render
 
       - name: Check that the committed image is current
         run: git diff --exit-code -- images/demo.png
@@ -45,7 +45,7 @@ jobs:
         uses: DeterminateSystems/determinate-nix-action@v3
 
       - name: Render the demo
-        run: nix develop -c nu tools/render-demo.nu
+        run: nix develop -c nur demo render
 
       - name: Commit the image when stale
         run: nix develop -c nu tools/commit-demo.nu

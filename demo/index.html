@@ -23,21 +23,14 @@
         <div class="hero-copy">
           <p class="kicker">方正中宫・气连美学</p>
           <h2>字有中宫，<br />标点亦应归中。</h2>
-          <p class="lede">
-            为华语标点而作的开源可变字体，兼顾横排与竖排，
-            让点号守在字心连线上。
-          </p>
-          <div class="symbol-line" aria-label="大挪移标点示例">
-            「读」・〔中豆〕・⸺・⋯
-          </div>
+          <p class="lede">为华语标点而作的开源可变字体，兼顾横排与竖排，让点号守在字心连线上。</p>
+          <div class="symbol-line" aria-label="大挪移标点示例">「读」・〔中豆〕・⸺・⋯</div>
         </div>
 
         <div class="vertical-card">
           <div class="card-label">VERT・ZHS</div>
           <div class="vertical-grid" aria-hidden="true"></div>
-          <p class="vertical-copy">
-            天地有正气，杂然赋流形。下则为河岳，上则为日星。
-          </p>
+          <p class="vertical-copy">「天地有正气，杂然流形」<br />〔下则为河岳，上为日星〕<br />于人曰浩然，沛乎塞苍冥。</p>
           <div class="vertical-note">居中点号・直角引号・龟甲括</div>
         </div>
       </section>
@@ -69,7 +62,7 @@
             </div>
             <div>
               <small>蝌蚪・SS02</small>
-              <p class="tadpole">，；「逗」</p>
+              <p class="tadpole">，；‘逗’</p>
             </div>
           </div>
         </article>
@@ -78,8 +71,17 @@
       <footer>
         <span>OPEN FONT LICENSE 1.1</span>
         <span>ZH-CN LOCL・VERT・SS01・SS02・DLIG</span>
-        <span>中外文混排</span>
       </footer>
     </main>
+    <script>
+      const demo = document.querySelector("#demo");
+      const fitDemo = () => {
+        const scale = Math.min(window.innerWidth / 2560, window.innerHeight / 1440);
+        demo.style.transform = `translate(-50%, -50%) scale(${scale})`;
+      };
+
+      fitDemo();
+      window.addEventListener("resize", fitDemo);
+    </script>
   </body>
 </html>

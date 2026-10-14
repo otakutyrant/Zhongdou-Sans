@@ -1,0 +1,25 @@
+# Small projects keep their complete command catalog at the stable root
+# entrypoint; split this into task modules only if the catalog grows.
+
+const PROJECT_ROOT = path self | path dirname
+const BUILD_SCRIPT = $PROJECT_ROOT | path join tools build_font.py
+const SOURCE_FONT = $PROJECT_ROOT | path join fonts variable ZhudouSansVF.ttf
+const BUILT_FONT = $PROJECT_ROOT | path join build ZhongdouSansVF.ttf
+const DEMO_PAGE = $PROJECT_ROOT | path join demo index.html
+
+# Build the derivative variable font consumed by the HTML specimen.
+export def "nur demo build" [] {
+    mkdir ($PROJECT_ROOT | path join build)
+    ^python $BUILD_SCRIPT $SOURCE_FONT $BUILT_FONT
+}
+
+# Build the font and open the editable specimen in Chromium.
+export def "nur demo preview" [] {
+    nur demo build
+    ^chromium $"file://($DEMO_PAGE)"
+}
+
+# Regenerate the PNG embedded at the top of the README.
+export def "nur demo render" [] {
+    ^nu ($PROJECT_ROOT | path join tools render-demo.nu)
+}
