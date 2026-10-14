@@ -1,5 +1,10 @@
 # 中豆黑体 Zhongdou Sans
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./images/demo.png">
+  <img src="./images/demo.png">
+</picture>
+
 分生自[煮豆黑体](https://github.com/Buernia/Zhudou-Sans)，后者三年无更新。原字体衍生自 [Noto Sans](https://github.com/googlefonts/noto-fonts) 和[思源黑体](https://github.com/adobe-fonts/source-han-sans)，支持中日韩标点、全角字母、全角数字及一些特殊符号。标点造型主要来源于 Noto Sans，可以为类似风格的西文字体带来更加协调的中外文混排效果。
 
 本字体为可变字体，支持字重无级变化，同时提供对应思源黑体7个字重的静态版本。
