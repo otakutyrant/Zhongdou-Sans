@@ -1,8 +1,17 @@
-# 煮豆黑体 Zhudou Sans
+# 中豆黑体 Zhongdou Sans
 
-煮豆黑体是衍生自 [Noto Sans](https://github.com/googlefonts/noto-fonts) 和[思源黑体](https://github.com/adobe-fonts/source-han-sans)的标点符号字体家族，支持中日韩标点、全角字母、全角数字及一些特殊符号。标点造型主要来源于 Noto Sans，可以为类似风格的西文字体带来更加协调的中外文混排效果。
+中豆黑体是[煮豆黑体](https://github.com/Buernia/Zhudou-Sans)的衍生版本。原字体衍生自 [Noto Sans](https://github.com/googlefonts/noto-fonts) 和[思源黑体](https://github.com/adobe-fonts/source-han-sans)，支持中日韩标点、全角字母、全角数字及一些特殊符号。标点造型主要来源于 Noto Sans，可以为类似风格的西文字体带来更加协调的中外文混排效果。
 
 本字体为可变字体，支持字重无级变化，同时提供对应思源黑体7个字重的静态版本。
+
+## 与煮豆黑体的排版差异
+
+中豆黑体保留原字体的字形设计，但调整了以下默认排版行为：
+
+* 将弯引号 `‘’“”` 的半角字形直接设为 Unicode 字符映射（`cmap`）中的默认字形，不借用任何 OpenType 功能。`fwid` 可改用全角字形，`pwid` 可改用比例宽度字形；开关 `ccmp` 不会改变引号宽度。
+* 简体中文（`ZHS`）仅在 `locl` 中复用繁体中文（`ZHT`）的居中标点查找，使简体中文文本默认使用居中标点。`vert` 等其他功能仍使用简体中文自己的地区规则。
+* 保留 `kern`、`vkrn` 功能标签以兼容应用程序，但清空其查找列表，因此字体不会自动挤压横排或竖排标点。
+* `ccmp` 仍仅处理破折号组合，`dlig` 仍提供问号和叹号的自选连字，二者的原有语义不变。
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./images/Title.dark.svg">
@@ -43,7 +52,7 @@
 
 * **全角、半角与比例宽度字形**（`fwid`、`hwid`、`pwid`）
 
-  弯引号有全角、半角、比例（Adobe 误译为 “等比宽度”）3种宽度的字形，连接号和间隔号有全角、半角2种宽度的字形。Adobe 软件可在 “字形” 面板中选择相应字形。
+  弯引号有全角、半角、比例（Adobe 误译为 “等比宽度”）3种宽度的字形。中豆黑体默认使用半角弯引号；`fwid` 改用全角字形，`hwid` 改用半角字形，`pwid` 改用比例宽度字形。连接号和间隔号仍有全角、半角2种宽度的字形，但默认宽度不因引号的默认设置而改变。Adobe 软件可在 “字形” 面板中选择相应字形。
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./images/fwid-hwid-pwid.dark.svg">
@@ -52,7 +61,7 @@
 
 * **破折号连字**（`ccmp`）
 
-  将2个 “—”（`U+2014`）组成一个完整的破折号，将3个 “—” 组成一个占3字宽的长横。默认开启。
+  将2个 “—”（`U+2014`）组成一个完整的破折号，将3个 “—” 组成一个占3字宽的长横。默认开启。本功能仅处理破折号组合，不控制弯引号的宽度。
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./images/ccmp.dark.svg">
@@ -61,7 +70,7 @@
 
 * **标点挤压**（`kern`、`vkrn`）
 
-  压缩连续出现的标点符号所占空间。默认开启，可在软件字距微调菜单中关闭。在 InDesign 等专业排版软件中建议关闭（选择 “原始设定-仅罗马字”，确保西文字母间距微调不受影响），改用软件内的标点挤压功能。
+  原字体用这两个功能压缩连续标点所占的空间。中豆黑体保留功能标签，但清空了查找列表；无论应用程序是否开启 `kern` 或 `vkrn`，字体本身都不会挤压标点。需要标点挤压时，请使用排版软件自身的标点挤压功能。
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./images/kern.dark.svg">
@@ -72,7 +81,7 @@
 
 * **地区字形**（`locl`）
 
-  本字体默认采用中国内地标点规范，可在软件（如 Word 和 InDesign）或网页中将文本标记为相应语言以采用港澳台、日本或韩国规范。
+  简体中文（`ZHS`）复用繁体中文（`ZHT`）的居中标点查找，因此标记为简体中文的文本默认采用居中标点。这里只共享 `locl` 查找；简体中文的竖排字形等其他地区功能保持不变。将文本标记为港澳台、日文或韩文时，仍采用各自的地区字形。
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./images/locl.dark.svg">
@@ -96,7 +105,7 @@
 
 * **居中标点**（`cpct`、`ss01`）
 
-  将顿号、句号、叹号、逗号、句点、冒号、分号、问号居中。可在软件 OpenType 功能菜单中选择 “居中中日韩标点” 风格组合（Adobe）或 “样式集1”（Word）以开启该功能。
+  将顿号、句号、叹号、逗号、句点、冒号、分号、问号居中。两项功能仍为可选功能，并未被改成默认开启；简体中文文本已通过 `locl` 默认获得相同的居中效果。其他语言仍可在软件 OpenType 功能菜单中选择 “居中中日韩标点” 风格组合（Adobe）或 “样式集1”（Word）以开启该功能。
   
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./images/cpct.dark.svg">
@@ -140,4 +149,3 @@
 ## 其他项目
 
 * [铁蒺藜体 Tiejili](https://github.com/Buernia/Tiejili)
-

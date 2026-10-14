@@ -7,7 +7,6 @@ Linux while making the same feature choices recorded in the Glyphs source.
 """
 
 import argparse
-from copy import deepcopy
 from pathlib import Path
 
 from fontTools.ttLib import TTFont
@@ -26,20 +25,51 @@ FAMILY_REPLACEMENTS = {
 LEGAL_NAME_IDS = {0, 13, 14}
 
 
-def disable_dlig(font: TTFont) -> None:
-    """Keep the feature registered for compatibility, but make it a no-op."""
-    disabled = 0
-    for record in font["GSUB"].table.FeatureList.FeatureRecord:
-        if record.FeatureTag == "dlig":
+def feature_by_tag(font: TTFont, table_tag: str, tag: str):
+    for record in font[table_tag].table.FeatureList.FeatureRecord:
+        if record.FeatureTag == tag:
+            return record.Feature
+    raise ValueError(f"the input font has no {tag} feature in {table_tag}")
+
+
+def use_half_width_quotes_by_default(font: TTFont) -> None:
+    """Encode curly quotes as their half-width glyphs without altering features."""
+    quote_glyphs = {
+        0x2018: "quoteleft.half",
+        0x2019: "quoteright.half",
+        0x201C: "quotedblleft.half",
+        0x201D: "quotedblright.half",
+    }
+    updated_codepoints = set()
+    for table in font["cmap"].tables:
+        if not table.isUnicode():
+            continue
+        for codepoint, glyph_name in quote_glyphs.items():
+            if codepoint in table.cmap:
+                table.cmap[codepoint] = glyph_name
+                updated_codepoints.add(codepoint)
+
+    missing = set(quote_glyphs) - updated_codepoints
+    if missing:
+        formatted = ", ".join(f"U+{codepoint:04X}" for codepoint in sorted(missing))
+        raise ValueError(f"the input font is missing curly quotes in cmap: {formatted}")
+
+
+def disable_positioning_features(font: TTFont) -> None:
+    """Keep kern and vkrn registered for compatibility, but make them no-ops."""
+    disabled = set()
+    for record in font["GPOS"].table.FeatureList.FeatureRecord:
+        if record.FeatureTag in {"kern", "vkrn"}:
             record.Feature.LookupListIndex = []
             record.Feature.LookupCount = 0
-            disabled += 1
-    if disabled == 0:
-        raise ValueError("the input font has no dlig feature")
+            disabled.add(record.FeatureTag)
+    if disabled != {"kern", "vkrn"}:
+        raise ValueError(f"missing positioning features: {sorted({'kern', 'vkrn'} - disabled)}")
 
 
-def use_zh_tw_for_zh_cn(font: TTFont) -> None:
-    """Give every ZHS language system the corresponding ZHT feature set."""
+def use_zh_tw_locl_for_zh_cn(font: TTFont) -> None:
+    """Use ZHT's centered locl lookup for ZHS without changing other features."""
+    feature_records = font["GSUB"].table.FeatureList.FeatureRecord
     updated = 0
     for script_record in font["GSUB"].table.ScriptList.ScriptRecord:
         language_records = {
@@ -48,7 +78,27 @@ def use_zh_tw_for_zh_cn(font: TTFont) -> None:
         }
         if "ZHS" not in language_records or "ZHT" not in language_records:
             continue
-        language_records["ZHS"].LangSys = deepcopy(language_records["ZHT"].LangSys)
+
+        zhs = language_records["ZHS"].LangSys
+        zht = language_records["ZHT"].LangSys
+        zht_locl = [
+            index
+            for index in zht.FeatureIndex
+            if feature_records[index].FeatureTag == "locl"
+        ]
+        if len(zht_locl) != 1:
+            raise ValueError(
+                f"{script_record.ScriptTag} ZHT has {len(zht_locl)} locl features"
+            )
+
+        zhs.FeatureIndex = sorted(
+            index
+            for index in zhs.FeatureIndex
+            if feature_records[index].FeatureTag != "locl"
+        )
+        zhs.FeatureIndex.append(zht_locl[0])
+        zhs.FeatureIndex.sort()
+        zhs.FeatureCount = len(zhs.FeatureIndex)
         updated += 1
     if updated == 0:
         raise ValueError("the input font has no matching ZHS and ZHT language systems")
@@ -82,8 +132,9 @@ def main() -> None:
     args = parser.parse_args()
 
     font = TTFont(args.input, recalcTimestamp=False)
-    disable_dlig(font)
-    use_zh_tw_for_zh_cn(font)
+    use_half_width_quotes_by_default(font)
+    disable_positioning_features(font)
+    use_zh_tw_locl_for_zh_cn(font)
     rename_family(font)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     font.save(args.output)
