@@ -30,6 +30,8 @@ def main [] {
     "--disable-sync"
     "--force-device-scale-factor=1"
     "--hide-scrollbars"
+    # GitHub-hosted runners cannot configure Nix's setuid Chromium sandbox.
+    "--no-sandbox"
     "--no-first-run"
     "--no-pings"
     $"--user-data-dir=($chromium_profile)"
