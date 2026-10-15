@@ -209,6 +209,29 @@ def center_zh_cn_vertical_punctuation(font: TTFont) -> None:
         raise ValueError("the input font has no ZHS vertical features")
 
 
+def center_default_language_punctuation(font: TTFont) -> None:
+    """Use centered localization when apps omit a supported CJK language."""
+    table = font["GSUB"].table
+    centered_index = next(
+        index
+        for script in table.ScriptList.ScriptRecord
+        for language in script.Script.LangSysRecord
+        if language.LangSysTag.strip() == "ZHT"
+        for index in language.LangSys.FeatureIndex
+        if table.FeatureList.FeatureRecord[index].FeatureTag == "locl"
+    )
+    for script in table.ScriptList.ScriptRecord:
+        default = script.Script.DefaultLangSys
+        if default is None:
+            continue
+        default.FeatureIndex = sorted(
+            {index for index in default.FeatureIndex
+             if table.FeatureList.FeatureRecord[index].FeatureTag != "locl"}
+            | {centered_index}
+        )
+        default.FeatureCount = len(default.FeatureIndex)
+
+
 def translate_glyph(font: TTFont, glyph_name: str, dx: int, dy: int) -> None:
     """Translate a TrueType glyph without changing its advance metrics."""
     glyph = font["glyf"][glyph_name]
@@ -386,6 +409,7 @@ def main() -> None:
     disable_positioning_features(font)
     use_zh_tw_locl_for_zh_cn(font)
     center_zh_cn_vertical_punctuation(font)
+    center_default_language_punctuation(font)
     refine_punctuation_glyphs(font)
     rename_family(font)
     args.output.parent.mkdir(parents=True, exist_ok=True)

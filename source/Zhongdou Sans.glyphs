@@ -515,52 +515,64 @@ sub emdash emdash emdash by threeemdash;
 tag = ccmp;
 },
 {
-code = "script latn; # Latin
-language JAN; # Japanese
-lookup CN2JP;
-language KOR; # Korean
-lookup CN2JP;
-language ZHH; # Chinese, Traditional, Hong Kong SAR
+code = "script DFLT;
+language dflt;
 lookup CN2TW;
-language ZHS; # Chinese, Simplified; intentionally use Taiwan punctuation
+
+script latn; # Latin
+language dflt;
 lookup CN2TW;
-language ZHT; # Chinese, Traditional
+language JAN exclude_dflt; # Japanese
+lookup CN2JP;
+language KOR exclude_dflt; # Korean
+lookup CN2JP;
+language ZHH exclude_dflt; # Chinese, Traditional, Hong Kong SAR
+lookup CN2TW;
+language ZHS exclude_dflt; # Chinese, Simplified; intentionally use Taiwan punctuation
+lookup CN2TW;
+language ZHT exclude_dflt; # Chinese, Traditional
 lookup CN2TW;
 
 script hang; # Hangul
-language JAN; # Japanese
-lookup CN2JP;
-language KOR; # Korean
-lookup CN2JP;
-language ZHH; # Chinese, Traditional, Hong Kong SAR
+language dflt;
 lookup CN2TW;
-language ZHS; # Chinese, Simplified; intentionally use Taiwan punctuation
+language JAN exclude_dflt; # Japanese
+lookup CN2JP;
+language KOR exclude_dflt; # Korean
+lookup CN2JP;
+language ZHH exclude_dflt; # Chinese, Traditional, Hong Kong SAR
 lookup CN2TW;
-language ZHT; # Chinese, Traditional
+language ZHS exclude_dflt; # Chinese, Simplified; intentionally use Taiwan punctuation
+lookup CN2TW;
+language ZHT exclude_dflt; # Chinese, Traditional
 lookup CN2TW;
 
 script hani; # CJK Ideographic
-language JAN; # Japanese
-lookup CN2JP;
-language KOR; # Korean
-lookup CN2JP;
-language ZHH; # Chinese, Traditional, Hong Kong SAR
+language dflt;
 lookup CN2TW;
-language ZHS; # Chinese, Simplified; intentionally use Taiwan punctuation
+language JAN exclude_dflt; # Japanese
+lookup CN2JP;
+language KOR exclude_dflt; # Korean
+lookup CN2JP;
+language ZHH exclude_dflt; # Chinese, Traditional, Hong Kong SAR
 lookup CN2TW;
-language ZHT; # Chinese, Traditional
+language ZHS exclude_dflt; # Chinese, Simplified; intentionally use Taiwan punctuation
+lookup CN2TW;
+language ZHT exclude_dflt; # Chinese, Traditional
 lookup CN2TW;
 
 script kana; # Hiragana
-language JAN; # Japanese
-lookup CN2JP;
-language KOR; # Korean
-lookup CN2JP;
-language ZHH; # Chinese, Traditional, Hong Kong SAR
+language dflt;
 lookup CN2TW;
-language ZHS; # Chinese, Simplified; intentionally use Taiwan punctuation
+language JAN exclude_dflt; # Japanese
+lookup CN2JP;
+language KOR exclude_dflt; # Korean
+lookup CN2JP;
+language ZHH exclude_dflt; # Chinese, Traditional, Hong Kong SAR
 lookup CN2TW;
-language ZHT; # Chinese, Traditional
+language ZHS exclude_dflt; # Chinese, Simplified; intentionally use Taiwan punctuation
+lookup CN2TW;
+language ZHT exclude_dflt; # Chinese, Traditional
 lookup CN2TW;";
 tag = locl;
 },
