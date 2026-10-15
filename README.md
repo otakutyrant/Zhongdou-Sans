@@ -67,6 +67,23 @@
 * 已修正[行高问题](https://github.com/Buernia/Zhudou-Sans/issues/7)，并使水平排版度量与更纱黑体兼容，避免 Pango/GTK 在字体回退时错开标点与正文的基线。
 * 此外如上文所述，增加了一些标点符号。
 
+### 与其他华文字体的混排评估
+
+以 Chromium 按 `zh-CN` 排版，在常规字重下测试了更纱黑体、Noto Sans CJK SC、思源黑体、霞鹜文楷、文泉驿正黑和 Noto Serif CJK SC。测试中的红色标点来自中豆黑体，白色汉字来自各搭配字体；[32 像素对照图](./images/assessment/alignment-32px.png)用于观察常见阅读字号，[64 像素对照图](./images/assessment/alignment-64px.png)用于放大观察细微差异。
+
+下表的「墨迹中心差」比较中豆直角引号与六角括号组合和示例汉字组合的轮廓包围盒中心；正值表示中豆标点较高，负值表示较低。它不是基线偏移，而且会随所选汉字而变化。
+
+| 搭配字体 | 32 像素墨迹中心差 | 64 像素墨迹中心差 | 混排行框〔32／64 像素〕 |
+| --- | ---: | ---: | ---: |
+| Sarasa Fixed SC | −0.05 像素 | −0.10 像素 | 40／80 像素 |
+| Noto Sans CJK SC | −0.03 像素 | −0.06 像素 | 46／92 像素 |
+| Source Han Sans SC〔思源黑体〕 | −0.05 像素 | −0.10 像素 | 46／92 像素 |
+| LXGW WenKai〔霞鹜文楷〕 | ＋0.74 像素 | ＋1.47 像素 | 40／80 像素 |
+| WenQuanYi Zen Hei〔文泉驿正黑〕 | ＋1.00 像素 | ＋2.01 像素 | 44／87 像素 |
+| Noto Serif CJK SC | −0.09 像素 | −0.17 像素 | 46／92 像素 |
+
+结果表明，中豆黑体与 Sarasa Fixed SC 的基线和正常行框完全一致；在 64 像素下，所测轮廓中心仅差约 0.10 像素。Noto Sans CJK SC 与思源黑体来自同一套合作设计，不能视为两个独立的字形样本；它们和 Noto Serif CJK SC 的墨迹中心也很接近中豆标点，但较高的自身度量会使混排行框增高，而不会使字形脱离共同基线。霞鹜文楷和文泉驿正黑的视觉中心较低，差异在放大字号下较明显，在 32 像素下分别约为 0.74 和 1.00 像素。此次评估只说明这些代表性字体及所测字样的表现，不能推及所有华文字体。
+
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./images/Title.dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="./images/Title.light.svg">
