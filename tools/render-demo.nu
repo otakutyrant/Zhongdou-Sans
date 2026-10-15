@@ -17,6 +17,7 @@ def main [] {
 
   mkdir $build_dir
   ^python ($project_root | path join "tools" "build_font.py") $input_font $output_font
+  ^nu ($project_root | path join "tools" "render-title.nu")
 
   # A fresh profile prevents extensions and user preferences from affecting pixels.
   let chromium_profile = (^mktemp -d --tmpdir "zhongdou-demo.XXXXXX" | str trim)

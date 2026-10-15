@@ -23,3 +23,9 @@ export def "nur demo preview" [] {
 export def "nur demo render" [] {
     ^nu ($PROJECT_ROOT | path join tools render-demo.nu)
 }
+
+# Rebuild the README's light and dark title specimens from the current font.
+export def "nur title render" [] {
+    nur demo build
+    ^nu ($PROJECT_ROOT | path join tools render-title.nu)
+}

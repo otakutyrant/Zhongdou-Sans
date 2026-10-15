@@ -88,7 +88,7 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./images/Title.dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="./images/Title.light.svg">
-  <img src="./Title.light.svg">
+  <img src="./images/Title.light.svg">
 </picture>
 
 > 样张文本选自马王堆汉墓帛书〔老子〕甲本、[〔请颁行新式标点符号议案（修正案）〕](https://zh.wikisource.org/wiki/%E8%AB%8B%E9%A0%92%E8%A1%8C%E6%96%B0%E5%BC%8F%E6%A8%99%E9%BB%9E%E7%AC%A6%E8%99%9F%E8%AD%B0%E6%A1%88%EF%BC%88%E4%BF%AE%E6%AD%A3%E6%A1%88%EF%BC%89)、1951年[〔标点符号用法〕](https://zh.wikisource.org/wiki/%E6%A8%99%E9%BB%9E%E7%AC%A6%E8%99%9F%E7%94%A8%E6%B3%95_(1951%E5%B9%B4))和日文维基百科条目[〔約物〕](https://ja.wikipedia.org/w/index.php?title=%E7%B4%84%E7%89%A9&oldid=86255058)
@@ -198,14 +198,15 @@
 
 ## 生成样张
 
-首页样张的排版源码位于 [`demo/`](./demo/)，输出为 [`images/demo.png`](./images/demo.png)。在项目根目录运行：
+首页样张和文内标题图的排版源码位于 [`demo/`](./demo/)，输出为 [`images/demo.png`](./images/demo.png)、[`images/Title.light.svg`](./images/Title.light.svg)和[`images/Title.dark.svg`](./images/Title.dark.svg)。在项目根目录运行：
 
 ```nu
 nix develop -c nur demo preview # 构建字体并在浏览器中打开 HTML 样张
-nix develop -c nur demo render  # 重新生成 images/demo.png
+nix develop -c nur demo render  # 重新生成全部样张图片
+nix develop -c nur title render # 仅重新生成浅色与深色标题图
 ```
 
-这些任务会先从原始字体生成中豆黑体，再以固定的 2560×1440 画布渲染并压缩图片。Nix flake 锁定 Nur、渲染工具和备用字体的版本。拉取请求中的样张若已过时，持续集成便会报错；推送到 `main` 后，持续集成则会在样张变化时自动创建 `docs: update generated demo` 提交，不变时不会提交。
+这些任务会先从原始字体生成中豆黑体；首页样张采用固定的 2560×1440 画布，标题图则把构建后的字体嵌入 SVG，因而不依赖读者本机安装中豆黑体。Nix flake 锁定 Nur、渲染工具和备用字体的版本。拉取请求中的样张若已过时，持续集成便会报错；推送到 `main` 后，持续集成则会在样张变化时自动创建 `docs: update generated specimens` 提交，不变时不会提交。
 
 ## 授权信息
 

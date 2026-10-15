@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" lang="zh-CN">
+  <defs>
+    <style>
+      @font-face {
+        font-family: "Zhongdou Poster";
+        src: url("data:font/ttf;base64,@@FONT_DATA@@") format("truetype-variations");
+        font-weight: 250 900;
+      }
+
+      :root {
+        --paper: @@PAPER@@;
+        --ink: @@INK@@;
+        --soft: @@SOFT@@;
+        --faint: @@FAINT@@;
+        --red: @@RED@@;
+        --line: @@LINE@@;
+      }
+
+      text {
+        font-family: "Zhongdou Poster", "Source Han Sans SC", sans-serif;
+        font-synthesis: none;
+      }
+
+      .meta {
+        fill: var(--ink);
+        font-family: "DejaVu Sans Mono", monospace;
+        font-size: 18px;
+        font-weight: 600;
+        letter-spacing: 4px;
+      }
+
+      .copy {
+        fill: var(--soft);
+        font-size: 31px;
+        font-weight: 360;
+        letter-spacing: 1px;
+      }
+
+      .title {
+        fill: var(--red);
+        font-family: "Source Han Sans SC", sans-serif;
+        font-size: 104px;
+        font-weight: 650;
+        letter-spacing: 18px;
+      }
+
+      .cn-title {
+        fill: var(--red);
+        font-size: 34px;
+        font-weight: 700;
+        letter-spacing: 8px;
+      }
+
+      .specimen {
+        fill: var(--red);
+        font-size: 70px;
+        font-variation-settings: "wght" 560;
+      }
+
+      .feature-label {
+        fill: var(--ink);
+        font-family: "DejaVu Sans Mono", monospace;
+        font-size: 15px;
+        font-weight: 700;
+        letter-spacing: 3px;
+      }
+
+      .feature-copy {
+        fill: var(--soft);
+        font-size: 24px;
+        font-weight: 380;
+      }
+
+      .weight {
+        fill: var(--red);
+        font-size: 54px;
+      }
+
+      .tadpole-small {
+        fill: var(--red);
+        font-size: 32px;
+        font-feature-settings: "ss02" 1;
+      }
+
+      .vertical {
+        fill: var(--soft);
+        font-size: 45px;
+        font-weight: 380;
+        letter-spacing: 2px;
+        writing-mode: vertical-rl;
+      }
+
+      .vertical-mark {
+        fill: var(--red);
+      }
+    </style>
+    <linearGradient id="wash" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="@@WASH_START@@" />
+      <stop offset="1" stop-color="@@WASH_END@@" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1920" height="1080" fill="var(--paper)" />
+  <rect x="3" y="3" width="1914" height="1074" fill="none" stroke="var(--line)" stroke-width="2" />
+  <rect x="70" y="70" width="1780" height="940" rx="34" fill="url(#wash)" />
+
+  <text class="meta" x="112" y="118">中豆黑体 · ZHONGDOU SANS</text>
+  <text class="meta" x="1808" y="118" text-anchor="end">标点补充字体 · 250—900</text>
+  <line x1="112" y1="144" x2="1808" y2="144" stroke="var(--line)" stroke-width="2" />
+
+  <g class="copy">
+    <text x="112" y="210">汉字自有中宫，标点也应归中。中豆黑体专为中文标点而作，</text>
+    <text x="112" y="255">让点号守在字心连线上；横排不坠角，竖排不断气，粗细皆相承。</text>
+    <text x="112" y="300">它不包含汉字、一般西文和数字，应与更纱黑体等正文字体搭配使用。</text>
+  </g>
+
+  <text class="title" x="112" y="445">Zhongdou Sans</text>
+  <text class="cn-title" x="112" y="496">中豆黑体</text>
+  <text class="meta" x="400" y="493">LOCL · VERT · SS01 · SS02 · DLIG</text>
+
+  <text class="specimen" x="112" y="595">「读」・〔中豆〕・⸺・⋯</text>
+  <text class="copy" x="112" y="647">直角引号　龟甲括　居中间隔号　双字宽破折号　中线省略号</text>
+
+  <g transform="translate(112 708)">
+    <rect width="1300" height="238" rx="25" fill="none" stroke="var(--line)" stroke-width="2" />
+    <text class="feature-label" x="34" y="42">VARIABLE WEIGHT</text>
+    <line x1="34" y1="62" x2="1266" y2="62" stroke="var(--line)" />
+
+    <g transform="translate(46 105)">
+      <text class="weight" x="0" y="48" style="font-variation-settings:'wght' 250">「・」</text>
+      <text class="feature-label" x="18" y="91">250</text>
+    </g>
+    <g transform="translate(214 105)">
+      <text class="weight" x="0" y="48" style="font-variation-settings:'wght' 400">〔・〕</text>
+      <text class="feature-label" x="31" y="91">400</text>
+    </g>
+    <g transform="translate(418 105)">
+      <text class="weight" x="0" y="48" style="font-variation-settings:'wght' 550">「・」</text>
+      <text class="feature-label" x="18" y="91">550</text>
+    </g>
+    <g transform="translate(598 105)">
+      <text class="weight" x="0" y="48" style="font-variation-settings:'wght' 700">〔・〕</text>
+      <text class="feature-label" x="31" y="91">700</text>
+    </g>
+    <g transform="translate(802 105)">
+      <text class="weight" x="0" y="48" style="font-variation-settings:'wght' 900">⋯</text>
+      <text class="feature-label" x="2" y="91">900</text>
+    </g>
+
+    <line x1="934" y1="84" x2="934" y2="212" stroke="var(--line)" />
+    <text class="feature-label" x="970" y="102">SS01 · 居中</text>
+    <text class="specimen" x="970" y="166">，。！？</text>
+    <text class="feature-label" x="970" y="204">SS02 · 蝌蚪</text>
+    <text class="tadpole-small" x="1195" y="207">，；‘’</text>
+  </g>
+
+  <g aria-label="竖排标点示例">
+    <text class="vertical" x="1790" y="190"><tspan class="vertical-mark">「</tspan>天地有正气<tspan class="vertical-mark">，</tspan>杂然赋流形<tspan class="vertical-mark">」</tspan></text>
+    <text class="vertical" x="1692" y="190"><tspan class="vertical-mark">〔</tspan>下则为河岳<tspan class="vertical-mark">，</tspan>上则为日星<tspan class="vertical-mark">〕</tspan></text>
+    <text class="vertical" x="1594" y="190">于人曰浩然<tspan class="vertical-mark">，</tspan>沛乎塞苍冥<tspan class="vertical-mark">。</tspan></text>
+  </g>
+
+  <text class="meta" x="112" y="989">字有中宫，标点亦应归中。</text>
+  <text class="meta" x="1808" y="989" text-anchor="end">OPEN FONT LICENSE 1.1</text>
+</svg>

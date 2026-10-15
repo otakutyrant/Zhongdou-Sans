@@ -28,8 +28,8 @@ jobs:
       - name: Render the demo
         run: nix develop -c nur demo render
 
-      - name: Check that the committed image is current
-        run: git diff --exit-code -- images/demo.png
+      - name: Check that the committed images are current
+        run: git diff --exit-code -- images/demo.png images/Title.light.svg images/Title.dark.svg
 
   update:
     name: Update generated image
