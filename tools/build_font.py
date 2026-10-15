@@ -20,9 +20,8 @@ FAMILY_REPLACEMENTS = {
     "煮豆黑體": "Zhongdou Sans",
 }
 
-# Preserve copyright and licence records verbatim, including the declaration
-# of upstream's reserved font name. All actual derivative-family identifiers
-# are renamed below as required by the SIL Open Font License.
+# Do not rename names inside legal notices. These records are populated from
+# LICENSE separately, retaining upstream notices alongside our own declaration.
 LEGAL_NAME_IDS = {0, 13, 14}
 
 
@@ -386,6 +385,23 @@ def rename_family(font: TTFont) -> None:
         record.string = value.encode(record.getEncoding())
 
 
+def embed_license(font: TTFont) -> None:
+    """Keep distributed font metadata consistent with the complete LICENSE."""
+    license_text = (Path(__file__).resolve().parent.parent / "LICENSE").read_text(
+        encoding="utf-8"
+    )
+    notices = license_text.split("\n\n", 1)[0]
+    values = {0: notices, 13: license_text, 14: "https://openfontlicense.org/"}
+    names = font["name"]
+    for name_id, value in values.items():
+        for record in list(names.names):
+            if record.nameID == name_id:
+                names.setName(
+                    value, name_id, record.platformID, record.platEncID, record.langID
+                )
+        names.setName(value, name_id, 3, 1, 0x409)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -412,6 +428,7 @@ def main() -> None:
     center_default_language_punctuation(font)
     refine_punctuation_glyphs(font)
     rename_family(font)
+    embed_license(font)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     font.save(args.output)
 

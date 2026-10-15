@@ -24609,7 +24609,10 @@ key = copyrights;
 values = (
 {
 language = dflt;
-value = "Copyright © 2022 Buernia (https://github.com/Buernia), with Reserved Font Name 'Zhudou'.";
+value = "Copyright © 2026 otakutyrant (https://github.com/otakutyrant), with Reserved Font Names 'Zhongdou' and '中豆'.
+Copyright © 2022 Buernia (https://github.com/Buernia), with Reserved Font Name 'Zhudou' and '煮豆'.
+Portions Copyright © 2014-2021 Adobe (http://www.adobe.com/), with Reserved Font Name 'Source'.
+Portions Copyright © 2015 Google Inc.";
 }
 );
 },
@@ -24618,13 +24621,13 @@ key = licenses;
 values = (
 {
 language = dflt;
-value = "This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: https://scripts.sil.org/OFL";
+value = "This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: https://openfontlicense.org/";
 }
 );
 },
 {
 key = licenseURL;
-value = "https://scripts.sil.org/OFL";
+value = "https://openfontlicense.org/";
 },
 {
 key = sampleTexts;
