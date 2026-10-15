@@ -6,7 +6,7 @@
 </picture>
 
 
-分生自[煮豆黑体](https://github.com/Buernia/Zhudou-Sans)，后者三年无更新。原字体衍生自 [Noto Sans](https://github.com/googlefonts/noto-fonts) 和[思源黑体](https://github.com/adobe-fonts/source-han-sans)，支持中日韩标点、全角字母、全角数字及一些特殊符号。标点造型主要来源于 Noto Sans，可以为类似风格的西文字体带来更加协调的中外文混排效果。
+分生自[煮豆黑体](https://github.com/Buernia/Zhudou-Sans)，后者三年无更新。原字体衍生自 [Noto Sans](https://github.com/googlefonts/noto-fonts) 和[思源黑体](https://github.com/adobe-fonts/source-han-sans)，支持中日韩标点及一些特殊符号。标点造型主要来源于 Noto Sans，可以为类似风格的西文字体带来更加协调的中外文混排效果。
 
 中豆黑体为可变字体，支持字重无级变化，同时提供对应思源黑体7个字重的静态版本。
 
@@ -65,6 +65,7 @@
 * 对居中点号作光学校正，并将龟甲括与直角引号的墨迹在全部字重中移到全角字身的横向中心；由其构成的闭括号和竖排字形会同步归中，字身宽度保持不变。
 * 保留 `halt`、`vhal`、`kern`、`vkrn` 功能标签以兼容应用程序，但清空其查找列表，因此中豆黑体不会自动压缩或挤移横排、竖排标点。
 * 已修正[行高问题](https://github.com/Buernia/Zhudou-Sans/issues/7)，并使水平排版度量与更纱黑体兼容，避免 Pango/GTK 在字体回退时错开标点与正文的基线。
+* 移除与标点补充定位无关的全角拉丁字母、全角数字、许可图标和传统吉祥图案。
 * 此外如上文所述，增加了一些标点符号。
 
 ### 与其他华文字体的混排评估
@@ -99,9 +100,6 @@
 * 现代中日韩标点符号，包括间隔号・、直角引号「」、单码位双字宽字符破折号⸺、和六角括号〔〕。
 * ⋯（`U+22EF` MIDLINE HORIZONTAL ELLIPSIS），单码位单字宽（full-width），可以作为华语省略号使用，虽然这违背了其数学语义。
 * 古汉语钩识号（𖿢，`U+16FE2`）和重文号（𖿣，`U+16FE3`）
-* 全角字母、数字
-* 7个知识共享（Creative Commons）许可图标（⊜🄍🄎🄏🅭🅮🅯，`U+229C`、`U+1F10D`—`U+1F10F`、`U+1F16D`—`U+1F16F`）
-* 6个中国传统吉祥图案（🉠🉡🉢🉣🉤🉥，`U+1F260`—`U+1F265`）
 
 ⚠**注意：中豆黑体不包含汉字、假名、谚文、一般西文和数字，请和其他字体搭配使用。**
 

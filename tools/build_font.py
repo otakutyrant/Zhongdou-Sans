@@ -9,6 +9,7 @@ Linux while making the same feature choices recorded in the Glyphs source.
 import argparse
 from pathlib import Path
 
+from fontTools import subset
 from fontTools.ttLib import TTFont
 from fontTools.varLib.iup import iup_delta
 
@@ -23,6 +24,16 @@ FAMILY_REPLACEMENTS = {
 # Do not rename names inside legal notices. These records are populated from
 # LICENSE separately, retaining upstream notices alongside our own declaration.
 LEGAL_NAME_IDS = {0, 13, 14}
+
+REMOVED_CODEPOINTS = (
+    set(range(0xFF10, 0xFF1A))
+    | set(range(0xFF21, 0xFF3B))
+    | set(range(0xFF41, 0xFF5B))
+    | {0x229C}
+    | set(range(0x1F10D, 0x1F110))
+    | set(range(0x1F16D, 0x1F170))
+    | set(range(0x1F260, 0x1F266))
+)
 
 
 def feature_by_tag(font: TTFont, table_tag: str, tag: str):
@@ -68,6 +79,46 @@ def add_midline_ellipsis(font: TTFont) -> None:
 
     if updated == 0:
         raise ValueError("the input font has no Unicode cmap containing U+2026")
+
+
+def remove_unwanted_characters(font: TTFont) -> None:
+    """Remove full-width alphanumerics and unrelated symbol collections."""
+    encoded = {
+        codepoint
+        for table in font["cmap"].tables
+        if table.isUnicode()
+        for codepoint in table.cmap
+    }
+    variation_selectors = {
+        selector
+        for table in font["cmap"].tables
+        if table.format == 14
+        for selector in table.uvsDict
+    }
+    missing = REMOVED_CODEPOINTS - encoded
+    if missing:
+        formatted = ", ".join(f"U+{codepoint:04X}" for codepoint in sorted(missing))
+        raise ValueError(f"the input font is missing characters to remove: {formatted}")
+
+    options = subset.Options()
+    options.glyph_names = True
+    options.layout_features = ["*"]
+    options.layout_scripts = ["*"]
+    options.name_IDs = ["*"]
+    options.name_languages = ["*"]
+    options.name_legacy = True
+    options.notdef_outline = True
+    # Upstream places full-width A and B at GIDs 2 and 3; retaining the first
+    # four "recommended" GIDs would therefore leave those deleted outlines.
+    options.recommended_glyphs = False
+    options.symbol_cmap = True
+    options.legacy_cmap = True
+
+    subsetter = subset.Subsetter(options=options)
+    subsetter.populate(
+        unicodes=(encoded - REMOVED_CODEPOINTS) | variation_selectors
+    )
+    subsetter.subset(font)
 
 
 def harmonize_horizontal_metrics(font: TTFont) -> None:
@@ -422,11 +473,12 @@ def main() -> None:
     use_half_width_quotes_by_default(font)
     add_midline_ellipsis(font)
     harmonize_horizontal_metrics(font)
-    disable_positioning_features(font)
     use_zh_tw_locl_for_zh_cn(font)
     center_zh_cn_vertical_punctuation(font)
     center_default_language_punctuation(font)
     refine_punctuation_glyphs(font)
+    remove_unwanted_characters(font)
+    disable_positioning_features(font)
     rename_family(font)
     embed_license(font)
     args.output.parent.mkdir(parents=True, exist_ok=True)
