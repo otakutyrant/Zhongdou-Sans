@@ -873,15 +873,27 @@ axesValues = (
 customParameters = (
 {
 name = typoAscender;
-value = 880;
+value = 965;
 },
 {
 name = typoDescender;
-value = -120;
+value = -285;
 },
 {
 name = typoLineGap;
-value = 200;
+value = 0;
+},
+{
+name = hheaAscender;
+value = 965;
+},
+{
+name = hheaDescender;
+value = -215;
+},
+{
+name = hheaLineGap;
+value = 70;
 },
 {
 name = winAscent;
@@ -908,13 +920,13 @@ iconName = Light;
 id = m002;
 metricValues = (
 {
-pos = 880;
+pos = 965;
 },
 {
 over = -30;
 },
 {
-pos = -120;
+pos = -285;
 },
 {
 pos = 733;
@@ -933,15 +945,27 @@ axesValues = (
 customParameters = (
 {
 name = typoAscender;
-value = 880;
+value = 965;
 },
 {
 name = typoDescender;
-value = -120;
+value = -285;
 },
 {
 name = typoLineGap;
-value = 200;
+value = 0;
+},
+{
+name = hheaAscender;
+value = 965;
+},
+{
+name = hheaDescender;
+value = -215;
+},
+{
+name = hheaLineGap;
+value = 70;
 },
 {
 name = winAscent;
@@ -967,13 +991,13 @@ value = 500;
 id = m01;
 metricValues = (
 {
-pos = 880;
+pos = 965;
 },
 {
 over = -30;
 },
 {
-pos = -120;
+pos = -285;
 },
 {
 pos = 733;
@@ -992,15 +1016,27 @@ axesValues = (
 customParameters = (
 {
 name = typoAscender;
-value = 880;
+value = 965;
 },
 {
 name = typoDescender;
-value = -120;
+value = -285;
 },
 {
 name = typoLineGap;
-value = 200;
+value = 0;
+},
+{
+name = hheaAscender;
+value = 965;
+},
+{
+name = hheaDescender;
+value = -215;
+},
+{
+name = hheaLineGap;
+value = 70;
 },
 {
 name = winAscent;
@@ -1027,13 +1063,13 @@ iconName = Bold;
 id = m003;
 metricValues = (
 {
-pos = 880;
+pos = 965;
 },
 {
 over = -30;
 },
 {
-pos = -120;
+pos = -285;
 },
 {
 pos = 733;

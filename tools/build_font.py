@@ -71,10 +71,17 @@ def add_midline_ellipsis(font: TTFont) -> None:
         raise ValueError("the input font has no Unicode cmap containing U+2026")
 
 
-def reduce_line_gaps(font: TTFont) -> None:
-    """Replace upstream's accidental one-em horizontal line gaps."""
-    font["OS/2"].sTypoLineGap = 200
-    font["hhea"].lineGap = 200
+def harmonize_horizontal_metrics(font: TTFont) -> None:
+    """Match Sarasa's line metrics so fallback runs share one baseline."""
+    os2 = font["OS/2"]
+    os2.sTypoAscender = 965
+    os2.sTypoDescender = -285
+    os2.sTypoLineGap = 0
+
+    hhea = font["hhea"]
+    hhea.ascent = 965
+    hhea.descent = -215
+    hhea.lineGap = 70
 
 
 def disable_positioning_features(font: TTFont) -> None:
@@ -375,7 +382,7 @@ def main() -> None:
     font = TTFont(args.input, recalcTimestamp=False)
     use_half_width_quotes_by_default(font)
     add_midline_ellipsis(font)
-    reduce_line_gaps(font)
+    harmonize_horizontal_metrics(font)
     disable_positioning_features(font)
     use_zh_tw_locl_for_zh_cn(font)
     center_zh_cn_vertical_punctuation(font)
