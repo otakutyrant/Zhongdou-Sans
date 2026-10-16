@@ -44,6 +44,7 @@ body {
   color: var(--paper);
   font-family: var(--body-font);
   font-synthesis: none;
+  line-break: anywhere;
   text-rendering: optimizeLegibility;
 }
 
@@ -79,7 +80,6 @@ a {
   font-size: clamp(22px, 3.55vmin, 38px);
   font-weight: 430;
   letter-spacing: 0;
-  line-break: anywhere;
   line-height: 1;
   text-align: start;
   text-wrap: wrap;
@@ -200,7 +200,6 @@ a {
   font-size: 1em;
   font-weight: 430;
   letter-spacing: 0;
-  line-break: anywhere;
   line-height: 1;
   text-align: start;
 }
