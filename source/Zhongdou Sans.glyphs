@@ -7,317 +7,6 @@ name = Weight;
 tag = wght;
 }
 );
-classes = (
-{
-code = "whiteparenleft.full
-anglebracketleft
-blacklenticularbracketleft
-braceleft.full
-cornerbracketleft
-dblanglebracketleft
-tortoiseshellbracketleft
-whitecornerbracketleft
-whitelenticularbracketleft
-whitesquarebracketleft
-whitetortoiseshellbracketleft
-bracketleft.full
-parenleft.full
-quotedblleft
-quoteleft
-quotedoubleprimeReversed
-quotedblleft.ss02
-quoteleft.ss02
-";
-name = OpeningBracket;
-notes = "前括号";
-},
-{
-code = "whiteparenright.full
-anglebracketright
-blacklenticularbracketright
-braceright.full
-cornerbracketright
-dblanglebracketright
-tortoiseshellbracketright
-whitecornerbracketright
-whitelenticularbracketright
-whitesquarebracketright
-whitetortoiseshellbracketright
-bracketright.full
-parenright.full
-quotedblright
-quoteright
-lowquotedoubleprime
-quotedoubleprime
-quotedblright.ss02
-quoteright.ss02
-";
-name = ClosingBracket;
-notes = "后括号";
-},
-{
-code = "comma-han
-comma-han.uv001
-period-han
-period-han.uv001
-colon.full
-comma.full
-exclam.full
-period.full
-question.full
-semicolon.full
-colon.full.uv001
-comma.full.uv001
-exclam.full.uv001
-period.full.uv001
-question.full.uv001
-semicolon.full.uv001
-comma.full.ss02
-semicolon.full.ss02
-";
-name = PeriodComma;
-notes = "居角标点";
-},
-{
-code = "anglebracketleft.vert
-blacklenticularbracketleft.vert
-cornerbracketleft.vert
-dblanglebracketleft.vert
-tortoiseshellbracketleft.vert
-whiteparenleft.full.vert
-whitesquarebracketleft.vert
-whitetortoiseshellbracketleft.vert
-whitecornerbracketleft.vert
-whitelenticularbracketleft.vert
-braceleft.full.vert
-bracketleft.full.vert
-parenleft.full.vert
-quoteleft.vert
-quotedoubleprimeReversed.vert
-";
-name = OpeningBracketVert;
-notes = "竖排前括号";
-},
-{
-code = "anglebracketright.vert
-blacklenticularbracketright.vert
-cornerbracketright.vert
-dblanglebracketright.vert
-tortoiseshellbracketright.vert
-whiteparenright.full.vert
-whitesquarebracketright.vert
-whitetortoiseshellbracketright.vert
-whitecornerbracketright.vert
-whitelenticularbracketright.vert
-braceright.full.vert
-bracketright.full.vert
-parenright.full.vert
-quoteright.vert
-quotedoubleprime.vert
-";
-name = ClosingBracketVert;
-notes = "竖排后括号";
-},
-{
-code = "comma-han.vert
-period-han.vert
-comma.full.vert
-period.full.vert
-comma.full.vert.ss02
-u16FE2.vert
-u16FE3.vert
-";
-name = PeriodCommaVert;
-notes = "竖排居角小标点";
-},
-{
-code = "comma-han.uv002
-period-han.uv002
-dot-kata
-colon.full.uv002
-comma.full.uv002
-exclam.full.uv002
-period.full.uv002
-question.full.uv002
-semicolon.full.uv002
-comma.full.uv002.ss02
-semicolon.full.uv002.ss02
-periodcentered.full
-";
-name = Centered;
-notes = "居中标点";
-},
-{
-code = "comma-han.uv002
-period-han.uv002
-dot-kata
-periodcentered.full
-comma.full.uv002
-period.full.uv002
-colon.full.vert.loclJAN
-comma.full.uv002.ss02
-";
-name = CenteredVert;
-notes = "竖排居中小标点";
-},
-{
-code = "colon.vert
-exclam.vert
-question.vert
-semicolon.vert
-semicolon.vert.ss02
-colon.full.uv002
-exclam.full.uv002
-question.full.uv002
-semicolon.full.uv002
-semicolon.full.uv002.ss02
-";
-name = ColonExclamQuestionVert;
-notes = "竖排大标点";
-},
-{
-code = "comma-han
-comma-han.uv001
-period-han
-period-han.uv001
-colon.full
-comma.full
-exclam.full
-period.full
-question.full
-semicolon.full
-comma.full.ss02
-semicolon.full.ss02
-colon.full.uv001
-comma.full.uv001
-exclam.full.uv001
-period.full.uv001
-question.full.uv001
-semicolon.full.uv001
-whiteparenright.full
-anglebracketright
-blacklenticularbracketright
-braceright.full
-cornerbracketright
-dblanglebracketright
-tortoiseshellbracketright
-whitecornerbracketright
-whitelenticularbracketright
-whitesquarebracketright
-whitetortoiseshellbracketright
-bracketright.full
-parenright.full
-quotedblright
-quoteright
-lowquotedoubleprime
-quotedoubleprime
-quotedblright.ss02
-quoteright.ss02
-";
-name = HaltLeft;
-notes = "居左标点";
-},
-{
-code = "whiteparenleft.full
-anglebracketleft
-blacklenticularbracketleft
-braceleft.full
-cornerbracketleft
-dblanglebracketleft
-tortoiseshellbracketleft
-whitecornerbracketleft
-whitelenticularbracketleft
-whitesquarebracketleft
-whitetortoiseshellbracketleft
-bracketleft.full
-parenleft.full
-quotedblleft
-quoteleft
-quotedoubleprimeReversed
-quotedblleft.ss02
-quoteleft.ss02
-";
-name = HaltRight;
-notes = "居右标点";
-},
-{
-code = "comma-han.uv002
-period-han.uv002
-dot-kata
-periodcentered.full
-colon.full.uv002
-comma.full.uv002
-exclam.full.uv002
-period.full.uv002
-question.full.uv002
-semicolon.full.uv002
-comma.full.uv002.ss02
-semicolon.full.uv002.ss02
-";
-name = HaltCenter;
-notes = "居中标点";
-},
-{
-code = "comma-han.vert
-period-han.vert
-comma.full.vert
-period.full.vert
-comma.full.vert.ss02
-anglebracketright.vert
-blacklenticularbracketright.vert
-cornerbracketright.vert
-dblanglebracketright.vert
-tortoiseshellbracketright.vert
-whiteparenright.full.vert
-whitesquarebracketright.vert
-whitetortoiseshellbracketright.vert
-whitecornerbracketright.vert
-whitelenticularbracketright.vert
-braceright.full.vert
-bracketright.full.vert
-parenright.full.vert
-quoteright.vert
-quotedoubleprime.vert
-u16FE2.vert
-u16FE3.vert
-";
-name = VhalHigh;
-notes = "居上标点";
-},
-{
-code = "anglebracketleft.vert
-blacklenticularbracketleft.vert
-cornerbracketleft.vert
-dblanglebracketleft.vert
-tortoiseshellbracketleft.vert
-whiteparenleft.full.vert
-whitesquarebracketleft.vert
-whitetortoiseshellbracketleft.vert
-whitecornerbracketleft.vert
-whitelenticularbracketleft.vert
-braceleft.full.vert
-bracketleft.full.vert
-parenleft.full.vert
-quoteleft.vert
-quotedoubleprimeReversed.vert
-";
-name = VhalLow;
-notes = "居下标点";
-},
-{
-code = "comma-han.uv002
-period-han.uv002
-dot-kata
-periodcentered.full
-comma.full.uv002
-period.full.uv002
-colon.full.vert.loclJAN
-comma.full.uv002.ss02
-";
-name = VhalCenter;
-notes = "竖排居中标点";
-}
-);
 customParameters = (
 {
 name = codePageRanges;
@@ -339,13 +28,6 @@ value = (
 59,
 65,
 68
-);
-},
-{
-name = "Remove Features";
-value = (
-kern,
-vkrn
 );
 }
 );
@@ -390,11 +72,6 @@ sub exclam.full by exclam.full.uv002;
 sub colon.full by colon.full.uv002;
 sub semicolon.full by semicolon.full.uv002;
 sub question.full by question.full.uv002;
-sub quoteleft.ss02 by quoteleft.ss02.pwid;
-sub quoteright.ss02 by quoteright.ss02.pwid;
-sub quotedblleft.ss02 by quotedblleft.ss02.pwid;
-sub quotedblright.ss02 by quotedblright.ss02.pwid;
-sub semicolon.full.ss02 by semicolon.full.uv002.ss02;
 } CN2JP;
 
 lookup CN2TW {
@@ -407,22 +84,7 @@ sub period.full by period.full.uv002;
 sub colon.full by colon.full.uv002;
 sub semicolon.full by semicolon.full.uv002;
 sub question.full by question.full.uv002;
-sub comma.full.ss02 by comma.full.uv002.ss02;
-sub semicolon.full.ss02 by semicolon.full.uv002.ss02;
 } CN2TW;
-
-lookup cpct {
-sub comma-han by comma-han.uv002;
-sub period-han by period-han.uv002;
-sub exclam.full by exclam.full.uv002;
-sub comma.full by comma.full.uv002;
-sub period.full by period.full.uv002;
-sub colon.full by colon.full.uv002;
-sub semicolon.full by semicolon.full.uv002;
-sub question.full by question.full.uv002;
-sub comma.full.ss02 by comma.full.uv002.ss02;
-sub semicolon.full.ss02 by semicolon.full.uv002.ss02;
-} cpct;
 
 lookup vert_CN {
 sub comma-han by comma-han.uv002;
@@ -433,16 +95,10 @@ sub period.full by period.full.uv002;
 sub colon.full by colon.full.uv002;
 sub semicolon.full by semicolon.full.uv002;
 sub question.full by question.full.uv002;
-sub comma.full.ss02 by comma.full.uv002.ss02;
-sub semicolon.full.ss02 by semicolon.full.uv002.ss02;
 sub quoteleft by cornerbracketleft.vert;
 sub quoteright by cornerbracketright.vert;
 sub quotedblleft by whitecornerbracketleft.vert;
 sub quotedblright by whitecornerbracketright.vert;
-sub quoteleft.ss02 by cornerbracketleft.vert;
-sub quoteright.ss02 by cornerbracketright.vert;
-sub quotedblleft.ss02 by whitecornerbracketleft.vert;
-sub quotedblright.ss02 by whitecornerbracketright.vert;
 } vert_CN;
 
 lookup vert_JP {
@@ -454,7 +110,6 @@ sub exclam.full.uv002 by exclam.vert;
 sub colon.full.uv002 by colon.vert;
 sub semicolon.full.uv002 by semicolon.vert;
 sub question.full.uv002 by question.vert;
-sub semicolon.full.uv002.ss02 by semicolon.vert.ss02;
 } vert_KR;
 
 lookup vert_TW {
@@ -462,58 +117,13 @@ sub quoteleft by quoteleft.vert;
 sub quoteright by quoteright.vert;
 sub quotedblleft by quotedoubleprimeReversed.vert;
 sub quotedblright by quotedoubleprime.vert;
-sub quoteleft.ss02 by quoteleft.vert;
-sub quoteright.ss02 by quoteright.vert;
-sub quotedblleft.ss02 by quotedoubleprimeReversed.vert;
-sub quotedblright.ss02 by quotedoubleprime.vert;
 } vert_TW;
-
-lookup chws { # GPOS lookup type PairAdjustment
-pos @OpeningBracket @OpeningBracket -500;
-pos @ClosingBracket @OpeningBracket -500;
-pos @ClosingBracket @ClosingBracket -500;
-pos @ClosingBracket space-han -500;
-pos @ClosingBracket @PeriodComma -500;
-pos @ClosingBracket @Centered -500;
-pos space-han @OpeningBracket -500;
-pos @PeriodComma @OpeningBracket -500;
-pos @PeriodComma @ClosingBracket -500;
-pos @PeriodComma space-han -500;
-pos @PeriodComma @PeriodComma -500;
-pos @PeriodComma @Centered -500;
-pos @Centered @OpeningBracket -500;
-} chws;
-
-lookup vchw { # GPOS lookup type PairAdjustment
-pos space-han @OpeningBracketVert <0 0 0 -500>;
-pos @PeriodCommaVert space-han <0 0 0 -500>;
-pos @PeriodCommaVert @PeriodCommaVert <0 0 0 -500>;
-pos @PeriodCommaVert @ColonExclamQuestionVert <0 0 0 -500>;
-pos @PeriodCommaVert @OpeningBracketVert <0 0 0 -500>;
-pos @PeriodCommaVert @ClosingBracketVert <0 0 0 -500>;
-pos @PeriodCommaVert @CenteredVert <0 0 0 -500>;
-pos @ColonExclamQuestionVert @OpeningBracketVert <0 0 0 -500>;
-pos @OpeningBracketVert @OpeningBracketVert <0 0 0 -500>;
-pos @ClosingBracketVert space-han <0 0 0 -500>;
-pos @ClosingBracketVert @PeriodCommaVert <0 0 0 -500>;
-pos @ClosingBracketVert @ColonExclamQuestionVert <0 0 0 -500>;
-pos @ClosingBracketVert @OpeningBracketVert <0 0 0 -500>;
-pos @ClosingBracketVert @ClosingBracketVert <0 0 0 -500>;
-pos @ClosingBracketVert @CenteredVert <0 0 0 -500>;
-pos @CenteredVert @OpeningBracketVert <0 0 0 -500>;
-} vchw;
 ";
 name = GlobalLookup;
 notes = "全局查找";
 }
 );
 features = (
-{
-code = "sub emdash emdash by twoemdash;
-sub emdash emdash emdash by threeemdash;
-";
-tag = ccmp;
-},
 {
 code = "script DFLT;
 language dflt;
@@ -616,7 +226,6 @@ sub parenleft.full by parenleft.full.vert;
 sub parenright.full by parenright.full.vert;
 sub comma.full by comma.full.vert;
 sub comma.full.uv001 by comma.full.vert;
-sub comma.full.ss02 by comma.full.vert.ss02;
 sub hyphen.full by hyphen.full.vert;
 sub period.full by period.full.vert;
 sub period.full.uv001 by period.full.vert;
@@ -624,7 +233,6 @@ sub colon.full by colon.vert;
 sub colon.full.uv001 by colon.vert;
 sub semicolon.full by semicolon.vert;
 sub semicolon.full.uv001 by semicolon.vert;
-sub semicolon.full.ss02 by semicolon.vert.ss02;
 sub equal.full by equal.full.vert;
 sub question.full by question.vert;
 sub question.full.uv001 by question.vert;
@@ -696,180 +304,6 @@ language ZHT exclude_dflt; # Chinese, Traditional
 lookup vert_TW;
 ";
 tag = vert;
-},
-{
-code = "sub hyphen by hyphen.full;
-sub periodcentered by periodcentered.full;
-sub endash by emdash;
-sub quoteleft.pwid by quoteleft;
-sub quoteright.pwid by quoteright;
-sub quotedblleft.pwid by quotedblleft;
-sub quotedblright.pwid by quotedblright;
-sub quoteleft.half by quoteleft;
-sub quoteright.half by quoteright;
-sub quotedblleft.half by quotedblleft;
-sub quotedblright.half by quotedblright;
-sub periodcentered.vert by periodcentered.full;
-sub endash.vert by emdash.vert;
-sub quoteleft.ss02.pwid by quoteleft.ss02;
-sub quoteright.ss02.pwid by quoteright.ss02;
-sub quotedblleft.ss02.pwid by quotedblleft.ss02;
-sub quotedblright.ss02.pwid by quotedblright.ss02;
-sub quoteleft.ss02.half by quoteleft.ss02;
-sub quoteright.ss02.half by quoteright.ss02;
-sub quotedblleft.ss02.half by quotedblleft.ss02;
-sub quotedblright.ss02.half by quotedblright.ss02;
-";
-tag = fwid;
-},
-{
-code = "sub emdash by endash;
-sub quoteleft by quoteleft.half;
-sub quoteright by quoteright.half;
-sub quotedblleft by quotedblleft.half;
-sub quotedblright by quotedblright.half;
-sub hyphen.full by hyphen;
-sub quoteleft.pwid by quoteleft.half;
-sub quoteright.pwid by quoteright.half;
-sub quotedblleft.pwid by quotedblleft.half;
-sub quotedblright.pwid by quotedblright.half;
-sub periodcentered.full by periodcentered;
-sub emdash.vert by endash.vert;
-sub quoteleft.ss02 by quoteleft.ss02.half;
-sub quoteright.ss02 by quoteright.ss02.half;
-sub quotedblleft.ss02 by quotedblleft.ss02.half;
-sub quotedblright.ss02 by quotedblright.ss02.half;
-sub quoteleft.ss02.pwid by quoteleft.ss02.half;
-sub quoteright.ss02.pwid by quoteright.ss02.half;
-sub quotedblleft.ss02.pwid by quotedblleft.ss02.half;
-sub quotedblright.ss02.pwid by quotedblright.ss02.half;
-";
-tag = hwid;
-},
-{
-code = "sub quotedblleft by quotedblleft.pwid;
-sub quotedblright by quotedblright.pwid;
-sub quoteleft by quoteleft.pwid;
-sub quoteright by quoteright.pwid;
-sub quotedblleft.ss02 by quotedblleft.ss02.pwid;
-sub quotedblright.ss02 by quotedblright.ss02.pwid;
-sub quoteleft.ss02 by quoteleft.ss02.pwid;
-sub quoteright.ss02 by quoteright.ss02.pwid;
-sub quotedblleft.half by quotedblleft.pwid;
-sub quotedblright.half by quotedblright.pwid;
-sub quoteleft.half by quoteleft.pwid;
-sub quoteright.half by quoteright.pwid;
-sub quotedblleft.ss02.half by quotedblleft.ss02.pwid;
-sub quotedblright.ss02.half by quotedblright.ss02.pwid;
-sub quoteleft.ss02.half by quoteleft.ss02.pwid;
-sub quoteright.ss02.half by quoteright.ss02.pwid;
-";
-tag = pwid;
-},
-{
-code = "lookup cpct;";
-tag = cpct;
-},
-{
-code = "lookup cpct;
-";
-labels = (
-{
-language = dflt;
-value = "Centered CJK Punctuation";
-},
-{
-language = ZHS;
-value = "居中中日韩标点";
-},
-{
-language = ZHT;
-value = "居中中日韓標點";
-},
-{
-language = ZHH;
-value = "居中中日韓標點";
-}
-);
-tag = ss01;
-},
-{
-code = "sub comma.full by comma.full.ss02;
-sub semicolon.full by semicolon.full.ss02;
-sub semicolon.vert by semicolon.vert.ss02;
-sub comma.full.vert by comma.full.vert.ss02;
-sub comma.full.uv002 by comma.full.uv002.ss02;
-sub semicolon.full.uv002 by semicolon.full.uv002.ss02;
-sub quotedblleft by quotedblleft.ss02;
-sub quotedblright by quotedblright.ss02;
-sub quoteleft by quoteleft.ss02;
-sub quoteright by quoteright.ss02;
-sub quotedblleft.half by quotedblleft.ss02.half;
-sub quotedblright.half by quotedblright.ss02.half;
-sub quoteleft.half by quoteleft.ss02.half;
-sub quoteright.half by quoteright.ss02.half;
-sub quotedblleft.pwid by quotedblleft.ss02.pwid;
-sub quotedblright.pwid by quotedblright.ss02.pwid;
-sub quoteleft.pwid by quoteleft.ss02.pwid;
-sub quoteright.pwid by quoteright.ss02.pwid;
-";
-labels = (
-{
-language = dflt;
-value = "9-Shaped Comma";
-},
-{
-language = ZHS;
-value = "蝌蚪逗号";
-},
-{
-language = ZHT;
-value = "蝌蚪逗號";
-},
-{
-language = ZHH;
-value = "蝌蚪逗號";
-}
-);
-tag = ss02;
-},
-{
-code = "sub exclam.vert exclam.vert by exclamdouble;
-sub exclam.vert question.vert by exclamationquestion;
-sub question.vert exclam.vert by questionexclamation;
-sub question.vert question.vert by doublequestion;
-sub exclam.full exclam.full by exclamdouble;
-sub exclam.full question.full by exclamationquestion;
-sub question.full exclam.full by questionexclamation;
-sub question.full question.full by doublequestion;
-sub exclam.full.uv001 exclam.full.uv001 by exclamdouble;
-sub exclam.full.uv001 question.full.uv001 by exclamationquestion;
-sub question.full.uv001 exclam.full.uv001 by questionexclamation;
-sub question.full.uv001 question.full.uv001 by doublequestion;
-sub exclam.full.uv002 exclam.full.uv002 by exclamdouble;
-sub exclam.full.uv002 question.full.uv002 by exclamationquestion;
-sub question.full.uv002 exclam.full.uv002 by questionexclamation;
-sub question.full.uv002 question.full.uv002 by doublequestion;
-";
-tag = dlig;
-},
-{
-code = "feature vert;
-feature fwid;
-feature hwid;
-feature pwid;
-feature ss01;
-feature ss02;
-";
-tag = aalt;
-},
-{
-code = "# Disabled in Zhongdou Sans to preserve full-width advances.";
-tag = halt;
-},
-{
-code = "# Disabled in Zhongdou Sans to preserve full-width advances.";
-tag = vhal;
 }
 );
 fontMaster = (
@@ -927,18 +361,22 @@ iconName = Light;
 id = m002;
 metricValues = (
 {
+over = 0;
 pos = 965;
 },
 {
 over = -30;
 },
 {
+over = 0;
 pos = -285;
 },
 {
+over = 0;
 pos = 733;
 },
 {
+over = 0;
 pos = 543;
 }
 );
@@ -998,18 +436,22 @@ value = 500;
 id = m01;
 metricValues = (
 {
+over = 0;
 pos = 965;
 },
 {
 over = -30;
 },
 {
+over = 0;
 pos = -285;
 },
 {
+over = 0;
 pos = 733;
 },
 {
+over = 0;
 pos = 543;
 }
 );
@@ -1070,18 +512,22 @@ iconName = Bold;
 id = m003;
 metricValues = (
 {
+over = 0;
 pos = 965;
 },
 {
 over = -30;
 },
 {
+over = 0;
 pos = -285;
 },
 {
+over = 0;
 pos = 733;
 },
 {
+over = 0;
 pos = 543;
 }
 );
@@ -1447,10 +893,6 @@ width = 1000;
 },
 {
 glyphname = "space-han";
-kernBottom = "space-han";
-kernLeft = "space-han";
-kernRight = "space-han";
-kernTop = "space-han";
 lastChange = "2022-11-17 03:01:25 +0000";
 layers = (
 {
@@ -1470,8 +912,6 @@ unicode = 12288;
 },
 {
 glyphname = "comma-han";
-kernLeft = PeriodComma;
-kernRight = PeriodComma;
 lastChange = "2022-11-17 03:28:00 +0000";
 layers = (
 {
@@ -1537,8 +977,6 @@ unicode = 12289;
 {
 color = 0;
 glyphname = "comma-han.uv001";
-kernLeft = PeriodComma;
-kernRight = PeriodComma;
 lastChange = "2022-11-17 01:45:45 +0000";
 layers = (
 {
@@ -1576,10 +1014,6 @@ width = 1000;
 {
 color = 1;
 glyphname = "comma-han.uv002";
-kernBottom = CenteredVert;
-kernLeft = Centered;
-kernRight = Centered;
-kernTop = CenteredVert;
 lastChange = "2022-11-17 02:44:26 +0000";
 layers = (
 {
@@ -1620,8 +1054,6 @@ width = 1000;
 {
 color = 3;
 glyphname = "comma-han.vert";
-kernBottom = PeriodCommaVert;
-kernTop = PeriodCommaVert;
 lastChange = "2022-11-17 02:39:56 +0000";
 layers = (
 {
@@ -1659,8 +1091,6 @@ unicode = 65041;
 },
 {
 glyphname = "period-han";
-kernLeft = PeriodComma;
-kernRight = PeriodComma;
 lastChange = "2022-11-17 01:45:45 +0000";
 layers = (
 {
@@ -1789,8 +1219,6 @@ unicode = 12290;
 {
 color = 0;
 glyphname = "period-han.uv001";
-kernLeft = PeriodComma;
-kernRight = PeriodComma;
 lastChange = "2022-11-17 01:45:45 +0000";
 layers = (
 {
@@ -1828,10 +1256,6 @@ width = 1000;
 {
 color = 1;
 glyphname = "period-han.uv002";
-kernBottom = CenteredVert;
-kernLeft = Centered;
-kernRight = Centered;
-kernTop = CenteredVert;
 lastChange = "2022-11-17 02:44:30 +0000";
 layers = (
 {
@@ -1872,8 +1296,6 @@ width = 1000;
 {
 color = 3;
 glyphname = "period-han.vert";
-kernBottom = PeriodCommaVert;
-kernTop = PeriodCommaVert;
 lastChange = "2022-11-17 02:40:29 +0000";
 layers = (
 {
@@ -1911,10 +1333,6 @@ unicode = 65042;
 },
 {
 glyphname = "dot-kata";
-kernBottom = CenteredVert;
-kernLeft = Centered;
-kernRight = Centered;
-kernTop = CenteredVert;
 lastChange = "2022-11-17 03:04:23 +0000";
 layers = (
 {
@@ -3068,8 +2486,6 @@ unicode = 65340;
 },
 {
 glyphname = colon.full;
-kernLeft = PeriodComma;
-kernRight = PeriodComma;
 lastChange = "2022-11-17 01:45:45 +0000";
 layers = (
 {
@@ -3117,8 +2533,6 @@ unicode = 65306;
 {
 color = 3;
 glyphname = colon.vert;
-kernBottom = ColonExclamQuestionVert;
-kernTop = ColonExclamQuestionVert;
 lastChange = "2022-11-17 02:47:11 +0000";
 layers = (
 {
@@ -3168,8 +2582,6 @@ unicode = 65043;
 },
 {
 glyphname = comma.full;
-kernLeft = PeriodComma;
-kernRight = PeriodComma;
 lastChange = "2022-11-17 01:57:42 +0000";
 layers = (
 {
@@ -3299,8 +2711,6 @@ unicode = 65049;
 },
 {
 glyphname = exclam.full;
-kernLeft = PeriodComma;
-kernRight = PeriodComma;
 lastChange = "2022-11-17 01:45:45 +0000";
 layers = (
 {
@@ -3363,8 +2773,6 @@ unicode = 65281;
 {
 color = 3;
 glyphname = exclam.vert;
-kernBottom = ColonExclamQuestionVert;
-kernTop = ColonExclamQuestionVert;
 lastChange = "2022-11-17 02:47:14 +0000";
 layers = (
 {
@@ -3403,10 +2811,6 @@ unicode = 65045;
 {
 color = 1;
 glyphname = periodcentered.full;
-kernBottom = CenteredVert;
-kernLeft = Centered;
-kernRight = Centered;
-kernTop = CenteredVert;
 lastChange = "2022-11-17 02:44:38 +0000";
 layers = (
 {
@@ -3847,8 +3251,6 @@ unicode = 65285;
 },
 {
 glyphname = period.full;
-kernLeft = PeriodComma;
-kernRight = PeriodComma;
 lastChange = "2022-11-17 01:45:45 +0000";
 layers = (
 {
@@ -3886,8 +3288,6 @@ unicode = 65294;
 },
 {
 glyphname = question.full;
-kernLeft = PeriodComma;
-kernRight = PeriodComma;
 lastChange = "2022-11-17 01:45:45 +0000";
 layers = (
 {
@@ -4025,8 +3425,6 @@ unicode = 65311;
 {
 color = 3;
 glyphname = question.vert;
-kernBottom = ColonExclamQuestionVert;
-kernTop = ColonExclamQuestionVert;
 lastChange = "2022-11-17 03:02:31 +0000";
 layers = (
 {
@@ -4195,8 +3593,6 @@ unicode = 65287;
 },
 {
 glyphname = semicolon.full;
-kernLeft = PeriodComma;
-kernRight = PeriodComma;
 lastChange = "2022-11-17 01:45:45 +0000";
 layers = (
 {
@@ -4244,8 +3640,6 @@ unicode = 65307;
 {
 color = 3;
 glyphname = semicolon.vert;
-kernBottom = ColonExclamQuestionVert;
-kernTop = ColonExclamQuestionVert;
 lastChange = "2022-11-17 02:47:22 +0000";
 layers = (
 {
@@ -4440,8 +3834,6 @@ width = 1000;
 {
 color = 3;
 glyphname = comma.full.vert;
-kernBottom = PeriodCommaVert;
-kernTop = PeriodCommaVert;
 lastChange = "2022-11-17 02:41:15 +0000";
 layers = (
 {
@@ -4476,224 +3868,6 @@ width = 1000;
 }
 );
 unicode = 65040;
-},
-{
-color = 4;
-glyphname = comma.full.ss02;
-kernLeft = PeriodComma;
-kernRight = PeriodComma;
-lastChange = "2023-04-08 08:02:54 +0000";
-layers = (
-{
-layerId = m002;
-shapes = (
-{
-closed = 1;
-nodes = (
-(261,-40,o),
-(290,5,o),
-(290,77,cs),
-(290,114,o),
-(278,130,o),
-(250,130,cs),
-(222,130,o),
-(213,114,o),
-(213,88,cs),
-(213,62,o),
-(221,46,o),
-(255,46,c),
-(255,10,o),
-(231,-26,o),
-(202,-33,c),
-(202,-60,l)
-);
-}
-);
-width = 1000;
-},
-{
-background = {
-shapes = (
-{
-closed = 1;
-nodes = (
-(270,-123,o),
-(324,-24,o),
-(324,89,cs),
-(324,143,o),
-(288,163,o),
-(251,163,cs),
-(214,163,o),
-(184,143,o),
-(184,89,cs),
-(184,36,o),
-(214,14,o),
-(251,14,cs),
-(253,14,o),
-(256,14,o),
-(259,14,c),
-(248,-35,o),
-(220,-72,o),
-(173,-88,c),
-(173,-140,l)
-);
-}
-);
-};
-layerId = m01;
-shapes = (
-{
-closed = 1;
-nodes = (
-(269,-120,o),
-(324,-40,o),
-(324,78,cs),
-(324,142,o),
-(287,163,o),
-(250,163,cs),
-(213,163,o),
-(182,142,o),
-(182,89,cs),
-(182,46,o),
-(209,21,o),
-(255,21,c),
-(255,-24,o),
-(218,-75,o),
-(175,-88,c),
-(175,-137,l)
-);
-}
-);
-width = 1000;
-},
-{
-layerId = m003;
-shapes = (
-{
-closed = 1;
-nodes = (
-(279,-135,o),
-(370,-39,o),
-(370,109,cs),
-(370,211,o),
-(310,238,o),
-(250,238,cs),
-(190,238,o),
-(138,211,o),
-(138,135,cs),
-(138,75,o),
-(174,39,o),
-(236,38,c),
-(236,-10,o),
-(185,-56,o),
-(125,-62,c),
-(125,-146,l)
-);
-}
-);
-width = 1000;
-}
-);
-},
-{
-color = 4;
-glyphname = semicolon.full.ss02;
-kernLeft = PeriodComma;
-kernRight = PeriodComma;
-lastChange = "2023-04-08 08:02:54 +0000";
-layers = (
-{
-layerId = m002;
-shapes = (
-{
-pos = (0,120);
-ref = periodcentered;
-},
-{
-ref = comma.full.ss02;
-}
-);
-width = 1000;
-},
-{
-layerId = m01;
-shapes = (
-{
-pos = (0,120);
-ref = periodcentered;
-},
-{
-ref = comma.full.ss02;
-}
-);
-width = 1000;
-},
-{
-layerId = m003;
-shapes = (
-{
-pos = (0,120);
-ref = periodcentered;
-},
-{
-ref = comma.full.ss02;
-}
-);
-width = 1000;
-}
-);
-},
-{
-color = 4;
-glyphname = semicolon.vert.ss02;
-kernBottom = ColonExclamQuestionVert;
-kernTop = ColonExclamQuestionVert;
-lastChange = "2023-04-08 08:02:54 +0000";
-layers = (
-{
-color = 3;
-layerId = m002;
-shapes = (
-{
-pos = (550,378);
-ref = periodcentered;
-},
-{
-pos = (550,378);
-ref = comma.full.ss02;
-}
-);
-width = 1000;
-},
-{
-layerId = m01;
-shapes = (
-{
-pos = (550,346);
-ref = periodcentered;
-},
-{
-pos = (550,327);
-ref = comma.full.ss02;
-}
-);
-width = 1000;
-},
-{
-layerId = m003;
-shapes = (
-{
-pos = (550,317);
-ref = periodcentered;
-},
-{
-pos = (550,242);
-ref = comma.full.ss02;
-}
-);
-width = 1000;
-}
-);
 },
 {
 color = 3;
@@ -4738,8 +3912,6 @@ width = 1000;
 {
 color = 0;
 glyphname = colon.full.uv001;
-kernLeft = PeriodComma;
-kernRight = PeriodComma;
 lastChange = "2022-11-17 01:45:45 +0000";
 layers = (
 {
@@ -4774,8 +3946,6 @@ width = 1000;
 {
 color = 0;
 glyphname = comma.full.uv001;
-kernLeft = PeriodComma;
-kernRight = PeriodComma;
 lastChange = "2022-11-17 01:45:45 +0000";
 layers = (
 {
@@ -4810,8 +3980,6 @@ width = 1000;
 {
 color = 0;
 glyphname = exclam.full.uv001;
-kernLeft = PeriodComma;
-kernRight = PeriodComma;
 lastChange = "2022-11-17 01:45:45 +0000";
 layers = (
 {
@@ -4846,8 +4014,6 @@ width = 1000;
 {
 color = 0;
 glyphname = period.full.uv001;
-kernLeft = PeriodComma;
-kernRight = PeriodComma;
 lastChange = "2022-11-17 01:45:45 +0000";
 layers = (
 {
@@ -4882,8 +4048,6 @@ width = 1000;
 {
 color = 0;
 glyphname = question.full.uv001;
-kernLeft = PeriodComma;
-kernRight = PeriodComma;
 lastChange = "2022-11-17 01:45:45 +0000";
 layers = (
 {
@@ -4918,8 +4082,6 @@ width = 1000;
 {
 color = 0;
 glyphname = semicolon.full.uv001;
-kernLeft = PeriodComma;
-kernRight = PeriodComma;
 lastChange = "2022-11-17 01:45:45 +0000";
 layers = (
 {
@@ -4954,10 +4116,6 @@ width = 1000;
 {
 color = 1;
 glyphname = colon.full.uv002;
-kernBottom = ColonExclamQuestionVert;
-kernLeft = Centered;
-kernRight = Centered;
-kernTop = ColonExclamQuestionVert;
 lastChange = "2022-11-17 02:46:52 +0000";
 layers = (
 {
@@ -4995,10 +4153,6 @@ width = 1000;
 {
 color = 1;
 glyphname = comma.full.uv002;
-kernBottom = CenteredVert;
-kernLeft = Centered;
-kernRight = Centered;
-kernTop = CenteredVert;
 lastChange = "2022-11-17 02:44:42 +0000";
 layers = (
 {
@@ -5036,10 +4190,6 @@ width = 1000;
 {
 color = 1;
 glyphname = exclam.full.uv002;
-kernBottom = ColonExclamQuestionVert;
-kernLeft = Centered;
-kernRight = Centered;
-kernTop = ColonExclamQuestionVert;
 lastChange = "2022-11-17 02:46:56 +0000";
 layers = (
 {
@@ -5077,10 +4227,6 @@ width = 1000;
 {
 color = 1;
 glyphname = period.full.uv002;
-kernBottom = CenteredVert;
-kernLeft = Centered;
-kernRight = Centered;
-kernTop = CenteredVert;
 lastChange = "2022-11-17 02:44:46 +0000";
 layers = (
 {
@@ -5118,10 +4264,6 @@ width = 1000;
 {
 color = 1;
 glyphname = question.full.uv002;
-kernBottom = ColonExclamQuestionVert;
-kernLeft = Centered;
-kernRight = Centered;
-kernTop = ColonExclamQuestionVert;
 lastChange = "2022-11-17 02:47:00 +0000";
 layers = (
 {
@@ -5258,10 +4400,6 @@ width = 1000;
 {
 color = 1;
 glyphname = semicolon.full.uv002;
-kernBottom = ColonExclamQuestionVert;
-kernLeft = Centered;
-kernRight = Centered;
-kernTop = ColonExclamQuestionVert;
 lastChange = "2022-11-17 02:47:03 +0000";
 layers = (
 {
@@ -5299,8 +4437,6 @@ width = 1000;
 {
 color = 3;
 glyphname = period.full.vert;
-kernBottom = PeriodCommaVert;
-kernTop = PeriodCommaVert;
 lastChange = "2022-11-17 02:39:38 +0000";
 layers = (
 {
@@ -5338,8 +4474,6 @@ width = 1000;
 {
 color = 3;
 glyphname = colon.full.vert.loclJAN;
-kernBottom = CenteredVert;
-kernTop = CenteredVert;
 lastChange = "2022-11-17 02:44:54 +0000";
 layers = (
 {
@@ -5380,130 +4514,6 @@ ref = period.full;
 {
 pos = (27,297);
 ref = period.full;
-}
-);
-width = 1000;
-}
-);
-},
-{
-color = 4;
-glyphname = comma.full.vert.ss02;
-kernBottom = PeriodCommaVert;
-kernTop = PeriodCommaVert;
-lastChange = "2023-04-08 08:02:54 +0000";
-layers = (
-{
-color = 3;
-layerId = m002;
-shapes = (
-{
-pos = (550,670);
-ref = comma.full.ss02;
-}
-);
-width = 1000;
-},
-{
-layerId = m01;
-shapes = (
-{
-pos = (550,637);
-ref = comma.full.ss02;
-}
-);
-width = 1000;
-},
-{
-layerId = m003;
-shapes = (
-{
-pos = (550,562);
-ref = comma.full.ss02;
-}
-);
-width = 1000;
-}
-);
-},
-{
-color = 4;
-glyphname = comma.full.uv002.ss02;
-kernBottom = CenteredVert;
-kernLeft = Centered;
-kernRight = Centered;
-kernTop = CenteredVert;
-lastChange = "2023-04-08 08:02:54 +0000";
-layers = (
-{
-color = 1;
-layerId = m002;
-shapes = (
-{
-pos = (250,365);
-ref = comma.full.ss02;
-}
-);
-width = 1000;
-},
-{
-layerId = m01;
-shapes = (
-{
-pos = (250,387);
-ref = comma.full.ss02;
-}
-);
-width = 1000;
-},
-{
-layerId = m003;
-shapes = (
-{
-pos = (250,354);
-ref = comma.full.ss02;
-}
-);
-width = 1000;
-}
-);
-},
-{
-color = 4;
-glyphname = semicolon.full.uv002.ss02;
-kernBottom = ColonExclamQuestionVert;
-kernLeft = Centered;
-kernRight = Centered;
-kernTop = ColonExclamQuestionVert;
-lastChange = "2023-04-08 08:02:54 +0000";
-layers = (
-{
-color = 1;
-layerId = m002;
-shapes = (
-{
-pos = (250,137);
-ref = semicolon.full.ss02;
-}
-);
-width = 1000;
-},
-{
-layerId = m01;
-shapes = (
-{
-pos = (250,123);
-ref = semicolon.full.ss02;
-}
-);
-width = 1000;
-},
-{
-layerId = m003;
-shapes = (
-{
-pos = (250,108);
-ref = semicolon.full.ss02;
 }
 );
 width = 1000;
@@ -6035,8 +5045,6 @@ width = 1000;
 },
 {
 glyphname = whiteparenleft.full;
-kernLeft = OpeningBracket;
-kernRight = OpeningBracket;
 lastChange = "2022-11-17 01:45:30 +0000";
 layers = (
 {
@@ -6176,8 +5184,6 @@ unicode = 65375;
 },
 {
 glyphname = whiteparenright.full;
-kernLeft = ClosingBracket;
-kernRight = ClosingBracket;
 lastChange = "2022-11-17 01:45:54 +0000";
 layers = (
 {
@@ -6218,8 +5224,6 @@ unicode = 65376;
 },
 {
 glyphname = anglebracketleft;
-kernLeft = OpeningBracket;
-kernRight = OpeningBracket;
 lastChange = "2022-11-17 01:45:30 +0000";
 layers = (
 {
@@ -6278,8 +5282,6 @@ unicode = 12296;
 },
 {
 glyphname = anglebracketright;
-kernLeft = ClosingBracket;
-kernRight = ClosingBracket;
 lastChange = "2022-11-17 01:45:54 +0000";
 layers = (
 {
@@ -6320,8 +5322,6 @@ unicode = 12297;
 },
 {
 glyphname = blacklenticularbracketleft;
-kernLeft = OpeningBracket;
-kernRight = OpeningBracket;
 lastChange = "2022-11-17 01:59:00 +0000";
 layers = (
 {
@@ -6404,8 +5404,6 @@ unicode = 12304;
 },
 {
 glyphname = blacklenticularbracketright;
-kernLeft = ClosingBracket;
-kernRight = ClosingBracket;
 lastChange = "2022-11-17 01:56:54 +0000";
 layers = (
 {
@@ -6446,8 +5444,6 @@ unicode = 12305;
 },
 {
 glyphname = braceleft.full;
-kernLeft = OpeningBracket;
-kernRight = OpeningBracket;
 lastChange = "2022-11-17 01:45:30 +0000";
 layers = (
 {
@@ -6584,8 +5580,6 @@ unicode = 65371;
 },
 {
 glyphname = braceright.full;
-kernLeft = ClosingBracket;
-kernRight = ClosingBracket;
 lastChange = "2022-11-17 01:45:54 +0000";
 layers = (
 {
@@ -6626,8 +5620,6 @@ unicode = 65373;
 },
 {
 glyphname = cornerbracketleft;
-kernLeft = OpeningBracket;
-kernRight = OpeningBracket;
 lastChange = "2022-11-17 01:45:30 +0000";
 layers = (
 {
@@ -6686,8 +5678,6 @@ unicode = 12300;
 },
 {
 glyphname = cornerbracketright;
-kernLeft = ClosingBracket;
-kernRight = ClosingBracket;
 lastChange = "2022-11-17 01:45:54 +0000";
 layers = (
 {
@@ -6728,8 +5718,6 @@ unicode = 12301;
 },
 {
 glyphname = dblanglebracketleft;
-kernLeft = OpeningBracket;
-kernRight = OpeningBracket;
 lastChange = "2022-11-17 01:45:30 +0000";
 layers = (
 {
@@ -6821,8 +5809,6 @@ unicode = 12298;
 },
 {
 glyphname = dblanglebracketright;
-kernLeft = ClosingBracket;
-kernRight = ClosingBracket;
 lastChange = "2022-11-17 01:45:54 +0000";
 layers = (
 {
@@ -6863,8 +5849,6 @@ unicode = 12299;
 },
 {
 glyphname = tortoiseshellbracketleft;
-kernLeft = OpeningBracket;
-kernRight = OpeningBracket;
 lastChange = "2022-11-17 01:45:30 +0000";
 layers = (
 {
@@ -6929,8 +5913,6 @@ unicode = 12308;
 },
 {
 glyphname = tortoiseshellbracketright;
-kernLeft = ClosingBracket;
-kernRight = ClosingBracket;
 lastChange = "2022-11-17 01:45:54 +0000";
 layers = (
 {
@@ -6971,8 +5953,6 @@ unicode = 12309;
 },
 {
 glyphname = whitecornerbracketleft;
-kernLeft = OpeningBracket;
-kernRight = OpeningBracket;
 lastChange = "2022-11-17 01:45:30 +0000";
 layers = (
 {
@@ -7043,8 +6023,6 @@ unicode = 12302;
 },
 {
 glyphname = whitecornerbracketright;
-kernLeft = ClosingBracket;
-kernRight = ClosingBracket;
 lastChange = "2022-11-17 01:45:54 +0000";
 layers = (
 {
@@ -7085,8 +6063,6 @@ unicode = 12303;
 },
 {
 glyphname = whitelenticularbracketleft;
-kernLeft = OpeningBracket;
-kernRight = OpeningBracket;
 lastChange = "2022-11-17 01:45:30 +0000";
 layers = (
 {
@@ -7172,8 +6148,6 @@ unicode = 12310;
 },
 {
 glyphname = whitelenticularbracketright;
-kernLeft = ClosingBracket;
-kernRight = ClosingBracket;
 lastChange = "2022-11-17 01:45:54 +0000";
 layers = (
 {
@@ -7214,8 +6188,6 @@ unicode = 12311;
 },
 {
 glyphname = whitesquarebracketleft;
-kernLeft = OpeningBracket;
-kernRight = OpeningBracket;
 lastChange = "2022-11-17 01:45:30 +0000";
 layers = (
 {
@@ -7307,8 +6279,6 @@ unicode = 12314;
 },
 {
 glyphname = whitesquarebracketright;
-kernLeft = ClosingBracket;
-kernRight = ClosingBracket;
 lastChange = "2022-11-17 01:45:54 +0000";
 layers = (
 {
@@ -7349,8 +6319,6 @@ unicode = 12315;
 },
 {
 glyphname = whitetortoiseshellbracketleft;
-kernLeft = OpeningBracket;
-kernRight = OpeningBracket;
 lastChange = "2022-11-17 01:45:30 +0000";
 layers = (
 {
@@ -7427,8 +6395,6 @@ unicode = 12312;
 },
 {
 glyphname = whitetortoiseshellbracketright;
-kernLeft = ClosingBracket;
-kernRight = ClosingBracket;
 lastChange = "2022-11-17 01:45:54 +0000";
 layers = (
 {
@@ -7470,8 +6436,6 @@ unicode = 12313;
 {
 color = 3;
 glyphname = anglebracketleft.vert;
-kernBottom = OpeningBracketVert;
-kernTop = OpeningBracketVert;
 lastChange = "2022-11-17 03:05:13 +0000";
 layers = (
 {
@@ -7513,8 +6477,6 @@ unicode = 65087;
 {
 color = 3;
 glyphname = anglebracketright.vert;
-kernBottom = ClosingBracketVert;
-kernTop = ClosingBracketVert;
 lastChange = "2022-11-17 02:54:38 +0000";
 layers = (
 {
@@ -7556,8 +6518,6 @@ unicode = 65088;
 {
 color = 3;
 glyphname = blacklenticularbracketleft.vert;
-kernBottom = OpeningBracketVert;
-kernTop = OpeningBracketVert;
 lastChange = "2022-11-17 02:29:32 +0000";
 layers = (
 {
@@ -7599,8 +6559,6 @@ unicode = 65083;
 {
 color = 3;
 glyphname = blacklenticularbracketright.vert;
-kernBottom = ClosingBracketVert;
-kernTop = ClosingBracketVert;
 lastChange = "2022-11-17 02:37:20 +0000";
 layers = (
 {
@@ -7641,8 +6599,6 @@ unicode = 65084;
 },
 {
 glyphname = bracketleft.full;
-kernLeft = OpeningBracket;
-kernRight = OpeningBracket;
 lastChange = "2022-11-17 01:45:30 +0000";
 layers = (
 {
@@ -7707,8 +6663,6 @@ unicode = 65339;
 },
 {
 glyphname = bracketright.full;
-kernLeft = ClosingBracket;
-kernRight = ClosingBracket;
 lastChange = "2022-11-17 01:45:54 +0000";
 layers = (
 {
@@ -7750,8 +6704,6 @@ unicode = 65341;
 {
 color = 3;
 glyphname = cornerbracketleft.vert;
-kernBottom = OpeningBracketVert;
-kernTop = OpeningBracketVert;
 lastChange = "2022-11-17 02:31:33 +0000";
 layers = (
 {
@@ -7793,8 +6745,6 @@ unicode = 65089;
 {
 color = 3;
 glyphname = cornerbracketright.vert;
-kernBottom = ClosingBracketVert;
-kernTop = ClosingBracketVert;
 lastChange = "2022-11-17 02:35:40 +0000";
 layers = (
 {
@@ -7836,8 +6786,6 @@ unicode = 65090;
 {
 color = 3;
 glyphname = dblanglebracketleft.vert;
-kernBottom = OpeningBracketVert;
-kernTop = OpeningBracketVert;
 lastChange = "2022-11-17 02:48:55 +0000";
 layers = (
 {
@@ -7879,8 +6827,6 @@ unicode = 65085;
 {
 color = 3;
 glyphname = dblanglebracketright.vert;
-kernBottom = ClosingBracketVert;
-kernTop = ClosingBracketVert;
 lastChange = "2022-11-17 02:35:46 +0000";
 layers = (
 {
@@ -7921,8 +6867,6 @@ unicode = 65086;
 },
 {
 glyphname = parenleft.full;
-kernLeft = OpeningBracket;
-kernRight = OpeningBracket;
 lastChange = "2022-11-17 01:45:30 +0000";
 layers = (
 {
@@ -8005,8 +6949,6 @@ unicode = 65288;
 },
 {
 glyphname = parenright.full;
-kernLeft = ClosingBracket;
-kernRight = ClosingBracket;
 lastChange = "2022-11-17 01:45:54 +0000";
 layers = (
 {
@@ -8048,8 +6990,6 @@ unicode = 65289;
 {
 color = 3;
 glyphname = tortoiseshellbracketleft.vert;
-kernBottom = OpeningBracketVert;
-kernTop = OpeningBracketVert;
 lastChange = "2022-11-17 02:29:55 +0000";
 layers = (
 {
@@ -8091,8 +7031,6 @@ unicode = 65081;
 {
 color = 3;
 glyphname = tortoiseshellbracketright.vert;
-kernBottom = ClosingBracketVert;
-kernTop = ClosingBracketVert;
 lastChange = "2022-11-17 02:35:50 +0000";
 layers = (
 {
@@ -8134,8 +7072,6 @@ unicode = 65082;
 {
 color = 3;
 glyphname = whiteparenleft.full.vert;
-kernBottom = OpeningBracketVert;
-kernTop = OpeningBracketVert;
 lastChange = "2022-11-17 02:30:04 +0000";
 layers = (
 {
@@ -8176,8 +7112,6 @@ width = 1000;
 {
 color = 3;
 glyphname = whiteparenright.full.vert;
-kernBottom = ClosingBracketVert;
-kernTop = ClosingBracketVert;
 lastChange = "2022-11-17 02:35:55 +0000";
 layers = (
 {
@@ -8218,8 +7152,6 @@ width = 1000;
 {
 color = 3;
 glyphname = whitesquarebracketleft.vert;
-kernBottom = OpeningBracketVert;
-kernTop = OpeningBracketVert;
 lastChange = "2022-11-17 02:30:07 +0000";
 layers = (
 {
@@ -8260,8 +7192,6 @@ width = 1000;
 {
 color = 3;
 glyphname = whitesquarebracketright.vert;
-kernBottom = ClosingBracketVert;
-kernTop = ClosingBracketVert;
 lastChange = "2022-11-17 02:36:00 +0000";
 layers = (
 {
@@ -8302,8 +7232,6 @@ width = 1000;
 {
 color = 3;
 glyphname = whitetortoiseshellbracketleft.vert;
-kernBottom = OpeningBracketVert;
-kernTop = OpeningBracketVert;
 lastChange = "2022-11-17 02:30:13 +0000";
 layers = (
 {
@@ -8344,8 +7272,6 @@ width = 1000;
 {
 color = 3;
 glyphname = whitetortoiseshellbracketright.vert;
-kernBottom = ClosingBracketVert;
-kernTop = ClosingBracketVert;
 lastChange = "2022-11-17 02:36:05 +0000";
 layers = (
 {
@@ -8386,8 +7312,6 @@ width = 1000;
 {
 color = 3;
 glyphname = whitecornerbracketleft.vert;
-kernBottom = OpeningBracketVert;
-kernTop = OpeningBracketVert;
 lastChange = "2022-11-17 02:33:41 +0000";
 layers = (
 {
@@ -8429,8 +7353,6 @@ unicode = 65091;
 {
 color = 3;
 glyphname = whitecornerbracketright.vert;
-kernBottom = ClosingBracketVert;
-kernTop = ClosingBracketVert;
 lastChange = "2022-11-17 02:36:10 +0000";
 layers = (
 {
@@ -8472,8 +7394,6 @@ unicode = 65092;
 {
 color = 3;
 glyphname = whitelenticularbracketleft.vert;
-kernBottom = OpeningBracketVert;
-kernTop = OpeningBracketVert;
 lastChange = "2022-11-17 02:37:36 +0000";
 layers = (
 {
@@ -8515,8 +7435,6 @@ unicode = 65047;
 {
 color = 3;
 glyphname = whitelenticularbracketright.vert;
-kernBottom = ClosingBracketVert;
-kernTop = ClosingBracketVert;
 lastChange = "2022-11-17 02:36:13 +0000";
 layers = (
 {
@@ -8558,8 +7476,6 @@ unicode = 65048;
 {
 color = 3;
 glyphname = braceleft.full.vert;
-kernBottom = OpeningBracketVert;
-kernTop = OpeningBracketVert;
 lastChange = "2022-11-17 02:30:47 +0000";
 layers = (
 {
@@ -8601,8 +7517,6 @@ unicode = 65079;
 {
 color = 3;
 glyphname = braceright.full.vert;
-kernBottom = ClosingBracketVert;
-kernTop = ClosingBracketVert;
 lastChange = "2022-11-17 02:36:17 +0000";
 layers = (
 {
@@ -8644,8 +7558,6 @@ unicode = 65080;
 {
 color = 3;
 glyphname = bracketleft.full.vert;
-kernBottom = OpeningBracketVert;
-kernTop = OpeningBracketVert;
 lastChange = "2022-11-17 02:30:52 +0000";
 layers = (
 {
@@ -8687,8 +7599,6 @@ unicode = 65095;
 {
 color = 3;
 glyphname = bracketright.full.vert;
-kernBottom = ClosingBracketVert;
-kernTop = ClosingBracketVert;
 lastChange = "2022-11-17 02:36:22 +0000";
 layers = (
 {
@@ -8730,8 +7640,6 @@ unicode = 65096;
 {
 color = 3;
 glyphname = parenleft.full.vert;
-kernBottom = OpeningBracketVert;
-kernTop = OpeningBracketVert;
 lastChange = "2022-11-17 02:53:00 +0000";
 layers = (
 {
@@ -8773,8 +7681,6 @@ unicode = 65077;
 {
 color = 3;
 glyphname = parenright.full.vert;
-kernBottom = ClosingBracketVert;
-kernTop = ClosingBracketVert;
 lastChange = "2022-11-17 02:36:25 +0000";
 layers = (
 {
@@ -8815,8 +7721,6 @@ unicode = 65078;
 },
 {
 glyphname = quotedblleft;
-kernLeft = OpeningBracket;
-kernRight = OpeningBracket;
 lastChange = "2022-11-17 01:45:30 +0000";
 layers = (
 {
@@ -8865,8 +7769,6 @@ width = 1000;
 },
 {
 glyphname = quotedblright;
-kernLeft = ClosingBracket;
-kernRight = ClosingBracket;
 lastChange = "2022-11-17 01:45:54 +0000";
 layers = (
 {
@@ -8906,8 +7808,6 @@ width = 1000;
 },
 {
 glyphname = quoteleft;
-kernLeft = OpeningBracket;
-kernRight = OpeningBracket;
 lastChange = "2022-11-17 01:45:30 +0000";
 layers = (
 {
@@ -8974,8 +7874,6 @@ width = 1000;
 },
 {
 glyphname = quoteright;
-kernLeft = ClosingBracket;
-kernRight = ClosingBracket;
 lastChange = "2022-11-17 01:45:54 +0000";
 layers = (
 {
@@ -9015,8 +7913,6 @@ width = 1000;
 },
 {
 glyphname = lowquotedoubleprime;
-kernLeft = ClosingBracket;
-kernRight = ClosingBracket;
 lastChange = "2022-11-17 01:45:54 +0000";
 layers = (
 {
@@ -9096,8 +7992,6 @@ unicode = 12319;
 },
 {
 glyphname = quotedoubleprime;
-kernLeft = ClosingBracket;
-kernRight = ClosingBracket;
 lastChange = "2022-11-17 01:45:54 +0000";
 layers = (
 {
@@ -9177,8 +8071,6 @@ unicode = 12318;
 },
 {
 glyphname = quotedoubleprimeReversed;
-kernLeft = OpeningBracket;
-kernRight = OpeningBracket;
 lastChange = "2022-11-17 01:45:30 +0000";
 layers = (
 {
@@ -9551,232 +8443,8 @@ width = 251;
 );
 },
 {
-color = 4;
-glyphname = quotedblleft.ss02;
-kernLeft = OpeningBracket;
-kernRight = OpeningBracket;
-lastChange = "2023-04-08 08:02:54 +0000";
-layers = (
-{
-layerId = m002;
-shapes = (
-{
-pos = (-148,0);
-ref = quoteleft.ss02;
-},
-{
-ref = quoteleft.ss02;
-}
-);
-width = 1000;
-},
-{
-layerId = m01;
-shapes = (
-{
-pos = (-185,0);
-ref = quoteleft.ss02;
-},
-{
-ref = quoteleft.ss02;
-}
-);
-width = 1000;
-},
-{
-layerId = m003;
-shapes = (
-{
-pos = (-249,0);
-ref = quoteleft.ss02;
-},
-{
-ref = quoteleft.ss02;
-}
-);
-width = 1000;
-}
-);
-},
-{
-color = 4;
-glyphname = quotedblright.ss02;
-kernLeft = ClosingBracket;
-kernRight = ClosingBracket;
-lastChange = "2023-04-08 08:02:54 +0000";
-layers = (
-{
-layerId = m002;
-shapes = (
-{
-angle = 180;
-pos = (1000,1470);
-ref = quotedblleft.ss02;
-}
-);
-width = 1000;
-},
-{
-layerId = m01;
-shapes = (
-{
-angle = 180;
-pos = (1000,1404);
-ref = quotedblleft.ss02;
-}
-);
-width = 1000;
-},
-{
-layerId = m003;
-shapes = (
-{
-angle = 180;
-pos = (1000,1337);
-ref = quotedblleft.ss02;
-}
-);
-width = 1000;
-}
-);
-},
-{
-color = 4;
-glyphname = quoteleft.ss02;
-kernLeft = OpeningBracket;
-kernRight = OpeningBracket;
-lastChange = "2023-04-08 08:02:54 +0000";
-layers = (
-{
-layerId = m002;
-shapes = (
-{
-closed = 1;
-nodes = (
-(901,810,o),
-(872,765,o),
-(872,693,cs),
-(872,656,o),
-(884,640,o),
-(912,640,cs),
-(940,640,o),
-(949,656,o),
-(949,682,cs),
-(949,708,o),
-(941,724,o),
-(907,724,c),
-(907,760,o),
-(931,796,o),
-(960,803,c),
-(960,830,l)
-);
-}
-);
-width = 1000;
-},
-{
-layerId = m01;
-shapes = (
-{
-closed = 1;
-nodes = (
-(872,820,o),
-(817,757,o),
-(817,659,cs),
-(817,595,o),
-(854,574,o),
-(891,574,cs),
-(928,574,o),
-(959,595,o),
-(959,648,cs),
-(959,691,o),
-(932,716,o),
-(886,716,c),
-(886,749,o),
-(923,779,o),
-(966,781,c),
-(966,830,l)
-);
-}
-);
-width = 1000;
-},
-{
-layerId = m003;
-shapes = (
-{
-closed = 1;
-nodes = (
-(834,827,o),
-(760,754,o),
-(760,622,cs),
-(760,530,o),
-(814,506,o),
-(868,506,cs),
-(922,506,o),
-(968,530,o),
-(968,598,cs),
-(968,652,o),
-(936,685,o),
-(880,686,c),
-(880,724,o),
-(923,752,o),
-(980,756,c),
-(980,831,l)
-);
-}
-);
-width = 1000;
-}
-);
-},
-{
-color = 4;
-glyphname = quoteright.ss02;
-kernLeft = ClosingBracket;
-kernRight = ClosingBracket;
-lastChange = "2023-04-08 08:02:54 +0000";
-layers = (
-{
-layerId = m002;
-shapes = (
-{
-angle = 180;
-pos = (1000,1470);
-ref = quoteleft.ss02;
-}
-);
-width = 1000;
-},
-{
-layerId = m01;
-shapes = (
-{
-angle = 180;
-pos = (1000,1404);
-ref = quoteleft.ss02;
-}
-);
-width = 1000;
-},
-{
-layerId = m003;
-shapes = (
-{
-angle = 180;
-pos = (1000,1337);
-ref = quoteleft.ss02;
-}
-);
-width = 1000;
-}
-);
-},
-{
 color = 3;
 glyphname = quoteleft.vert;
-kernBottom = OpeningBracketVert;
-kernTop = OpeningBracketVert;
 lastChange = "2022-11-17 02:31:00 +0000";
 layers = (
 {
@@ -9829,8 +8497,6 @@ width = 1000;
 {
 color = 3;
 glyphname = quoteright.vert;
-kernBottom = ClosingBracketVert;
-kernTop = ClosingBracketVert;
 lastChange = "2022-11-17 02:36:28 +0000";
 layers = (
 {
@@ -9871,8 +8537,6 @@ width = 1000;
 {
 color = 3;
 glyphname = quotedoubleprime.vert;
-kernBottom = ClosingBracketVert;
-kernTop = ClosingBracketVert;
 lastChange = "2022-11-17 02:36:32 +0000";
 layers = (
 {
@@ -9913,8 +8577,6 @@ width = 1000;
 {
 color = 3;
 glyphname = quotedoubleprimeReversed.vert;
-kernBottom = OpeningBracketVert;
-kernTop = OpeningBracketVert;
 lastChange = "2022-11-17 02:31:03 +0000";
 layers = (
 {
@@ -9949,304 +8611,6 @@ ref = quotedoubleprimeReversed;
 }
 );
 width = 1000;
-}
-);
-},
-{
-color = 2;
-glyphname = quotedblleft.ss02.half;
-lastChange = "2023-04-08 08:02:54 +0000";
-layers = (
-{
-color = 4;
-layerId = m002;
-shapes = (
-{
-pos = (-500,0);
-ref = quotedblleft.ss02;
-}
-);
-width = 500;
-},
-{
-layerId = m01;
-shapes = (
-{
-pos = (-500,0);
-ref = quotedblleft.ss02;
-}
-);
-width = 500;
-},
-{
-layerId = m003;
-shapes = (
-{
-pos = (-500,0);
-ref = quotedblleft.ss02;
-}
-);
-width = 500;
-}
-);
-},
-{
-color = 2;
-glyphname = quotedblright.ss02.half;
-lastChange = "2023-04-08 08:02:54 +0000";
-layers = (
-{
-color = 4;
-layerId = m002;
-shapes = (
-{
-ref = quotedblright.ss02;
-}
-);
-width = 500;
-},
-{
-layerId = m01;
-shapes = (
-{
-ref = quotedblright.ss02;
-}
-);
-width = 500;
-},
-{
-layerId = m003;
-shapes = (
-{
-ref = quotedblright.ss02;
-}
-);
-width = 500;
-}
-);
-},
-{
-color = 2;
-glyphname = quoteleft.ss02.half;
-lastChange = "2023-04-08 08:02:54 +0000";
-layers = (
-{
-color = 4;
-layerId = m002;
-shapes = (
-{
-pos = (-500,0);
-ref = quoteleft.ss02;
-}
-);
-width = 500;
-},
-{
-layerId = m01;
-shapes = (
-{
-pos = (-500,0);
-ref = quoteleft.ss02;
-}
-);
-width = 500;
-},
-{
-layerId = m003;
-shapes = (
-{
-pos = (-500,0);
-ref = quoteleft.ss02;
-}
-);
-width = 500;
-}
-);
-},
-{
-color = 2;
-glyphname = quoteright.ss02.half;
-lastChange = "2023-04-08 08:02:54 +0000";
-layers = (
-{
-color = 4;
-layerId = m002;
-shapes = (
-{
-ref = quoteright.ss02;
-}
-);
-width = 500;
-},
-{
-layerId = m01;
-shapes = (
-{
-ref = quoteright.ss02;
-}
-);
-width = 500;
-},
-{
-layerId = m003;
-shapes = (
-{
-ref = quoteright.ss02;
-}
-);
-width = 500;
-}
-);
-},
-{
-color = 4;
-glyphname = quotedblleft.ss02.pwid;
-lastChange = "2023-04-08 08:02:54 +0000";
-layers = (
-{
-color = 5;
-layerId = m002;
-shapes = (
-{
-pos = (-704,0);
-ref = quotedblleft.ss02;
-}
-);
-width = 272;
-},
-{
-layerId = m01;
-shapes = (
-{
-pos = (-619,0);
-ref = quotedblleft.ss02;
-}
-);
-width = 359;
-},
-{
-layerId = m003;
-shapes = (
-{
-pos = (-500,0);
-ref = quotedblleft.ss02;
-}
-);
-width = 498;
-}
-);
-},
-{
-color = 4;
-glyphname = quotedblright.ss02.pwid;
-lastChange = "2023-04-08 08:02:54 +0000";
-layers = (
-{
-color = 5;
-layerId = m002;
-shapes = (
-{
-pos = (-24,0);
-ref = quotedblright.ss02;
-}
-);
-width = 272;
-},
-{
-layerId = m01;
-shapes = (
-{
-pos = (-22,0);
-ref = quotedblright.ss02;
-}
-);
-width = 359;
-},
-{
-layerId = m003;
-shapes = (
-{
-pos = (-2,0);
-ref = quotedblright.ss02;
-}
-);
-width = 498;
-}
-);
-},
-{
-color = 4;
-glyphname = quoteleft.ss02.pwid;
-lastChange = "2023-04-08 08:02:54 +0000";
-layers = (
-{
-color = 5;
-layerId = m002;
-shapes = (
-{
-pos = (-852,0);
-ref = quoteleft.ss02;
-}
-);
-width = 124;
-},
-{
-layerId = m01;
-shapes = (
-{
-pos = (-804,0);
-ref = quoteleft.ss02;
-}
-);
-width = 174;
-},
-{
-layerId = m003;
-shapes = (
-{
-pos = (-749,0);
-ref = quoteleft.ss02;
-}
-);
-width = 249;
-}
-);
-},
-{
-color = 4;
-glyphname = quoteright.ss02.pwid;
-lastChange = "2023-04-08 08:02:54 +0000";
-layers = (
-{
-color = 5;
-layerId = m002;
-shapes = (
-{
-pos = (-24,0);
-ref = quoteright.ss02;
-}
-);
-width = 124;
-},
-{
-layerId = m01;
-shapes = (
-{
-pos = (-22,0);
-ref = quoteright.ss02;
-}
-);
-width = 174;
-},
-{
-layerId = m003;
-shapes = (
-{
-pos = (-2,0);
-ref = quoteright.ss02;
-}
-);
-width = 249;
 }
 );
 },
@@ -11814,8 +10178,6 @@ unicode = 94179;
 {
 color = 3;
 glyphname = u16FE2.vert;
-kernBottom = PeriodCommaVert;
-kernTop = PeriodCommaVert;
 lastChange = "2022-11-17 02:39:47 +0000";
 layers = (
 {
@@ -11853,8 +10215,6 @@ width = 1000;
 {
 color = 3;
 glyphname = u16FE3.vert;
-kernBottom = PeriodCommaVert;
-kernTop = PeriodCommaVert;
 lastChange = "2022-11-17 02:39:49 +0000";
 layers = (
 {
@@ -11967,81 +10327,6 @@ weightClass = 900;
 }
 );
 kerningLTR = {
-m002 = {
-"@MMK_L_Centered" = {
-"@MMK_R_OpeningBracket" = -500;
-};
-"@MMK_L_ClosingBracket" = {
-"@MMK_R_Centered" = -500;
-"@MMK_R_ClosingBracket" = -500;
-"@MMK_R_OpeningBracket" = -500;
-"@MMK_R_PeriodComma" = -500;
-"@MMK_R_space-han" = -500;
-};
-"@MMK_L_OpeningBracket" = {
-"@MMK_R_OpeningBracket" = -500;
-};
-"@MMK_L_PeriodComma" = {
-"@MMK_R_Centered" = -500;
-"@MMK_R_ClosingBracket" = -500;
-"@MMK_R_OpeningBracket" = -500;
-"@MMK_R_PeriodComma" = -500;
-"@MMK_R_space-han" = -500;
-};
-"@MMK_L_space-han" = {
-"@MMK_R_OpeningBracket" = -500;
-};
-};
-m01 = {
-"@MMK_L_Centered" = {
-"@MMK_R_OpeningBracket" = -500;
-};
-"@MMK_L_ClosingBracket" = {
-"@MMK_R_Centered" = -500;
-"@MMK_R_ClosingBracket" = -500;
-"@MMK_R_OpeningBracket" = -500;
-"@MMK_R_PeriodComma" = -500;
-"@MMK_R_space-han" = -500;
-};
-"@MMK_L_OpeningBracket" = {
-"@MMK_R_OpeningBracket" = -500;
-};
-"@MMK_L_PeriodComma" = {
-"@MMK_R_Centered" = -500;
-"@MMK_R_ClosingBracket" = -500;
-"@MMK_R_OpeningBracket" = -500;
-"@MMK_R_PeriodComma" = -500;
-"@MMK_R_space-han" = -500;
-};
-"@MMK_L_space-han" = {
-"@MMK_R_OpeningBracket" = -500;
-};
-};
-m003 = {
-"@MMK_L_Centered" = {
-"@MMK_R_OpeningBracket" = -500;
-};
-"@MMK_L_ClosingBracket" = {
-"@MMK_R_Centered" = -500;
-"@MMK_R_ClosingBracket" = -500;
-"@MMK_R_OpeningBracket" = -500;
-"@MMK_R_PeriodComma" = -500;
-"@MMK_R_space-han" = -500;
-};
-"@MMK_L_OpeningBracket" = {
-"@MMK_R_OpeningBracket" = -500;
-};
-"@MMK_L_PeriodComma" = {
-"@MMK_R_Centered" = -500;
-"@MMK_R_ClosingBracket" = -500;
-"@MMK_R_OpeningBracket" = -500;
-"@MMK_R_PeriodComma" = -500;
-"@MMK_R_space-han" = -500;
-};
-"@MMK_L_space-han" = {
-"@MMK_R_OpeningBracket" = -500;
-};
-};
 };
 kerningVertical = {
 m002 = {
@@ -12262,6 +10547,8 @@ value = "（，。？！】";
 key = manufacturerURL;
 value = "https://github.com/Buernia";
 }
+);
+stems = (
 );
 unitsPerEm = 1000;
 versionMajor = 2;

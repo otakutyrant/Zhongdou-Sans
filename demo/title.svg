@@ -77,12 +77,6 @@
         font-size: 54px;
       }
 
-      .tadpole-small {
-        fill: var(--red);
-        font-size: 32px;
-        font-feature-settings: "ss02" 1;
-      }
-
       .vertical {
         fill: var(--soft);
         font-size: 45px;
@@ -117,7 +111,7 @@
 
   <text class="title" x="112" y="445">Zhongdou Sans</text>
   <text class="cn-title" x="112" y="496">中豆黑体</text>
-  <text class="meta" x="400" y="493">LOCL · VERT · SS01 · SS02 · DLIG</text>
+  <text class="meta" x="400" y="493">ZH-CN LOCL · VERT</text>
 
   <text class="specimen" x="112" y="595">「读」・〔中豆〕・⸺・⋯</text>
   <text class="copy" x="112" y="647">直角引号　龟甲括　居中间隔号　双字宽破折号　中线省略号</text>
@@ -149,10 +143,9 @@
     </g>
 
     <line x1="934" y1="84" x2="934" y2="212" stroke="var(--line)" />
-    <text class="feature-label" x="970" y="102">SS01 · 居中</text>
+    <text class="feature-label" x="970" y="102">ZH-CN · LOCL</text>
     <text class="specimen" x="970" y="166">，。！？</text>
-    <text class="feature-label" x="970" y="204">SS02 · 蝌蚪</text>
-    <text class="tadpole-small" x="1195" y="207">，；‘’</text>
+    <text class="feature-label" x="970" y="204">VERT · 竖排亦居中</text>
   </g>
 
   <g aria-label="竖排标点示例">

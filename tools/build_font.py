@@ -7,10 +7,12 @@ Linux while making the same feature choices recorded in the Glyphs source.
 """
 
 import argparse
+from copy import deepcopy
 from pathlib import Path
 
 from fontTools import subset
 from fontTools.ttLib import TTFont
+from fontTools.ttLib.tables import otTables
 from fontTools.varLib.iup import iup_delta
 
 
@@ -35,12 +37,11 @@ REMOVED_CODEPOINTS = (
     | set(range(0x1F260, 0x1F266))
 )
 
-
-def feature_by_tag(font: TTFont, table_tag: str, tag: str):
-    for record in font[table_tag].table.FeatureList.FeatureRecord:
-        if record.FeatureTag == tag:
-            return record.Feature
-    raise ValueError(f"the input font has no {tag} feature in {table_tag}")
+# Zhongdou is a focused zh-CN punctuation fallback. Keep only localization and
+# vertical substitution; inherited alternates, ligatures, width controls, and
+# spacing features make its behavior harder to predict without serving that
+# purpose.
+CORE_LAYOUT_FEATURES = ("locl", "vert")
 
 
 def use_half_width_quotes_by_default(font: TTFont) -> None:
@@ -81,8 +82,8 @@ def add_midline_ellipsis(font: TTFont) -> None:
         raise ValueError("the input font has no Unicode cmap containing U+2026")
 
 
-def remove_unwanted_characters(font: TTFont) -> None:
-    """Remove full-width alphanumerics and unrelated symbol collections."""
+def subset_to_supported_characters(font: TTFont) -> None:
+    """Remove unrelated characters, alternates, and layout features."""
     encoded = {
         codepoint
         for table in font["cmap"].tables
@@ -102,7 +103,7 @@ def remove_unwanted_characters(font: TTFont) -> None:
 
     options = subset.Options()
     options.glyph_names = True
-    options.layout_features = ["*"]
+    options.layout_features = list(CORE_LAYOUT_FEATURES)
     options.layout_scripts = ["*"]
     options.name_IDs = ["*"]
     options.name_languages = ["*"]
@@ -120,6 +121,45 @@ def remove_unwanted_characters(font: TTFont) -> None:
     )
     subsetter.subset(font)
 
+    # fontTools can leave a syntactically valid but featureless GPOS table
+    # behind after pruning. It communicates no behavior and needlessly suggests
+    # that the font performs positioning, so remove it altogether.
+    if "GPOS" in font and not font["GPOS"].table.FeatureList.FeatureRecord:
+        del font["GPOS"]
+
+    retained = {
+        record.FeatureTag
+        for record in font["GSUB"].table.FeatureList.FeatureRecord
+    }
+    if retained != set(CORE_LAYOUT_FEATURES):
+        raise ValueError(
+            f"unexpected retained layout features: {sorted(retained)}; "
+            f"expected {sorted(CORE_LAYOUT_FEATURES)}"
+        )
+
+
+def ensure_zh_cn_language_system(font: TTFont) -> None:
+    """Keep an explicit ZHS record even when it matches the default system."""
+    matched = 0
+    for script_record in font["GSUB"].table.ScriptList.ScriptRecord:
+        script = script_record.Script
+        languages = {
+            record.LangSysTag.strip(): record for record in script.LangSysRecord or []
+        }
+        if script.DefaultLangSys is None:
+            continue
+        if "ZHS" not in languages:
+            record = otTables.LangSysRecord()
+            record.LangSysTag = "ZHS "
+            record.LangSys = deepcopy(script.DefaultLangSys)
+            script.LangSysRecord.append(record)
+            script.LangSysRecord.sort(key=lambda item: item.LangSysTag)
+            script.LangSysCount = len(script.LangSysRecord)
+        matched += 1
+
+    if matched == 0:
+        raise ValueError("the subset font has no scripts supporting ZHS")
+
 
 def harmonize_horizontal_metrics(font: TTFont) -> None:
     """Match Sarasa's line metrics so fallback runs share one baseline."""
@@ -132,19 +172,6 @@ def harmonize_horizontal_metrics(font: TTFont) -> None:
     hhea.ascent = 965
     hhea.descent = -215
     hhea.lineGap = 70
-
-
-def disable_positioning_features(font: TTFont) -> None:
-    """Keep spacing feature tags registered, but make them no-ops."""
-    feature_tags = {"halt", "kern", "vhal", "vkrn"}
-    disabled = set()
-    for record in font["GPOS"].table.FeatureList.FeatureRecord:
-        if record.FeatureTag in feature_tags:
-            record.Feature.LookupListIndex = []
-            record.Feature.LookupCount = 0
-            disabled.add(record.FeatureTag)
-    if disabled != feature_tags:
-        raise ValueError(f"missing positioning features: {sorted(feature_tags - disabled)}")
 
 
 def use_zh_tw_locl_for_zh_cn(font: TTFont) -> None:
@@ -191,11 +218,9 @@ def center_zh_cn_vertical_punctuation(font: TTFont) -> None:
         "uni3002": "uni3002.uv002",
         "uniFF01": "uniFF01.uv002",
         "uniFF0C": "uniFF0C.uv002",
-        "uniFF0C.ss02": "uniFF0C.uv002.ss02",
         "uniFF0E": "uniFF0E.uv002",
         "uniFF1A": "uniFF1A.uv002",
         "uniFF1B": "uniFF1B.uv002",
-        "uniFF1B.ss02": "uniFF1B.uv002.ss02",
         "uniFF1F": "uniFF1F.uv002",
     }
     glyphs = set(font.getGlyphOrder())
@@ -390,11 +415,9 @@ def refine_punctuation_glyphs(font: TTFont) -> None:
         "uni3002.uv002",
         "uniFF01.uv002",
         "uniFF0C.uv002",
-        "uniFF0C.uv002.ss02",
         "uniFF0E.uv002",
         "uniFF1A.uv002",
         "uniFF1B.uv002",
-        "uniFF1B.uv002.ss02",
         "uniFF1F.uv002",
     )
     translate_glyphs_once(
@@ -477,8 +500,8 @@ def main() -> None:
     center_zh_cn_vertical_punctuation(font)
     center_default_language_punctuation(font)
     refine_punctuation_glyphs(font)
-    remove_unwanted_characters(font)
-    disable_positioning_features(font)
+    subset_to_supported_characters(font)
+    ensure_zh_cn_language_system(font)
     rename_family(font)
     embed_license(font)
     args.output.parent.mkdir(parents=True, exist_ok=True)
