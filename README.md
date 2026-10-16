@@ -1,5 +1,7 @@
 # 中豆黑体 Zhongdou Sans
 
+[官方网站](https://otakutyrant.github.io/Zhongdou-Sans/)・[下载字体](https://github.com/otakutyrant/Zhongdou-Sans/releases/latest)
+
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./images/demo.png">
   <img src="./images/demo.png">
@@ -60,10 +62,10 @@
 
 中豆黑体保留原字体的字形设计，但调整了以下默认排版行为：
 
-* 将弯引号 `‘’“”` 的半角字形直接设为 Unicode 字符映射（`cmap`）中的默认字形，不借用任何 OpenType 功能。`fwid` 可改用全角字形，`pwid` 可改用比例宽度字形；开关 `ccmp` 不会改变引号宽度。
-* 陆规（`ZHS`）与默认语言在 `locl` 中复用台规（`ZHT`）的居中标点查找，使未标注中文语言的编辑器也默认使用居中标点；明确指定其他地区语言时仍遵循相应规则。`vert` 在默认语言与陆规文本中保留居中形式。
+* 将弯引号 `‘’“”` 的半角字形直接设为 Unicode 字符映射（`cmap`）中的默认字形，不借用任何 OpenType 功能。
+* 陆规（`ZHS`）与默认语言在 `locl` 中复用台规（`ZHT`）的居中标点查找，使未标注中文语言的编辑器也默认使用居中标点；`vert` 则在竖排中保留居中形式。
 * 对居中点号作光学校正，并将龟甲括与直角引号的墨迹在全部字重中移到全角字身的横向中心；由其构成的闭括号和竖排字形会同步归中，字身宽度保持不变。
-* 保留 `halt`、`vhal`、`kern`、`vkrn` 功能标签以兼容应用程序，但清空其查找列表，因此中豆黑体不会自动压缩或挤移横排、竖排标点。
+* 只保留服务于上述目标的 `locl` 与 `vert` 两项 OpenType 功能；移除继承自煮豆黑体的连字、宽度变体、样式集和标点挤压等无关功能。
 * 已修正[行高问题](https://github.com/Buernia/Zhudou-Sans/issues/7)，并使水平排版度量与更纱黑体兼容，避免 Pango/GTK 在字体回退时错开标点与正文的基线。
 * 移除与标点补充定位无关的全角拉丁字母、全角数字、许可图标和传统吉祥图案。
 * 此外如上文所述，增加了一些标点符号。
@@ -103,102 +105,20 @@
 
 ⚠**注意：中豆黑体不包含汉字、假名、谚文、一般西文和数字，请和其他字体搭配使用。**
 
-## 排版功能
+中豆黑体只保留两项 OpenType 功能：`locl` 使陆规（`ZHS`）及未声明地区的文本采用居中标点，`vert` 提供相应的竖排形式。其他地区仍采用各自的地区与竖排字形。
 
-中豆黑体支持以下 OpenType 排版特性：
+中豆黑体亦支持 Unicode 变体选择符。在相应字符后输入 VS01（`U+FE00`）或 VS02（`U+FE01`），可明确选择偏靠或居中的标点字形：
 
-* **自选连字**（`dlig`）
-
-  将「？？」「？！」与「！？」「！！」组合成「⁇」「⁈」与「⁉」「‼」合字。可在软件 OpenType 功能菜单中选择「自由连字」（Adobe）或「历史和任意连字」（Word）以开启该功能。
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./images/dlig.dark.svg">
-  <img src="./images/dlig.light.svg">
-</picture>
-
-* **全角、半角与比例宽度字形**（`fwid`、`hwid`、`pwid`）
-
-  弯引号有全角、半角、比例（Adobe 误译为「等比宽度」）3种宽度的字形。中豆黑体默认使用半角弯引号；`fwid` 改用全角字形，`hwid` 改用半角字形，`pwid` 改用比例宽度字形。连接号和间隔号仍有全角、半角2种宽度的字形，但默认宽度不因引号的默认设置而改变。Adobe 软件可在「字形」面板中选择相应字形。
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./images/fwid-hwid-pwid.dark.svg">
-  <img src="./images/fwid-hwid-pwid.light.svg">
-</picture>
-
-* **破折号连字**（`ccmp`）
-
-  将2个「—」（`U+2014`）组成一个完整的破折号，将3个「—」组成一个占3字宽的长横。默认开启。本功能仅处理破折号组合，不控制弯引号的宽度。
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./images/ccmp.dark.svg">
-  <img src="./images/ccmp.light.svg">
-</picture>
-
-* **标点挤压**（`kern`、`vkrn`）
-
-  原字体用这两个功能压缩连续标点所占的空间。中豆黑体保留功能标签，但清空了查找列表；无论应用程序是否开启 `kern` 或 `vkrn`，中豆黑体本身都不会挤压标点。需要标点挤压时，请使用排版软件自身的标点挤压功能。
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./images/kern.dark.svg">
-  <img src="./images/kern.light.svg">
-</picture>
-
-  > 文本选自〔请颁行新式标点符号议案（修正案）〕
-
-* **地区字形**（`locl`）
-
-  陆规（`ZHS`）复用台规（`ZHT`）的居中标点查找，因此标记为陆规的文本默认采用居中标点。这里只共享 `locl` 查找；竖排字形等其他地区功能保持不变。将文本标记为港澳台、日文或韩文时，仍采用各自的地区字形。
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./images/locl.dark.svg">
-  <img src="./images/locl.light.svg">
-</picture>
-
-  > 文本选自1951年〔标点符号用法〕
-
-* **斜杠0**（`zero`）
-
-  将全角数字０更改为斜杠０︀（Adobe 称「斜线零」）字形。
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./images/zero.dark.svg">
-  <img src="./images/zero.light.svg">
-</picture>
-
-* **竖排字形**（`vert`）
-
-  在竖排文本中使用相应的标点形式，默认开启。默认语言与陆规文本中的顿号、句号、叹号、逗号、句点、冒号、分号、问号保持居中；明确指定 VS01 时仍采用偏靠字形。其他地区的文本继续采用各自的竖排标点形式。
-
-* **居中标点**（`cpct`、`ss01`）
-
-  将顿号、句号、叹号、逗号、句点、冒号、分号、问号居中。两项功能仍为可选功能，并未被改成默认开启；陆规已通过 `locl` 默认获得相同的居中效果。其他语言仍可在软件 OpenType 功能菜单中选择「居中中日韩标点」风格组合（Adobe）或「样式集1」（Word）以开启该功能。
-  
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./images/cpct.dark.svg">
-  <img src="./images/cpct.light.svg">
-</picture>
-
-* **蝌蚪形逗号**（`ss02`）**（新特性！）**
-
-  将逗号、分号和引号的字形改为蝌蚪形。可在软件 OpenType 功能菜单中选择「蝌蚪逗号」风格组合（Adobe）或「样式集2」（Word）以开启该功能。
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./images/ss02.dark.svg">
-  <img src="./images/ss02.light.svg">
-</picture>
-
-此外，中豆黑体亦支持变体选择符（Variation Selector，VS）功能，在相应字符后输入变体选择符 VS01（`U+FE00`）或 VS02（`U+FE01`）即可强制将该字符显示为规定的变体字形。中豆黑体支持以下 Unicode 定义的标点符号和数字变体字形：
-
-| 字符          | 顿号`U+3001` | 句号`U+3002` | 叹号`U+FF01` | 逗号`U+FF0C` | 句点`U+FF0E` | 全角数字0 `U+FF10` | 冒号`U+FF1A` | 分号`U+FF1B` | 问号`U+FF1F` |
-| -------- | ---------- | ---------- | ---------- | ---------- | ---------- | ----------- | ---------- | ---------- | ---------- |
-| VS01 `U+FE00` | 、︀（偏靠） | 。︀（偏靠） | ！︀（偏靠） | ，︀（偏靠） | ．︀（偏靠） | ０︀（斜杠0） | ：︀（偏靠） | ；︀（偏靠） | ？︀（偏靠） |
-| VS02 `U+FE01` | 、︁（居中） | 。︁（居中） | ！︁（居中） | ，︁（居中） | ．︁（居中） | 不适用 | ：︁（居中） | ；︁（居中） | ？︁（居中） |
+| 字符 | 顿号`U+3001` | 句号`U+3002` | 叹号`U+FF01` | 逗号`U+FF0C` | 句点`U+FF0E` | 冒号`U+FF1A` | 分号`U+FF1B` | 问号`U+FF1F` |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| VS01 `U+FE00` | 、︀（偏靠） | 。︀（偏靠） | ！︀（偏靠） | ，︀（偏靠） | ．︀（偏靠） | ：︀（偏靠） | ；︀（偏靠） | ？︀（偏靠） |
+| VS02 `U+FE01` | 、︁（居中） | 。︁（居中） | ！︁（居中） | ，︁（居中） | ．︁（居中） | ：︁（居中） | ；︁（居中） | ？︁（居中） |
 
 上表中的符号可直接复制粘贴使用。
 
 ## 生成样张
 
-首页样张和文内标题图的排版源码位于 [`demo/`](./demo/)，输出为 [`images/demo.png`](./images/demo.png)、[`images/Title.light.svg`](./images/Title.light.svg)和[`images/Title.dark.svg`](./images/Title.dark.svg)。在项目根目录运行：
+README 首页样张和文内标题图的排版源码位于 [`demo/`](./demo/)，输出为 [`images/demo.png`](./images/demo.png)、[`images/Title.light.svg`](./images/Title.light.svg)和[`images/Title.dark.svg`](./images/Title.dark.svg)。在项目根目录运行：
 
 ```nu
 nix develop -c nur demo preview # 构建字体并在浏览器中打开 HTML 样张
@@ -207,6 +127,8 @@ nix develop -c nur title render # 仅重新生成浅色与深色标题图
 ```
 
 这些任务会先从原始字体生成中豆黑体；首页样张采用固定的 2560×1440 画布，标题图则把构建后的字体嵌入 SVG，因而不依赖读者本机安装中豆黑体。Nix flake 锁定 Nur、渲染工具和备用字体的版本。拉取请求中的样张若已过时，持续集成便会报错；推送到 `main` 后，持续集成则会在样张变化时自动创建 `docs: update generated specimens` 提交，不变时不会提交。
+
+独立的[官方网站](https://otakutyrant.github.io/Zhongdou-Sans/)源码位于 [`site/`](./site/)。`nix develop -c nur site build` 会从页面实际出现的字符生成中豆黑体与更纱黑体 SC 的 WOFF2 子集；推送到 `main` 后，GitHub Pages 工作流会构建并发布网站。使用 `nix develop -c nur site preview` 可以在本机预览。
 
 ## 授权信息
 

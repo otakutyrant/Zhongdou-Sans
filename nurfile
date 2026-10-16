@@ -3,6 +3,7 @@
 
 const PROJECT_ROOT = path self | path dirname
 const BUILD_SCRIPT = $PROJECT_ROOT | path join tools build_font.py
+const BUILD_SITE_SCRIPT = $PROJECT_ROOT | path join tools build_site.py
 const SOURCE_FONT = $PROJECT_ROOT | path join fonts variable ZhudouSansVF.ttf
 const BUILT_FONT = $PROJECT_ROOT | path join build ZhongdouSansVF.ttf
 const DEMO_PAGE = $PROJECT_ROOT | path join demo index.html
@@ -28,4 +29,21 @@ export def "nur demo render" [] {
 export def "nur title render" [] {
     nur demo build
     ^nu ($PROJECT_ROOT | path join tools render-title.nu)
+}
+
+# Build the public site and reduce both webfonts to the characters it uses.
+export def "nur site build" [] {
+    if ($env.SARASA_REGULAR_TTC? | is-empty) {
+        error make {
+            msg: "SARASA_REGULAR_TTC is unset. Enter the project with `nix develop`."
+        }
+    }
+
+    ^python $BUILD_SITE_SCRIPT --project-root $PROJECT_ROOT --sarasa-ttc $env.SARASA_REGULAR_TTC
+}
+
+# Build and serve the GitHub Pages site locally.
+export def "nur site preview" [--port: int = 8000] {
+    nur site build
+    ^python -m http.server $port --directory ($PROJECT_ROOT | path join build site)
 }

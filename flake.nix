@@ -20,7 +20,11 @@
         system:
         let
           pkgs = import nixpkgs { inherit system; };
-          python = pkgs.python3.withPackages (pythonPackages: [ pythonPackages.fonttools ]);
+          python = pkgs.python3.withPackages (pythonPackages: [
+            # fontTools uses Brotli when it writes the site's compact WOFF2 subsets.
+            pythonPackages.brotli
+            pythonPackages.fonttools
+          ]);
 
           # Nur bundles a matching Nushell runtime. Pin its official binary so
           # contributors do not need the task runner in their global profile.
@@ -62,6 +66,9 @@
               pkgs.git
               pkgs.nushell
               pkgs.oxipng
+              # The public site embeds only the glyphs used by its inscription
+              # and prose, but the build starts from the official SC face.
+              pkgs.sarasa-gothic
               nur
               python
             ];
@@ -71,6 +78,10 @@
             FONTCONFIG_FILE = pkgs.makeFontsConf {
               fontDirectories = [ pkgs.source-han-sans ];
             };
+
+            # Sarasa packages its regional faces in a TrueType Collection.
+            # tools/build_site.py selects the SC face at collection index 1.
+            SARASA_REGULAR_TTC = "${pkgs.sarasa-gothic}/share/fonts/truetype/Sarasa-Regular.ttc";
 
             shellHook = ''
               echo "Zhongdou Sans dev shell ready: use 'nur --help' to list project tasks."

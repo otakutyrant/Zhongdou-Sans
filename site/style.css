@@ -1,0 +1,471 @@
+@font-face {
+  font-family: "Zhongdou Web";
+  src: url("./fonts/ZhongdouSans-subset.woff2") format("woff2-variations");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 250 900;
+}
+
+@font-face {
+  font-family: "Sarasa Web";
+  src: url("./fonts/SarasaGothicSC-subset.woff2") format("woff2");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400;
+}
+
+:root {
+  color-scheme: dark;
+  --night: #100e0c;
+  --night-soft: #191612;
+  --stone: #8d8373;
+  --stone-light: #b5aa98;
+  --stone-dark: #5c5448;
+  --paper: #ded7c8;
+  --ink: #181511;
+  --red: #8e2e28;
+  --gold: #bd9a63;
+  --line: rgb(222 215 200 / 16%);
+  --body-font: "Zhongdou Web", "Sarasa Web", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--night);
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  background: var(--night);
+  color: var(--paper);
+  font-family: var(--body-font);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: inherit;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.monument {
+  position: relative;
+  display: grid;
+  min-height: 100svh;
+  place-items: center;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(ellipse at 50% 104%, rgb(126 101 70 / 22%), transparent 41%),
+    radial-gradient(ellipse at 50% 18%, rgb(255 242 210 / 7%), transparent 42%),
+    linear-gradient(180deg, #0d0c0b 0%, #14110e 72%, #1d1812 100%);
+}
+
+.monument::before {
+  position: absolute;
+  right: -5%;
+  bottom: -16%;
+  left: -5%;
+  height: 28%;
+  border-radius: 50% 50% 0 0;
+  background: radial-gradient(ellipse at top, #33291e, #16120e 64%);
+  box-shadow: 0 -24px 90px rgb(0 0 0 / 52%);
+  content: "";
+  filter: blur(2px);
+  transform: perspective(500px) rotateX(54deg);
+}
+
+.light {
+  position: absolute;
+  z-index: -1;
+  top: -40%;
+  left: 50%;
+  width: min(70vw, 760px);
+  height: 135%;
+  background: linear-gradient(90deg, transparent, rgb(231 211 171 / 9%), transparent);
+  clip-path: polygon(42% 0, 58% 0, 100% 100%, 0 100%);
+  filter: blur(24px);
+  transform: translateX(-50%);
+}
+
+.stele {
+  position: relative;
+  display: flex;
+  width: clamp(270px, 36vw, 460px);
+  height: min(82svh, 790px);
+  min-height: 540px;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -2svh;
+  filter: drop-shadow(0 42px 38px rgb(0 0 0 / 68%));
+}
+
+.stele-cap {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  width: 93%;
+  height: 8%;
+  align-items: end;
+  justify-content: center;
+  gap: 4%;
+  border-radius: 50% 50% 8% 8% / 95% 95% 12% 12%;
+  background:
+    radial-gradient(circle at 40% 30%, rgb(255 255 255 / 13%) 0 1px, transparent 2px),
+    linear-gradient(112deg, #756c5e, #a59a88 43%, #665e52);
+  box-shadow: inset 0 -7px 12px rgb(35 29 22 / 32%);
+}
+
+.stele-cap span {
+  width: 18%;
+  height: 54%;
+  border: 1px solid rgb(53 45 37 / 25%);
+  border-bottom: 0;
+  border-radius: 50% 50% 0 0;
+  opacity: 0.56;
+}
+
+.stele-face {
+  position: relative;
+  display: grid;
+  width: 86%;
+  min-height: 0;
+  flex: 1;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid rgb(45 38 31 / 40%);
+  border-top: 0;
+  background:
+    radial-gradient(circle at 18% 12%, rgb(255 255 255 / 12%) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 71% 68%, rgb(25 20 15 / 14%) 0 1px, transparent 2px),
+    radial-gradient(circle at 82% 25%, rgb(255 255 255 / 8%) 0 2px, transparent 3px),
+    linear-gradient(105deg, #746c60 0%, #aaa08f 43%, #8a8173 66%, #675f54 100%);
+  background-size: 37px 41px, 51px 47px, 83px 71px, auto;
+  box-shadow:
+    inset 18px 0 24px rgb(45 37 28 / 18%),
+    inset -17px 0 21px rgb(34 28 22 / 24%);
+}
+
+.stele-face::before {
+  position: absolute;
+  inset: 3.4%;
+  border: 1px solid rgb(46 39 32 / 22%);
+  content: "";
+  box-shadow: inset 0 0 24px rgb(50 39 29 / 12%);
+}
+
+.inscription {
+  height: 16em;
+  width: 6em;
+  margin: 0;
+  color: #29241e;
+  font-size: clamp(21px, 2.4vw, 30px);
+  font-weight: 550;
+  letter-spacing: 0;
+  line-break: anywhere;
+  line-height: 1;
+  text-align: start;
+  text-shadow: 0 1px 0 rgb(232 222 201 / 24%), 0 -1px 1px rgb(23 19 15 / 45%);
+  writing-mode: vertical-rl;
+}
+
+.seal {
+  position: absolute;
+  bottom: 7.5%;
+  left: 13%;
+  display: grid;
+  width: 2.35em;
+  height: 2.35em;
+  place-items: center;
+  border: 1px solid #6f2925;
+  color: #742923;
+  font-size: clamp(12px, 1.4vw, 17px);
+  font-weight: 700;
+  letter-spacing: -0.08em;
+  line-height: 0.9;
+  opacity: 0.82;
+  text-orientation: upright;
+  writing-mode: vertical-rl;
+}
+
+.stele-base {
+  position: relative;
+  z-index: 3;
+  width: 116%;
+  height: 7%;
+  min-height: 38px;
+  border-radius: 7px 7px 15px 15px;
+  background: linear-gradient(100deg, #5b5348, #918675 35%, #7a7163 68%, #4d463d);
+  box-shadow:
+    inset 0 4px 4px rgb(255 255 255 / 7%),
+    0 14px 18px rgb(0 0 0 / 35%);
+}
+
+.stele-base::after {
+  position: absolute;
+  right: -6%;
+  bottom: -44%;
+  left: -6%;
+  height: 60%;
+  border-radius: 4px 4px 9px 9px;
+  background: linear-gradient(90deg, #443d34, #756b5b 48%, #3c372f);
+  content: "";
+}
+
+.declaration,
+.grid-section,
+.pairing,
+.closing {
+  width: min(1180px, calc(100% - 48px));
+  margin-inline: auto;
+}
+
+.declaration {
+  padding: clamp(120px, 18vw, 270px) 0;
+}
+
+.eyebrow {
+  margin: 0 0 32px;
+  color: var(--gold);
+  font-family: ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+
+.declaration h2,
+.section-heading h2,
+.pairing h2,
+.closing h2 {
+  margin: 0;
+  font-weight: 540;
+}
+
+.declaration h2 {
+  display: flex;
+  flex-direction: column;
+  font-size: clamp(44px, 9vw, 126px);
+  letter-spacing: -0.06em;
+  line-height: 1.08;
+}
+
+.declaration h2 span:last-child {
+  align-self: end;
+  color: var(--gold);
+}
+
+.declaration-copy {
+  max-width: 700px;
+  margin: clamp(72px, 10vw, 140px) 0 0 auto;
+  color: #a8a094;
+  font-size: clamp(18px, 2.1vw, 25px);
+  line-height: 2;
+}
+
+.grid-section {
+  padding: 80px 0 clamp(130px, 15vw, 230px);
+}
+
+.section-heading {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  align-items: end;
+  margin-bottom: 64px;
+}
+
+.section-heading .eyebrow {
+  margin-bottom: 8px;
+}
+
+.section-heading h2 {
+  font-size: clamp(34px, 5.4vw, 74px);
+  line-height: 1.2;
+}
+
+.grid-stage {
+  position: relative;
+  display: grid;
+  min-height: min(75svh, 760px);
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background:
+    linear-gradient(rgb(224 216 199 / 8%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(224 216 199 / 8%) 1px, transparent 1px),
+    radial-gradient(circle at center, #221e18, #13110e 72%);
+  background-size: 1em 1em, 1em 1em, auto;
+  font-size: clamp(28px, 4.4vw, 54px);
+}
+
+.grid-stage::before,
+.grid-stage::after {
+  position: absolute;
+  z-index: 0;
+  color: rgb(222 215 200 / 4%);
+  font-size: 5em;
+  line-height: 1;
+  content: "中";
+}
+
+.grid-stage::before {
+  top: -0.12em;
+  left: -0.08em;
+}
+
+.grid-stage::after {
+  right: -0.08em;
+  bottom: -0.12em;
+}
+
+.grid-copy {
+  position: relative;
+  z-index: 1;
+  width: 14em;
+  color: #d8d0c1;
+  font-size: 1em;
+  font-weight: 430;
+  letter-spacing: 0;
+  line-break: anywhere;
+  line-height: 1;
+  text-align: start;
+}
+
+.caption {
+  max-width: 760px;
+  margin: 32px 0 0 auto;
+  color: #817a70;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.pairing {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(60px, 10vw, 160px);
+  padding: clamp(100px, 14vw, 200px) 0;
+  border-top: 1px solid var(--line);
+}
+
+.pairing h2,
+.closing h2 {
+  font-size: clamp(42px, 6.5vw, 86px);
+  line-height: 1.22;
+}
+
+.pairing-copy {
+  align-self: end;
+  color: #aaa295;
+  font-size: 18px;
+  line-height: 2;
+}
+
+.pairing-copy p {
+  margin: 0;
+}
+
+.pairing-copy p + p {
+  margin-top: 2em;
+}
+
+.closing {
+  position: relative;
+  padding: clamp(160px, 20vw, 300px) 0;
+  text-align: center;
+}
+
+.closing-mark {
+  margin: 0 0 36px;
+  color: var(--red);
+  font-size: 72px;
+  line-height: 1;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 68px;
+}
+
+.actions a {
+  min-width: 132px;
+  padding: 14px 22px;
+  border: 1px solid rgb(222 215 200 / 28%);
+  text-decoration: none;
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease;
+}
+
+.actions a:first-child,
+.actions a:hover {
+  border-color: var(--paper);
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.actions a:first-child:hover {
+  border-color: var(--gold);
+  background: var(--gold);
+}
+
+footer {
+  display: flex;
+  width: min(1180px, calc(100% - 48px));
+  justify-content: space-between;
+  margin-inline: auto;
+  padding: 30px 0 42px;
+  border-top: 1px solid var(--line);
+  color: #6e685f;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+@media (max-width: 760px) {
+  .stele {
+    width: min(76vw, 390px);
+  }
+
+  .inscription {
+    font-size: clamp(19px, 5.1vw, 25px);
+  }
+
+  .section-heading,
+  .pairing {
+    grid-template-columns: 1fr;
+  }
+
+  .section-heading {
+    gap: 12px;
+  }
+
+  .grid-stage {
+    min-height: 62svh;
+  }
+
+  .grid-copy {
+    width: 10em;
+  }
+
+  .pairing {
+    gap: 60px;
+  }
+
+  footer {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
