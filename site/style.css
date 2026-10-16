@@ -62,168 +62,28 @@ a {
   border: 0;
 }
 
-.monument {
-  position: relative;
+.inscription-hero {
   display: grid;
   min-height: 100svh;
   place-items: center;
   overflow: hidden;
-  isolation: isolate;
-  background:
-    radial-gradient(ellipse at 50% 104%, rgb(126 101 70 / 22%), transparent 41%),
-    radial-gradient(ellipse at 50% 18%, rgb(255 242 210 / 7%), transparent 42%),
-    linear-gradient(180deg, #0d0c0b 0%, #14110e 72%, #1d1812 100%);
-}
-
-.monument::before {
-  position: absolute;
-  right: -5%;
-  bottom: -16%;
-  left: -5%;
-  height: 28%;
-  border-radius: 50% 50% 0 0;
-  background: radial-gradient(ellipse at top, #33291e, #16120e 64%);
-  box-shadow: 0 -24px 90px rgb(0 0 0 / 52%);
-  content: "";
-  filter: blur(2px);
-  transform: perspective(500px) rotateX(54deg);
-}
-
-.light {
-  position: absolute;
-  z-index: -1;
-  top: -40%;
-  left: 50%;
-  width: min(70vw, 760px);
-  height: 135%;
-  background: linear-gradient(90deg, transparent, rgb(231 211 171 / 9%), transparent);
-  clip-path: polygon(42% 0, 58% 0, 100% 100%, 0 100%);
-  filter: blur(24px);
-  transform: translateX(-50%);
-}
-
-.stele {
-  position: relative;
-  display: flex;
-  width: clamp(270px, 36vw, 460px);
-  height: min(82svh, 790px);
-  min-height: 540px;
-  flex-direction: column;
-  align-items: center;
-  margin-top: -2svh;
-  filter: drop-shadow(0 42px 38px rgb(0 0 0 / 68%));
-}
-
-.stele-cap {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  width: 93%;
-  height: 8%;
-  align-items: end;
-  justify-content: center;
-  gap: 4%;
-  border-radius: 50% 50% 8% 8% / 95% 95% 12% 12%;
-  background:
-    radial-gradient(circle at 40% 30%, rgb(255 255 255 / 13%) 0 1px, transparent 2px),
-    linear-gradient(112deg, #756c5e, #a59a88 43%, #665e52);
-  box-shadow: inset 0 -7px 12px rgb(35 29 22 / 32%);
-}
-
-.stele-cap span {
-  width: 18%;
-  height: 54%;
-  border: 1px solid rgb(53 45 37 / 25%);
-  border-bottom: 0;
-  border-radius: 50% 50% 0 0;
-  opacity: 0.56;
-}
-
-.stele-face {
-  position: relative;
-  display: grid;
-  width: 86%;
-  min-height: 0;
-  flex: 1;
-  place-items: center;
-  overflow: hidden;
-  border: 1px solid rgb(45 38 31 / 40%);
-  border-top: 0;
-  background:
-    radial-gradient(circle at 18% 12%, rgb(255 255 255 / 12%) 0 1px, transparent 1.5px),
-    radial-gradient(circle at 71% 68%, rgb(25 20 15 / 14%) 0 1px, transparent 2px),
-    radial-gradient(circle at 82% 25%, rgb(255 255 255 / 8%) 0 2px, transparent 3px),
-    linear-gradient(105deg, #746c60 0%, #aaa08f 43%, #8a8173 66%, #675f54 100%);
-  background-size: 37px 41px, 51px 47px, 83px 71px, auto;
-  box-shadow:
-    inset 18px 0 24px rgb(45 37 28 / 18%),
-    inset -17px 0 21px rgb(34 28 22 / 24%);
-}
-
-.stele-face::before {
-  position: absolute;
-  inset: 3.4%;
-  border: 1px solid rgb(46 39 32 / 22%);
-  content: "";
-  box-shadow: inset 0 0 24px rgb(50 39 29 / 12%);
+  padding: 6svh 5vw;
+  background: var(--night);
 }
 
 .inscription {
-  height: 16em;
-  width: 6em;
+  width: 38em;
+  height: 22em;
   margin: 0;
-  color: #29241e;
-  font-size: clamp(21px, 2.4vw, 30px);
-  font-weight: 550;
+  color: var(--paper);
+  font-size: clamp(22px, 3.55vmin, 38px);
+  font-weight: 430;
   letter-spacing: 0;
   line-break: anywhere;
   line-height: 1;
   text-align: start;
-  text-shadow: 0 1px 0 rgb(232 222 201 / 24%), 0 -1px 1px rgb(23 19 15 / 45%);
+  text-wrap: wrap;
   writing-mode: vertical-rl;
-}
-
-.seal {
-  position: absolute;
-  bottom: 7.5%;
-  left: 13%;
-  display: grid;
-  width: 2.35em;
-  height: 2.35em;
-  place-items: center;
-  border: 1px solid #6f2925;
-  color: #742923;
-  font-size: clamp(12px, 1.4vw, 17px);
-  font-weight: 700;
-  letter-spacing: -0.08em;
-  line-height: 0.9;
-  opacity: 0.82;
-  text-orientation: upright;
-  writing-mode: vertical-rl;
-}
-
-.stele-base {
-  position: relative;
-  z-index: 3;
-  width: 116%;
-  height: 7%;
-  min-height: 38px;
-  border-radius: 7px 7px 15px 15px;
-  background: linear-gradient(100deg, #5b5348, #918675 35%, #7a7163 68%, #4d463d);
-  box-shadow:
-    inset 0 4px 4px rgb(255 255 255 / 7%),
-    0 14px 18px rgb(0 0 0 / 35%);
-}
-
-.stele-base::after {
-  position: absolute;
-  right: -6%;
-  bottom: -44%;
-  left: -6%;
-  height: 60%;
-  border-radius: 4px 4px 9px 9px;
-  background: linear-gradient(90deg, #443d34, #756b5b 48%, #3c372f);
-  content: "";
 }
 
 .declaration,
@@ -435,12 +295,10 @@ footer {
 }
 
 @media (max-width: 760px) {
-  .stele {
-    width: min(76vw, 390px);
-  }
-
   .inscription {
-    font-size: clamp(19px, 5.1vw, 25px);
+    width: 20em;
+    height: 42em;
+    font-size: clamp(14px, 4.1vw, 17px);
   }
 
   .section-heading,
