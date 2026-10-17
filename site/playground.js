@@ -168,6 +168,60 @@ for (const button of pathButtons) {
 }
 paintPath("row");
 
+const checkPunctuationGridLayout = () => {
+  const grid = document.querySelector(".punctuation-weave");
+  const gridRect = grid.getBoundingClientRect();
+  const cellWidth = grid.clientWidth / 9;
+  const cellHeight = grid.clientHeight / 9;
+  const originX = gridRect.left + grid.clientLeft;
+  const originY = gridRect.top + grid.clientTop;
+  const marks = [...grid.querySelectorAll("span")];
+
+  if (marks.length !== 21) {
+    throw new Error(`Expected 21 punctuation-grid items, found ${marks.length}`);
+  }
+
+  for (const mark of marks) {
+    const style = window.getComputedStyle(mark);
+    const row = Number(style.getPropertyValue("--row"));
+    const column = Number(style.getPropertyValue("--column"));
+    const textRange = document.createRange();
+    textRange.selectNodeContents(mark);
+    const textRect = textRange.getBoundingClientRect();
+    const actualX = textRect.left + textRect.width / 2;
+    const actualY = textRect.top + textRect.height / 2;
+    const expectedX = originX + (column - 0.5) * cellWidth;
+    const expectedY = originY + (row - 0.5) * cellHeight;
+
+    if (Math.abs(actualX - expectedX) > 0.5 || Math.abs(actualY - expectedY) > 0.5) {
+      throw new Error(
+        `Punctuation ink box ${mark.textContent} at (${row}, ${column}) misses its cell center: ` +
+          `actual (${actualX}, ${actualY}), expected (${expectedX}, ${expectedY})`,
+      );
+    }
+  }
+};
+
+const query = new URLSearchParams(window.location.search);
+
+if (query.has("layout-test")) {
+  try {
+    checkPunctuationGridLayout();
+    document.documentElement.dataset.layoutCheck = "passed";
+  } catch (error) {
+    document.documentElement.dataset.layoutCheck = "failed";
+    document.documentElement.dataset.layoutError = error.message;
+    console.error(error);
+  }
+}
+
+if (query.get("visual-test") === "games") {
+  document.documentElement.dataset.visualCheck = "games";
+  document.fonts.ready.then(() => {
+    document.documentElement.dataset.visualReady = "true";
+  });
+}
+
 if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
   document.documentElement.classList.add("reduce-motion");
 }

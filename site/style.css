@@ -575,6 +575,19 @@ summary:focus-visible {
   max-width: 440px;
 }
 
+/* The automated visual audit isolates the two grid games without changing
+   their card widths, typography, or responsive layout. */
+html[data-visual-check="games"] main > :not(.playground),
+html[data-visual-check="games"] .playground > :not(.play-pair),
+html[data-visual-check="games"] footer {
+  display: none;
+}
+
+html[data-visual-check="games"] .playground {
+  padding: 24px 0;
+  border-top: 0;
+}
+
 .pairing {
   display: grid;
   grid-template-columns: 1fr 1fr;

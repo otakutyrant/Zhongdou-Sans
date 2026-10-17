@@ -6,6 +6,7 @@ const BUILD_SCRIPT = $PROJECT_ROOT | path join tools build_font.py
 const RELEASE_CHECK_SCRIPT = $PROJECT_ROOT | path join tools check_release.py
 const PUNCTUATION_CHECK_SCRIPT = $PROJECT_ROOT | path join tools check_punctuation.py
 const BUILD_SITE_SCRIPT = $PROJECT_ROOT | path join tools build_site.py
+const SITE_LAYOUT_CHECK_SCRIPT = $PROJECT_ROOT | path join tools check-site-layout.nu
 const SOURCE_FONT = $PROJECT_ROOT | path join fonts variable ZhudouSansVF.ttf
 const BUILT_FONT = $PROJECT_ROOT | path join build ZhongdouSansVF.ttf
 const DEMO_PAGE = $PROJECT_ROOT | path join demo index.html
@@ -20,6 +21,8 @@ export def "nur demo build" [] {
 export def "nur release build" [tag: string] {
     # A release must pass the complete punctuation geometry and shaping audit.
     nur punctuation check
+    # Chromium catches CSS grid regressions that font geometry cannot detect.
+    nur site check-layout
     ^python $RELEASE_CHECK_SCRIPT $tag $BUILT_FONT
 }
 
@@ -57,6 +60,13 @@ export def "nur site build" [] {
     }
 
     ^python $BUILD_SITE_SCRIPT --project-root $PROJECT_ROOT --sarasa-ttc $env.SARASA_REGULAR_TTC
+}
+
+# Ask Chromium to calculate the actual punctuation-grid tracks and fail when
+# any mark's layout box no longer shares the center of its painted cell.
+export def "nur site check-layout" [] {
+    nur site build
+    ^nu $SITE_LAYOUT_CHECK_SCRIPT
 }
 
 # Build and serve the GitHub Pages site locally.
