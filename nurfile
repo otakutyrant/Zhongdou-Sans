@@ -3,6 +3,7 @@
 
 const PROJECT_ROOT = path self | path dirname
 const BUILD_SCRIPT = $PROJECT_ROOT | path join tools build_font.py
+const RELEASE_CHECK_SCRIPT = $PROJECT_ROOT | path join tools check_release.py
 const BUILD_SITE_SCRIPT = $PROJECT_ROOT | path join tools build_site.py
 const SOURCE_FONT = $PROJECT_ROOT | path join fonts variable ZhudouSansVF.ttf
 const BUILT_FONT = $PROJECT_ROOT | path join build ZhongdouSansVF.ttf
@@ -12,6 +13,12 @@ const DEMO_PAGE = $PROJECT_ROOT | path join demo index.html
 export def "nur demo build" [] {
     mkdir ($PROJECT_ROOT | path join build)
     ^python $BUILD_SCRIPT $SOURCE_FONT $BUILT_FONT
+}
+
+# Build the distributable font and ensure its metadata matches the release tag.
+export def "nur release build" [tag: string] {
+    nur demo build
+    ^python $RELEASE_CHECK_SCRIPT $tag $BUILT_FONT
 }
 
 # Build the font and open the editable specimen in Chromium.

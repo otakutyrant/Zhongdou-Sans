@@ -7,7 +7,11 @@
   };
 
   outputs =
-    { nixpkgs, ... }:
+    {
+      self,
+      nixpkgs,
+      ...
+    }:
     let
       # Chromium supplies this headless rendering workflow on NixOS/Linux.
       forAllSystems = nixpkgs.lib.genAttrs [
@@ -16,6 +20,41 @@
       ];
     in
     {
+      packages = forAllSystems (
+        system:
+        let
+          pkgs = import nixpkgs { inherit system; };
+        in
+        {
+          default = pkgs.stdenvNoCC.mkDerivation {
+            pname = "zhongdou-sans";
+            version = "3.000";
+            src = self;
+
+            nativeBuildInputs = [ pkgs.python3Packages.fonttools ];
+
+            buildPhase = ''
+              runHook preBuild
+              python tools/build_font.py fonts/variable/ZhudouSansVF.ttf ZhongdouSansVF.ttf
+              runHook postBuild
+            '';
+
+            installPhase = ''
+              runHook preInstall
+              install -Dm444 ZhongdouSansVF.ttf "$out/share/fonts/truetype/ZhongdouSansVF.ttf"
+              runHook postInstall
+            '';
+
+            meta = {
+              description = "CJK punctuation font with centered Simplified Chinese punctuation";
+              homepage = "https://github.com/otakutyrant/Zhongdou-Sans";
+              license = pkgs.lib.licenses.ofl;
+              platforms = pkgs.lib.platforms.all;
+            };
+          };
+        }
+      );
+
       devShells = forAllSystems (
         system:
         let
@@ -68,6 +107,8 @@
               pkgs.chromium
               pkgs.fontconfig
               pkgs.git
+              # GitHub CLI publishes release artifacts from the validated tag.
+              pkgs.gh
               # The standard output supplies hb-shape. The Cairo-enabled
               # development output additionally supplies hb-view.
               pkgs.harfbuzz

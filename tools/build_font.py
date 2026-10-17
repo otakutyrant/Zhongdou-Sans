@@ -17,6 +17,8 @@ from fontTools.ttLib.tables.TupleVariation import TupleVariation
 from fontTools.varLib.iup import iup_delta
 
 
+FONT_VERSION = "3.000"
+
 FAMILY_REPLACEMENTS = {
     "ZhudouSans": "ZhongdouSans",
     "Zhudou Sans": "Zhongdou Sans",
@@ -524,6 +526,23 @@ def rename_family(font: TTFont) -> None:
         record.string = value.encode(record.getEncoding())
 
 
+def set_version(font: TTFont) -> None:
+    """Give the derivative its own version in binary font metadata."""
+    font["head"].fontRevision = float(FONT_VERSION)
+    for record in font["name"].names:
+        value = record.toUnicode()
+        if record.nameID == 3:
+            _old_version, separator, identifier = value.partition(";")
+            if not separator:
+                raise ValueError(f"unexpected unique font identifier: {value!r}")
+            value = f"{FONT_VERSION};{identifier}"
+        elif record.nameID == 5:
+            value = f"Version {FONT_VERSION}"
+        else:
+            continue
+        record.string = value.encode(record.getEncoding())
+
+
 def embed_license(font: TTFont) -> None:
     """Keep distributed font metadata consistent with the complete LICENSE."""
     license_text = (Path(__file__).resolve().parent.parent / "LICENSE").read_text(
@@ -568,6 +587,7 @@ def main() -> None:
     subset_to_supported_characters(font)
     ensure_zh_cn_language_system(font)
     rename_family(font)
+    set_version(font)
     embed_license(font)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     font.save(args.output)
