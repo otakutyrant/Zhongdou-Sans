@@ -26,6 +26,10 @@
             pythonPackages.fonttools
           ]);
 
+          # Cairo support makes hb-view available alongside hb-shape, allowing
+          # focused PNG specimens of the exact glyph sequence HarfBuzz shapes.
+          harfbuzzView = (pkgs.harfbuzz.override { withCairo = true; }).dev;
+
           # Nur bundles a matching Nushell runtime. Pin its official binary so
           # contributors do not need the task runner in their global profile.
           nurVersion = "0.30.2+0.115.1";
@@ -64,6 +68,10 @@
               pkgs.chromium
               pkgs.fontconfig
               pkgs.git
+              # The standard output supplies hb-shape. The Cairo-enabled
+              # development output additionally supplies hb-view.
+              pkgs.harfbuzz
+              harfbuzzView
               pkgs.nushell
               pkgs.oxipng
               # The public site embeds only the glyphs used by its inscription

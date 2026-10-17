@@ -6711,7 +6711,7 @@ layerId = m002;
 shapes = (
 {
 angle = -90;
-pos = (120,880);
+pos = (-13,880);
 ref = cornerbracketleft;
 }
 );
@@ -6722,7 +6722,7 @@ layerId = m01;
 shapes = (
 {
 angle = -90;
-pos = (120,880);
+pos = (-21,880);
 ref = cornerbracketleft;
 }
 );
@@ -6733,7 +6733,7 @@ layerId = m003;
 shapes = (
 {
 angle = -90;
-pos = (120,880);
+pos = (-34,880);
 ref = cornerbracketleft;
 }
 );
@@ -6752,7 +6752,7 @@ layerId = m002;
 shapes = (
 {
 angle = -90;
-pos = (120,880);
+pos = (253,880);
 ref = cornerbracketright;
 }
 );
@@ -6763,7 +6763,7 @@ layerId = m01;
 shapes = (
 {
 angle = -90;
-pos = (120,880);
+pos = (261,880);
 ref = cornerbracketright;
 }
 );
@@ -6774,7 +6774,7 @@ layerId = m003;
 shapes = (
 {
 angle = -90;
-pos = (120,880);
+pos = (274,880);
 ref = cornerbracketright;
 }
 );
