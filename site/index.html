@@ -47,6 +47,166 @@
         </p>
       </section>
 
+      <section class="playground" aria-labelledby="playground-title">
+        <header class="playground-intro">
+          <p class="eyebrow">标点游园</p>
+          <h2 id="playground-title">同一方格，<br />六种玩法。</h2>
+          <p>
+            句读可以改意，文字可以循格而行。这里不挪动标点来制造效果，只让中豆黑体在真实的字身、字重与书写方向中参与游戏。
+          </p>
+        </header>
+
+        <article class="play-card sentence-game" aria-labelledby="sentence-title">
+          <div class="play-card-heading">
+            <p class="play-number">一</p>
+            <div>
+              <p class="eyebrow">一文多断</p>
+              <h3 id="sentence-title">一字未改，只改标点。</h3>
+            </div>
+          </div>
+          <p class="unpunctuated">下雨天留客天留我不留</p>
+          <div class="segmented-control" role="group" aria-label="选择断句方式">
+            <button class="is-active" type="button" data-reading="host" aria-pressed="true">主人留客</button>
+            <button type="button" data-reading="guest" aria-pressed="false">客人自留</button>
+            <button type="button" data-reading="question" aria-pressed="false">悬而未决</button>
+          </div>
+          <p class="reading-output" aria-live="polite" data-reading-output>
+            下雨天，留客天；留我不？留。
+          </p>
+        </article>
+
+        <article class="play-card rhythm-game" aria-labelledby="rhythm-title">
+          <div class="play-card-heading compact">
+            <p class="play-number">二</p>
+            <div>
+              <p class="eyebrow">标点谱</p>
+              <h3 id="rhythm-title">把一句话，读出四种呼吸。</h3>
+            </div>
+          </div>
+          <p class="rhythm-line" aria-live="polite" data-rhythm-output>
+            山雨将来，客问归期。灯未点，门先开。
+          </p>
+          <div class="tone-controls" role="group" aria-label="选择朗读语气">
+            <button class="is-active" type="button" data-tone="calm" aria-pressed="true">缓</button>
+            <button type="button" data-tone="urgent" aria-pressed="false">急</button>
+            <button type="button" data-tone="doubt" aria-pressed="false">疑</button>
+            <button type="button" data-tone="exclaim" aria-pressed="false">叹</button>
+          </div>
+        </article>
+
+        <article class="play-card pagoda-game" aria-labelledby="pagoda-title">
+          <div class="play-card-heading">
+            <p class="play-number">三</p>
+            <div>
+              <p class="eyebrow">宝塔诗</p>
+              <h3 id="pagoda-title">字字添阶，标点收檐。</h3>
+            </div>
+          </div>
+          <div class="pagoda-poem" aria-label="一字至七字宝塔诗">
+            <p>诗<span>。</span></p>
+            <p>绮美<span>，</span>瑰奇<span>。</span></p>
+            <p>明月夜<span>，</span>落花时<span>。</span></p>
+            <p>能助欢笑<span>，</span>亦伤别离<span>。</span></p>
+            <p>调清金石怨<span>，</span>吟苦鬼神悲<span>。</span></p>
+            <p>天下只应我爱<span>，</span>世间唯有君知<span>。</span></p>
+            <p>自从都尉别苏句<span>，</span>便到司空送白辞<span>。</span></p>
+          </div>
+          <p class="pagoda-caption">一字至七字诗。每行自然扩出一层，逗号居中承转，句号为层层塔檐收尾。</p>
+        </article>
+
+        <article class="play-card spiral-game" aria-labelledby="spiral-title">
+          <div class="play-card-heading">
+              <p class="play-number">四</p>
+            <div>
+              <p class="eyebrow">方盘回环</p>
+              <h3 id="spiral-title">从字心出发，沿四角读去。</h3>
+            </div>
+          </div>
+          <div class="spiral-layout">
+            <div
+              class="spiral-grid"
+              data-spiral-grid
+              data-text="山从云外起，水向石间回。人在方盘坐，诗随字格开。句读逢转角，风声入砚来。"
+              aria-label="山从云外起，水向石间回。人在方盘坐，诗随字格开。句读逢转角，风声入砚来。"
+            ></div>
+            <div class="spiral-copy">
+              <p>盘中诗曾使文字从中央向四角屈曲成文。这里把圆盘收进九乘九的方格，让句读也成为转弯的路标。</p>
+              <label for="spiral-progress">循格读到</label>
+              <input id="spiral-progress" type="range" min="1" max="81" value="1" />
+              <button class="text-button" type="button" data-spiral-play>开始循读</button>
+            </div>
+          </div>
+        </article>
+
+        <div class="play-pair">
+          <article class="play-card xuantu-game" aria-labelledby="xuantu-title">
+            <div class="play-card-heading compact">
+              <p class="play-number">五</p>
+              <div>
+                <p class="eyebrow">三路字阵</p>
+                <h3 id="xuantu-title">同一个山字，走出三句诗。</h3>
+              </div>
+            </div>
+            <div
+              class="xuantu-grid"
+              data-xuantu-grid
+              aria-label="八乘八三路诗图：横读，山雨来，客未归。纵读，山外月，照空庭。斜读，山风起，月满楼。"
+            ></div>
+            <p class="path-reading" aria-live="polite">
+              <span>此路读作</span>
+              <b data-path-output>山雨来，客未归。</b>
+            </p>
+            <div class="path-controls" role="group" aria-label="选择三路字阵阅读路径">
+              <button class="is-active" type="button" data-path="row" aria-pressed="true">横</button>
+              <button type="button" data-path="column" aria-pressed="false">纵</button>
+              <button type="button" data-path="diagonal" aria-pressed="false">斜</button>
+            </div>
+          </article>
+
+          <article class="play-card weave-game" aria-labelledby="weave-title">
+            <div class="play-card-heading compact">
+              <p class="play-number">六</p>
+              <div>
+                <p class="eyebrow">句读棋谱</p>
+                <h3 id="weave-title">点号居中，落子成阵。</h3>
+              </div>
+            </div>
+            <div
+              class="punctuation-weave"
+              role="img"
+              aria-label="由问号、叹号、冒号、句号、省略号和间隔号组成的对称九乘九谱阵"
+            >
+              <span style="--row: 1; --column: 5">。</span>
+              <span style="--row: 2; --column: 3">⋯</span>
+              <span style="--row: 2; --column: 7">⋯</span>
+              <span style="--row: 3; --column: 2">：</span>
+              <span style="--row: 3; --column: 5">？</span>
+              <span style="--row: 3; --column: 8">：</span>
+              <span style="--row: 4; --column: 3">・</span>
+              <span style="--row: 4; --column: 7">・</span>
+              <span style="--row: 5; --column: 1">⋯</span>
+              <span style="--row: 5; --column: 3">。</span>
+              <span class="weave-center" style="--row: 5; --column: 5">・</span>
+              <span style="--row: 5; --column: 7">。</span>
+              <span style="--row: 5; --column: 9">⋯</span>
+              <span style="--row: 6; --column: 3">・</span>
+              <span style="--row: 6; --column: 7">・</span>
+              <span style="--row: 7; --column: 2">：</span>
+              <span style="--row: 7; --column: 5">！</span>
+              <span style="--row: 7; --column: 8">：</span>
+              <span style="--row: 8; --column: 3">⋯</span>
+              <span style="--row: 8; --column: 7">⋯</span>
+              <span style="--row: 9; --column: 5">。</span>
+            </div>
+            <p class="weave-caption">这里只用真正以格心为轴的点号；九乘九字格既是棋盘，也是标点谱。</p>
+          </article>
+        </div>
+
+        <p class="visually-hidden" aria-hidden="true">
+          下雨，天留客；天留我不留。下雨天，留客天，留我不？留！山雨将来！客问归期？灯未点——门先开！「山雨将来？」客问：「归期？」灯未点……门先开？暂停循读。
+        </p>
+      </section>
+
       <section class="pairing" aria-labelledby="pairing-title">
         <div>
           <p class="eyebrow">两字体，一篇章</p>
@@ -76,5 +236,6 @@
       <span>中豆黑体・SIL OFL 1.1</span>
       <span>网页汉字采用更纱黑体 SC</span>
     </footer>
+    <script src="./playground.js"></script>
   </body>
 </html>

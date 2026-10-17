@@ -88,6 +88,7 @@ a {
 
 .declaration,
 .grid-section,
+.playground,
 .pairing,
 .closing {
   width: min(1180px, calc(100% - 48px));
@@ -212,6 +213,368 @@ a {
   line-height: 1.8;
 }
 
+.playground {
+  padding: clamp(110px, 15vw, 220px) 0;
+  border-top: 1px solid var(--line);
+}
+
+.playground-intro {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 40px clamp(40px, 8vw, 120px);
+  align-items: end;
+  margin-bottom: clamp(70px, 10vw, 140px);
+}
+
+.playground-intro .eyebrow {
+  grid-column: 1 / -1;
+  margin-bottom: -8px;
+}
+
+.playground-intro h2 {
+  margin: 0;
+  font-size: clamp(48px, 8vw, 108px);
+  font-weight: 540;
+  letter-spacing: -0.055em;
+  line-height: 1.06;
+}
+
+.playground-intro > p:last-child,
+.spiral-copy {
+  margin: 0;
+  color: #aaa295;
+  font-size: 18px;
+  line-height: 2;
+}
+
+.play-card {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(28px, 4vw, 56px);
+  border: 1px solid var(--line);
+  background:
+    linear-gradient(rgb(222 215 200 / 3%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(222 215 200 / 3%) 1px, transparent 1px),
+    #15120f;
+  background-size: 2rem 2rem;
+}
+
+.play-card + .play-card,
+.play-pair + .play-card,
+.play-card + .play-pair,
+.play-pair + .play-pair {
+  margin-top: 24px;
+}
+
+.play-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.play-pair .play-card {
+  min-width: 0;
+}
+
+.play-pair .play-card + .play-card {
+  margin-top: 0;
+}
+
+.play-card-heading {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.play-card-heading .eyebrow {
+  margin-bottom: 14px;
+}
+
+.play-number {
+  width: 2.35rem;
+  height: 2.35rem;
+  margin: 0;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  color: var(--gold);
+  line-height: 2.2rem;
+  text-align: center;
+}
+
+.play-card h3 {
+  margin: 0;
+  font-size: clamp(26px, 4vw, 52px);
+  font-weight: 520;
+  line-height: 1.25;
+}
+
+.compact h3 {
+  font-size: clamp(24px, 3vw, 38px);
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  color: inherit;
+}
+
+.segmented-control,
+.tone-controls,
+.path-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.segmented-control button,
+.tone-controls button,
+.path-controls button,
+.text-button {
+  padding: 10px 15px;
+  border: 1px solid rgb(222 215 200 / 22%);
+  background: #17130f;
+  cursor: pointer;
+  transition: border-color 160ms ease, background 160ms ease, color 160ms ease;
+}
+
+.segmented-control button:hover,
+.tone-controls button:hover,
+.path-controls button:hover,
+.text-button:hover,
+.segmented-control button.is-active,
+.tone-controls button.is-active,
+.path-controls button.is-active {
+  border-color: var(--gold);
+  background: var(--gold);
+  color: var(--ink);
+}
+
+button:focus-visible,
+input:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--paper);
+  outline-offset: 3px;
+}
+
+.unpunctuated {
+  margin: clamp(60px, 8vw, 100px) 0 30px;
+  color: var(--stone-light);
+  font-size: clamp(24px, 4.5vw, 60px);
+  letter-spacing: 0.08em;
+  line-height: 1.35;
+}
+
+.reading-output {
+  min-height: 1.45em;
+  margin: 32px 0 0;
+  color: var(--paper);
+  font-size: clamp(29px, 5.5vw, 72px);
+  font-weight: 560;
+  line-height: 1.45;
+}
+
+.rhythm-line {
+  min-height: 7.2em;
+  margin: 60px 0 32px;
+  color: var(--paper);
+  font-size: clamp(26px, 3.3vw, 42px);
+  line-height: 1.8;
+  transition: font-weight 200ms ease;
+}
+
+.tone-controls button,
+.path-controls button {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 50%;
+}
+
+.pagoda-game {
+  min-height: min(88svh, 940px);
+}
+
+.pagoda-poem {
+  display: grid;
+  margin: clamp(70px, 10vw, 130px) auto 54px;
+  place-items: center;
+  color: var(--paper);
+  font-size: clamp(16px, 3.7vw, 44px);
+  font-weight: 470;
+  line-height: 1.55;
+}
+
+.pagoda-poem p {
+  margin: 0;
+  white-space: nowrap;
+}
+
+.pagoda-poem span {
+  color: var(--gold);
+  font-weight: 650;
+}
+
+.pagoda-caption,
+.weave-caption {
+  max-width: 700px;
+  margin: 0 auto;
+  color: #817a70;
+  font-size: 14px;
+  line-height: 1.8;
+  text-align: center;
+}
+
+.spiral-game {
+  padding-bottom: clamp(40px, 6vw, 72px);
+}
+
+.spiral-layout {
+  display: grid;
+  grid-template-columns: minmax(300px, 1fr) minmax(260px, 0.7fr);
+  gap: clamp(40px, 8vw, 110px);
+  align-items: center;
+  margin-top: 56px;
+}
+
+.spiral-grid,
+.xuantu-grid {
+  display: grid;
+  aspect-ratio: 1;
+  border: 1px solid var(--line);
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+}
+
+.spiral-grid {
+  grid-template: repeat(9, 1fr) / repeat(9, 1fr);
+  background-size: calc(100% / 9) calc(100% / 9);
+}
+
+.spiral-grid span,
+.xuantu-grid span {
+  display: grid;
+  place-items: center;
+  color: #5f584e;
+  font-size: clamp(17px, 3.1vw, 38px);
+  line-height: 1;
+  transition: color 180ms ease, background 180ms ease;
+}
+
+.spiral-grid span.is-read {
+  color: var(--paper);
+}
+
+.spiral-grid span.is-current {
+  background: var(--red);
+  color: #f2eadb;
+}
+
+.spiral-copy label {
+  display: block;
+  margin-top: 36px;
+  color: var(--gold);
+  font-family: ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+
+.spiral-copy input {
+  width: 100%;
+  margin: 15px 0 22px;
+  accent-color: var(--red);
+}
+
+.text-button {
+  width: 100%;
+}
+
+.xuantu-grid {
+  grid-template: repeat(8, 1fr) / repeat(8, 1fr);
+  max-width: 500px;
+  margin: 48px auto 28px;
+  background-size: calc(100% / 8) calc(100% / 8);
+  background-origin: content-box;
+}
+
+.xuantu-grid span {
+  font-size: clamp(18px, 2.7vw, 34px);
+}
+
+.xuantu-grid span.is-active {
+  background: rgb(189 154 99 / 22%);
+  color: #f0d29f;
+}
+
+.path-reading {
+  min-height: 4.5em;
+  margin: 0 0 24px;
+  text-align: center;
+}
+
+.path-reading span {
+  display: block;
+  margin-bottom: 8px;
+  color: #817a70;
+  font-family: ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+}
+
+.path-reading b {
+  color: var(--paper);
+  font-size: clamp(21px, 3vw, 34px);
+  font-weight: 520;
+}
+
+.path-controls {
+  justify-content: center;
+}
+
+.punctuation-weave {
+  display: grid;
+  /* minmax(0, 1fr) prevents the oversized red center mark from enlarging
+     the fifth track while the painted background remains nine equal cells. */
+  grid-template: repeat(9, minmax(0, 1fr)) / repeat(9, minmax(0, 1fr));
+  width: min(100%, 500px);
+  aspect-ratio: 1;
+  margin: 48px auto 26px;
+  border: 1px solid var(--line);
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px),
+    radial-gradient(circle at center, #241e17, #12100d 68%);
+  background-size: calc(100% / 9) calc(100% / 9), calc(100% / 9) calc(100% / 9), auto;
+  background-origin: content-box;
+}
+
+.punctuation-weave span {
+  display: grid;
+  grid-row: var(--row);
+  grid-column: var(--column);
+  min-width: 0;
+  min-height: 0;
+  place-items: center;
+  color: var(--stone-light);
+  font-size: clamp(19px, 3vw, 38px);
+  line-height: 1;
+}
+
+.punctuation-weave .weave-center {
+  color: var(--red);
+  transform: scale(2);
+  transform-origin: center;
+}
+
+.weave-caption {
+  max-width: 440px;
+}
+
 .pairing {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -301,8 +664,33 @@ footer {
   }
 
   .section-heading,
-  .pairing {
+  .pairing,
+  .playground-intro,
+  .play-pair,
+  .spiral-layout {
     grid-template-columns: 1fr;
+  }
+
+  .playground-intro .eyebrow {
+    grid-column: auto;
+    margin-bottom: -12px;
+  }
+
+  .play-pair {
+    gap: 16px;
+  }
+
+  .play-pair .play-card + .play-card {
+    margin-top: 0;
+  }
+
+  .spiral-layout {
+    gap: 40px;
+  }
+
+  .spiral-grid span,
+  .xuantu-grid span {
+    font-size: clamp(14px, 4.6vw, 25px);
   }
 
   .section-heading {
@@ -324,5 +712,14 @@ footer {
   footer {
     flex-direction: column;
     gap: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
   }
 }
