@@ -26,10 +26,4 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         shell: nix develop -c nu {0}
-        run: |
-          ^gh release create $env.GITHUB_REF_NAME \
-            build/ZhongdouSansVF.ttf \
-            LICENSE \
-            CHANGELOG.md \
-            --title $"Zhongdou Sans ($env.GITHUB_REF_NAME)" \
-            --generate-notes
+        run: ^gh release create $env.GITHUB_REF_NAME build/ZhongdouSansVF.ttf LICENSE CHANGELOG.md --title $"Zhongdou Sans ($env.GITHUB_REF_NAME)" --generate-notes
