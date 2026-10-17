@@ -20,9 +20,12 @@ def main() -> None:
     version = match.group(1)
 
     font = TTFont(args.font)
-    if font["head"].fontRevision != float(version):
+    # OpenType stores fontRevision as a 16.16 fixed-point number, so most
+    # three-decimal versions acquire a tiny, unavoidable quantization error.
+    revision = font["head"].fontRevision
+    if abs(revision - float(version)) > 1 / 65536:
         raise ValueError(
-            f"head.fontRevision is {font['head'].fontRevision}, expected {version}"
+            f"head.fontRevision is {revision}, expected {version}"
         )
 
     names = font["name"].names

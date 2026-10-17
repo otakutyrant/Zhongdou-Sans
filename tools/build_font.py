@@ -17,7 +17,7 @@ from fontTools.ttLib.tables.TupleVariation import TupleVariation
 from fontTools.varLib.iup import iup_delta
 
 
-FONT_VERSION = "3.000"
+FONT_VERSION = "3.001"
 
 FAMILY_REPLACEMENTS = {
     "ZhudouSans": "ZhongdouSans",

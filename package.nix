@@ -8,7 +8,7 @@
 
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "zhongdou-sans";
-  version = "3.000";
+  version = "3.001";
 
   # Nixpkgs fetches the formal release, while the development flake overrides
   # this argument with its own source tree so local edits can be built directly.
@@ -20,7 +20,9 @@ stdenvNoCC.mkDerivation (finalAttrs: {
         owner = "otakutyrant";
         repo = "Zhongdou-Sans";
         rev = "v${finalAttrs.version}";
-        hash = "sha256-jZPcmT5mqG6WAVEaq3QOpawMBQjx5M5H/TWBHgXMxc0=";
+        # This hash is used only when consuming a tagged release; the local
+        # development flake passes `source = self` and does not fetch it.
+        hash = lib.fakeHash;
       };
 
   strictDeps = true;
