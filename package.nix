@@ -20,9 +20,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
         owner = "otakutyrant";
         repo = "Zhongdou-Sans";
         rev = "v${finalAttrs.version}";
-        # This hash is used only when consuming a tagged release; the local
-        # development flake passes `source = self` and does not fetch it.
-        hash = lib.fakeHash;
+        hash = "sha256-0wk9OLPhlQbtFKPIWU3Pp/ursAyxvI7r5AzABG57LQs=";
       };
 
   strictDeps = true;
