@@ -430,6 +430,49 @@ def translate_variable_composite_once(
     translate_glyph(font, glyph_name, dx, 0)
 
 
+def translate_variable_composite_with_model_once(
+    font: TTFont,
+    glyph_name: str,
+    dx: int,
+    variation_dx: tuple[int, ...],
+    variation_model_glyph: str,
+    before_bounds: tuple[int, int, int, int],
+    after_bounds: tuple[int, int, int, int],
+) -> None:
+    """Center a composite while preserving and extending its existing tuples."""
+    glyph = font["glyf"][glyph_name]
+    glyph.recalcBounds(font["glyf"])
+    bounds = (glyph.xMin, glyph.yMin, glyph.xMax, glyph.yMax)
+    if bounds == after_bounds:
+        return
+    if bounds != before_bounds:
+        raise ValueError(
+            f"unexpected {glyph_name} bounds: {bounds}; expected {before_bounds}"
+        )
+    if not glyph.isComposite():
+        raise ValueError(f"{glyph_name} is not a composite")
+
+    model_variations = font["gvar"].variations[variation_model_glyph]
+    if len(model_variations) != len(variation_dx):
+        raise ValueError(
+            f"unexpected {variation_model_glyph} variation count: "
+            f"{len(model_variations)}; expected {len(variation_dx)}"
+        )
+
+    coordinate_count = len(glyph.components) + 4
+    font["gvar"].variations[glyph_name].extend(
+        TupleVariation(
+            variation.axes,
+            [(tuple_dx, 0)] * len(glyph.components)
+            + [(0, 0)] * (coordinate_count - len(glyph.components)),
+        )
+        for variation, tuple_dx in zip(
+            model_variations, variation_dx, strict=True
+        )
+    )
+    translate_glyph(font, glyph_name, dx, 0)
+
+
 def sync_dependent_glyph_metrics(font: TTFont, translated: set[str]) -> None:
     """Synchronize side bearings after moving outlines and their composites."""
     affected = set(translated)
@@ -475,6 +518,27 @@ def refine_punctuation_glyphs(font: TTFont) -> None:
         (463, 338, 537, 422),
         (463, 358, 537, 442),
     )
+    # The inherited centered comma and semicolon components retain a slight
+    # left bias that grows toward lighter weights. Correct every master, not
+    # only the default outline that happens to look close at heavy weights.
+    translate_variable_composite_with_model_once(
+        font,
+        "uniFF0C.uv002",
+        31,
+        (-3, -22),
+        "uni300C",
+        (414, 265, 524, 535),
+        (445, 265, 555, 535),
+    )
+    translate_variable_composite_with_model_once(
+        font,
+        "uniFF1B.uv002",
+        25,
+        (-4, -16),
+        "uni300C",
+        (414, 37, 537, 679),
+        (439, 37, 562, 679),
+    )
     translate_variable_glyph_once(
         font,
         "uni3014",
@@ -490,6 +554,14 @@ def refine_punctuation_glyphs(font: TTFont) -> None:
         (5, 7),
         (660, 186, 965, 840),
         (348, 186, 653, 840),
+    )
+    translate_variable_glyph_once(
+        font,
+        "uni300E",
+        -279,
+        (-3, -6),
+        (598, 186, 960, 840),
+        (319, 186, 681, 840),
     )
     # The inherited vertical corner quotes straddle the column center. Move
     # each rotated composite onto x=500 at every master while preserving its
@@ -512,7 +584,31 @@ def refine_punctuation_glyphs(font: TTFont) -> None:
         (40, 228, 694, 533),
         (173, 228, 827, 533),
     )
-    sync_dependent_glyph_metrics(font, set(centered_marks) | {"uni300C", "uni3014"})
+    # The double corner quotes have the same inherited side bias as the
+    # single pair. Their vertical forms are rotated composites, so center
+    # those independently after moving the horizontal base glyph.
+    translate_variable_composite_once(
+        font,
+        "uniFE43",
+        -133,
+        (-8, -21),
+        "uni300E",
+        (306, 199, 960, 561),
+        (173, 199, 827, 561),
+    )
+    translate_variable_composite_once(
+        font,
+        "uniFE44",
+        133,
+        (8, 21),
+        "uni300E",
+        (40, 199, 694, 561),
+        (173, 199, 827, 561),
+    )
+    sync_dependent_glyph_metrics(
+        font,
+        set(centered_marks) | {"uni300C", "uni300E", "uni3014"},
+    )
 
 
 def rename_family(font: TTFont) -> None:

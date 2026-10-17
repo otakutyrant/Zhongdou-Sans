@@ -4,6 +4,7 @@
 const PROJECT_ROOT = path self | path dirname
 const BUILD_SCRIPT = $PROJECT_ROOT | path join tools build_font.py
 const RELEASE_CHECK_SCRIPT = $PROJECT_ROOT | path join tools check_release.py
+const PUNCTUATION_CHECK_SCRIPT = $PROJECT_ROOT | path join tools check_punctuation.py
 const BUILD_SITE_SCRIPT = $PROJECT_ROOT | path join tools build_site.py
 const SOURCE_FONT = $PROJECT_ROOT | path join fonts variable ZhudouSansVF.ttf
 const BUILT_FONT = $PROJECT_ROOT | path join build ZhongdouSansVF.ttf
@@ -17,7 +18,8 @@ export def "nur demo build" [] {
 
 # Build the distributable font and ensure its metadata matches the release tag.
 export def "nur release build" [tag: string] {
-    nur demo build
+    # A release must pass the complete punctuation geometry and shaping audit.
+    nur punctuation check
     ^python $RELEASE_CHECK_SCRIPT $tag $BUILT_FONT
 }
 
@@ -30,6 +32,14 @@ export def "nur demo preview" [] {
 # Regenerate the PNG embedded at the top of the README.
 export def "nur demo render" [] {
     ^nu ($PROJECT_ROOT | path join tools render-demo.nu)
+}
+
+# Check every encoded punctuation mark at all variable-font extremes and
+# render focused horizontal and vertical specimens for visual review.
+export def "nur punctuation check" [] {
+    nur demo build
+    let render_dir = $PROJECT_ROOT | path join build assessment punctuation
+    ^python $PUNCTUATION_CHECK_SCRIPT $BUILT_FONT --render-dir $render_dir
 }
 
 # Rebuild the README's light and dark title specimens from the current font.
