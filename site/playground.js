@@ -43,7 +43,12 @@ const makeSpiral = (size) => {
   let row = Math.floor(size / 2);
   let column = Math.floor(size / 2);
   points.push([row, column]);
-  const directions = [[0, 1], [-1, 0], [0, -1], [1, 0]];
+  const directions = [
+    [0, 1],
+    [-1, 0],
+    [0, -1],
+    [1, 0],
+  ];
   let distance = 1;
   let direction = 0;
   while (points.length < size * size) {
@@ -143,7 +148,7 @@ for (const route of Object.values(routeDefinitions)) {
 }
 
 const xuantuCells = [];
-for (const [index, character] of cellCharacters.entries()) {
+for (const character of cellCharacters) {
   const cell = document.createElement("span");
   cell.textContent = character;
   xuantuGrid.append(cell);
@@ -202,14 +207,55 @@ const checkPunctuationGridLayout = () => {
   }
 };
 
+const requireState = (condition, message) => {
+  if (!condition) throw new Error(message);
+};
+
+const checkPlaygroundInteractions = () => {
+  const guestButton = readingButtons.find((button) => button.dataset.reading === "guest");
+  guestButton.click();
+  requireState(readingOutput.textContent === readings.guest, "Sentence reading did not update");
+  requireState(guestButton.getAttribute("aria-pressed") === "true", "Sentence ARIA state is stale");
+
+  const urgentButton = toneButtons.find((button) => button.dataset.tone === "urgent");
+  urgentButton.click();
+  requireState(rhythmOutput.textContent === tones.urgent[0], "Rhythm reading did not update");
+  requireState(rhythmOutput.style.fontWeight === "720", "Rhythm weight did not update");
+
+  const diagonalButton = pathButtons.find((button) => button.dataset.path === "diagonal");
+  diagonalButton.click();
+  requireState(
+    pathOutput.textContent === routeDefinitions.diagonal.text,
+    "Path reading did not update",
+  );
+  requireState(
+    xuantuCells.filter((cell) => cell.classList.contains("is-active")).length === 8,
+    "Path highlighting did not select eight cells",
+  );
+
+  spiralRange.value = 12;
+  spiralRange.dispatchEvent(new Event("input"));
+  requireState(
+    spiralCells.filter((cell) => cell.classList.contains("is-read")).length === 12,
+    "Spiral progress did not paint the expected cells",
+  );
+  requireState(
+    spiralCells[11].classList.contains("is-current"),
+    "Spiral progress did not mark its current cell",
+  );
+};
+
 const query = new URLSearchParams(window.location.search);
 
 if (query.has("layout-test")) {
   try {
     checkPunctuationGridLayout();
+    checkPlaygroundInteractions();
     document.documentElement.dataset.layoutCheck = "passed";
+    document.documentElement.dataset.interactionCheck = "passed";
   } catch (error) {
     document.documentElement.dataset.layoutCheck = "failed";
+    document.documentElement.dataset.interactionCheck = "failed";
     document.documentElement.dataset.layoutError = error.message;
     console.error(error);
   }

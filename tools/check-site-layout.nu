@@ -50,6 +50,13 @@ def main [] {
       msg: $"Punctuation-grid layout check failed: ($detail | default 'the page did not report a passing result')"
     }
   }
+  if not ($result.stdout | str contains 'data-interaction-check="passed"') {
+    let detail = ($result.stdout | parse --regex 'data-layout-error="(?<message>[^"]+)"' | get -o 0.message)
+    rm -r $chromium_profile
+    error make {
+      msg: $"Playground interaction check failed: ($detail | default 'the page did not report a passing result')"
+    }
+  }
 
   let screenshot_dir = ($project_root | path join "build" "assessment" "site")
   mkdir $screenshot_dir
@@ -97,6 +104,6 @@ def main [] {
   }
 
   rm -r $chromium_profile
-  print "Validated all punctuation-grid items against their rendered cell centers."
+  print "Validated punctuation-grid geometry and playground interactions."
   print $"Rendered visual QA screenshots in ($screenshot_dir)."
 }

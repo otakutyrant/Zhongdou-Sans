@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# pyright: basic, reportAttributeAccessIssue=false
 """Build the static GitHub Pages site with content-specific webfont subsets."""
 
 from __future__ import annotations
@@ -18,11 +19,13 @@ class VisibleText(HTMLParser):
     """Collect visible HTML text and accessible labels used by the page."""
 
     def __init__(self) -> None:
+        """Initialize visible-text collection state."""
         super().__init__()
         self.parts: list[str] = []
         self.hidden_depth = 0
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        """Collect labels and enter hidden script or style regions."""
         if tag in {"script", "style"}:
             self.hidden_depth += 1
         for name, value in attrs:
@@ -30,10 +33,12 @@ class VisibleText(HTMLParser):
                 self.parts.append(value)
 
     def handle_endtag(self, tag: str) -> None:
+        """Leave hidden script or style regions at their closing tags."""
         if tag in {"script", "style"}:
             self.hidden_depth -= 1
 
     def handle_data(self, data: str) -> None:
+        """Collect text only when it is visible page content."""
         if self.hidden_depth == 0:
             self.parts.append(data)
 

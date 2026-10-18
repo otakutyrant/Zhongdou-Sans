@@ -169,7 +169,10 @@ a {
     linear-gradient(rgb(224 216 199 / 8%) 1px, transparent 1px),
     linear-gradient(90deg, rgb(224 216 199 / 8%) 1px, transparent 1px),
     radial-gradient(circle at center, #221e18, #13110e 72%);
-  background-size: 1em 1em, 1em 1em, auto;
+  background-size:
+    1em 1em,
+    1em 1em,
+    auto;
   font-size: clamp(28px, 4.4vw, 54px);
 }
 
@@ -254,8 +257,7 @@ a {
   border: 1px solid var(--line);
   background:
     linear-gradient(rgb(222 215 200 / 3%) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(222 215 200 / 3%) 1px, transparent 1px),
-    #15120f;
+    linear-gradient(90deg, rgb(222 215 200 / 3%) 1px, transparent 1px), #15120f;
   background-size: 2rem 2rem;
 }
 
@@ -338,7 +340,10 @@ button {
   border: 1px solid rgb(222 215 200 / 22%);
   background: #17130f;
   cursor: pointer;
-  transition: border-color 160ms ease, background 160ms ease, color 160ms ease;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    color 160ms ease;
 }
 
 .segmented-control button:hover,
@@ -462,7 +467,9 @@ summary:focus-visible {
   color: #5f584e;
   font-size: clamp(17px, 3.1vw, 38px);
   line-height: 1;
-  transition: color 180ms ease, background 180ms ease;
+  transition:
+    color 180ms ease,
+    background 180ms ease;
 }
 
 .spiral-grid span.is-read {
@@ -549,7 +556,10 @@ summary:focus-visible {
     linear-gradient(var(--line) 1px, transparent 1px),
     linear-gradient(90deg, var(--line) 1px, transparent 1px),
     radial-gradient(circle at center, #241e17, #12100d 68%);
-  background-size: calc(100% / 9) calc(100% / 9), calc(100% / 9) calc(100% / 9), auto;
+  background-size:
+    calc(100% / 9) calc(100% / 9),
+    calc(100% / 9) calc(100% / 9),
+    auto;
   background-origin: content-box;
 }
 
@@ -642,7 +652,10 @@ html[data-visual-check="games"] .playground {
   padding: 14px 22px;
   border: 1px solid rgb(222 215 200 / 28%);
   text-decoration: none;
-  transition: background 180ms ease, color 180ms ease, border-color 180ms ease;
+  transition:
+    background 180ms ease,
+    color 180ms ease,
+    border-color 180ms ease;
 }
 
 .actions a:first-child,

@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# pyright: basic, reportArgumentType=false, reportCallIssue=false, reportIndexIssue=false, reportOperatorIssue=false, reportOptionalSubscript=false, reportReturnType=false
 """Validate every encoded punctuation glyph and render focused specimens."""
 
 from __future__ import annotations
@@ -13,7 +14,6 @@ from pathlib import Path
 from fontTools.pens.boundsPen import BoundsPen
 from fontTools.ttLib import TTFont
 from fontTools.varLib.instancer import instantiateVariableFont
-
 
 WEIGHTS = (250, 400, 900)
 EXPECTED_PUNCTUATION_COUNT = 98
@@ -103,8 +103,7 @@ def punctuation_codepoints(font: TTFont) -> tuple[int, ...]:
     return tuple(
         codepoint
         for codepoint in sorted(font.getBestCmap())
-        if unicodedata.category(chr(codepoint)).startswith("P")
-        or codepoint in EXTRA_PUNCTUATION
+        if unicodedata.category(chr(codepoint)).startswith("P") or codepoint in EXTRA_PUNCTUATION
     )
 
 
@@ -173,19 +172,13 @@ def validate_geometry(font_path: Path) -> tuple[int, ...]:
             bounds = glyph_bounds(font, cmap[codepoint])
             center_x = (bounds[0] + bounds[2]) / 2
             if not close(center_x, 500, 1):
-                fail(
-                    f"U+{codepoint:04X} is not centered at wght={weight}: "
-                    f"x center={center_x}"
-                )
+                fail(f"U+{codepoint:04X} is not centered at wght={weight}: x center={center_x}")
 
         for glyph_name in CENTERED_MARK_GLYPHS:
             bounds = glyph_bounds(font, glyph_name)
             center_x = (bounds[0] + bounds[2]) / 2
             if not close(center_x, 500, 1):
-                fail(
-                    f"{glyph_name} is not centered at wght={weight}: "
-                    f"x center={center_x}"
-                )
+                fail(f"{glyph_name} is not centered at wght={weight}: x center={center_x}")
 
     return codepoints
 
@@ -201,7 +194,7 @@ def shape(
     result = subprocess.run(
         [
             hb_shape,
-            f"--language=zh-cn",
+            "--language=zh-cn",
             f"--direction={direction}",
             f"--features={features}",
             f"--variations=wght={weight}",

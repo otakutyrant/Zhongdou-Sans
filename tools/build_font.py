@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# pyright: basic, reportArgumentType=false, reportAttributeAccessIssue=false, reportGeneralTypeIssues=false, reportIndexIssue=false
 """Build the Zhongdou Sans variable font from the upstream binary.
 
 The upstream repository ships Glyphs source but no automated compiler. This
@@ -15,7 +16,6 @@ from fontTools.ttLib import TTFont
 from fontTools.ttLib.tables import otTables
 from fontTools.ttLib.tables.TupleVariation import TupleVariation
 from fontTools.varLib.iup import iup_delta
-
 
 FONT_VERSION = "3.001"
 
@@ -88,10 +88,7 @@ def add_midline_ellipsis(font: TTFont) -> None:
 def subset_to_supported_characters(font: TTFont) -> None:
     """Remove unrelated characters, alternates, and layout features."""
     encoded = {
-        codepoint
-        for table in font["cmap"].tables
-        if table.isUnicode()
-        for codepoint in table.cmap
+        codepoint for table in font["cmap"].tables if table.isUnicode() for codepoint in table.cmap
     }
     variation_selectors = {
         selector
@@ -119,9 +116,7 @@ def subset_to_supported_characters(font: TTFont) -> None:
     options.legacy_cmap = True
 
     subsetter = subset.Subsetter(options=options)
-    subsetter.populate(
-        unicodes=(encoded - REMOVED_CODEPOINTS) | variation_selectors
-    )
+    subsetter.populate(unicodes=(encoded - REMOVED_CODEPOINTS) | variation_selectors)
     subsetter.subset(font)
 
     # fontTools can leave a syntactically valid but featureless GPOS table
@@ -130,10 +125,7 @@ def subset_to_supported_characters(font: TTFont) -> None:
     if "GPOS" in font and not font["GPOS"].table.FeatureList.FeatureRecord:
         del font["GPOS"]
 
-    retained = {
-        record.FeatureTag
-        for record in font["GSUB"].table.FeatureList.FeatureRecord
-    }
+    retained = {record.FeatureTag for record in font["GSUB"].table.FeatureList.FeatureRecord}
     if retained != set(CORE_LAYOUT_FEATURES):
         raise ValueError(
             f"unexpected retained layout features: {sorted(retained)}; "
@@ -146,9 +138,7 @@ def ensure_zh_cn_language_system(font: TTFont) -> None:
     matched = 0
     for script_record in font["GSUB"].table.ScriptList.ScriptRecord:
         script = script_record.Script
-        languages = {
-            record.LangSysTag.strip(): record for record in script.LangSysRecord or []
-        }
+        languages = {record.LangSysTag.strip(): record for record in script.LangSysRecord or []}
         if script.DefaultLangSys is None:
             continue
         if "ZHS" not in languages:
@@ -183,8 +173,7 @@ def use_zh_tw_locl_for_zh_cn(font: TTFont) -> None:
     updated = 0
     for script_record in font["GSUB"].table.ScriptList.ScriptRecord:
         language_records = {
-            record.LangSysTag.strip(): record
-            for record in script_record.Script.LangSysRecord or []
+            record.LangSysTag.strip(): record for record in script_record.Script.LangSysRecord or []
         }
         if "ZHS" not in language_records or "ZHT" not in language_records:
             continue
@@ -192,19 +181,13 @@ def use_zh_tw_locl_for_zh_cn(font: TTFont) -> None:
         zhs = language_records["ZHS"].LangSys
         zht = language_records["ZHT"].LangSys
         zht_locl = [
-            index
-            for index in zht.FeatureIndex
-            if feature_records[index].FeatureTag == "locl"
+            index for index in zht.FeatureIndex if feature_records[index].FeatureTag == "locl"
         ]
         if len(zht_locl) != 1:
-            raise ValueError(
-                f"{script_record.ScriptTag} ZHT has {len(zht_locl)} locl features"
-            )
+            raise ValueError(f"{script_record.ScriptTag} ZHT has {len(zht_locl)} locl features")
 
         zhs.FeatureIndex = sorted(
-            index
-            for index in zhs.FeatureIndex
-            if feature_records[index].FeatureTag != "locl"
+            index for index in zhs.FeatureIndex if feature_records[index].FeatureTag != "locl"
         )
         zhs.FeatureIndex.append(zht_locl[0])
         zhs.FeatureIndex.sort()
@@ -242,8 +225,7 @@ def center_zh_cn_vertical_punctuation(font: TTFont) -> None:
             localized_lookups.append((lookup_index, mapping))
     if len(localized_lookups) != 1:
         raise ValueError(
-            f"the input font has {len(localized_lookups)} localized Chinese "
-            "vertical lookups"
+            f"the input font has {len(localized_lookups)} localized Chinese vertical lookups"
         )
 
     localized_lookup_index, mapping = localized_lookups[0]
@@ -260,8 +242,7 @@ def center_zh_cn_vertical_punctuation(font: TTFont) -> None:
 
     for script_record in font["GSUB"].table.ScriptList.ScriptRecord:
         language_records = {
-            record.LangSysTag.strip(): record
-            for record in script_record.Script.LangSysRecord or []
+            record.LangSysTag.strip(): record for record in script_record.Script.LangSysRecord or []
         }
         if "ZHS" not in language_records:
             continue
@@ -303,8 +284,11 @@ def center_default_language_punctuation(font: TTFont) -> None:
         if default is None:
             continue
         default.FeatureIndex = sorted(
-            {index for index in default.FeatureIndex
-             if table.FeatureList.FeatureRecord[index].FeatureTag != "locl"}
+            {
+                index
+                for index in default.FeatureIndex
+                if table.FeatureList.FeatureRecord[index].FeatureTag != "locl"
+            }
             | {centered_index}
         )
         default.FeatureCount = len(default.FeatureIndex)
@@ -338,9 +322,7 @@ def translate_glyphs_once(
     if bounds == after_bounds:
         return
     if bounds != before_bounds:
-        raise ValueError(
-            f"unexpected {marker_name} bounds: {bounds}; expected {before_bounds}"
-        )
+        raise ValueError(f"unexpected {marker_name} bounds: {bounds}; expected {before_bounds}")
     for glyph_name in glyph_names:
         translate_glyph(font, glyph_name, dx, dy)
 
@@ -360,9 +342,7 @@ def translate_variable_glyph_once(
     if bounds == after_bounds:
         return
     if bounds != before_bounds:
-        raise ValueError(
-            f"unexpected {glyph_name} bounds: {bounds}; expected {before_bounds}"
-        )
+        raise ValueError(f"unexpected {glyph_name} bounds: {bounds}; expected {before_bounds}")
 
     variations = font["gvar"].variations[glyph_name]
     if len(variations) != len(variation_dx):
@@ -403,9 +383,7 @@ def translate_variable_composite_once(
     if bounds == after_bounds:
         return
     if bounds != before_bounds:
-        raise ValueError(
-            f"unexpected {glyph_name} bounds: {bounds}; expected {before_bounds}"
-        )
+        raise ValueError(f"unexpected {glyph_name} bounds: {bounds}; expected {before_bounds}")
     if not glyph.isComposite() or font["gvar"].variations[glyph_name]:
         raise ValueError(f"{glyph_name} is not a variation-free composite")
 
@@ -423,9 +401,7 @@ def translate_variable_composite_once(
             [(tuple_dx, 0)] * len(glyph.components)
             + [(0, 0)] * (coordinate_count - len(glyph.components)),
         )
-        for variation, tuple_dx in zip(
-            model_variations, variation_dx, strict=True
-        )
+        for variation, tuple_dx in zip(model_variations, variation_dx, strict=True)
     ]
     translate_glyph(font, glyph_name, dx, 0)
 
@@ -446,9 +422,7 @@ def translate_variable_composite_with_model_once(
     if bounds == after_bounds:
         return
     if bounds != before_bounds:
-        raise ValueError(
-            f"unexpected {glyph_name} bounds: {bounds}; expected {before_bounds}"
-        )
+        raise ValueError(f"unexpected {glyph_name} bounds: {bounds}; expected {before_bounds}")
     if not glyph.isComposite():
         raise ValueError(f"{glyph_name} is not a composite")
 
@@ -466,9 +440,7 @@ def translate_variable_composite_with_model_once(
             [(tuple_dx, 0)] * len(glyph.components)
             + [(0, 0)] * (coordinate_count - len(glyph.components)),
         )
-        for variation, tuple_dx in zip(
-            model_variations, variation_dx, strict=True
-        )
+        for variation, tuple_dx in zip(model_variations, variation_dx, strict=True)
     )
     translate_glyph(font, glyph_name, dx, 0)
 
@@ -641,19 +613,34 @@ def set_version(font: TTFont) -> None:
 
 def embed_license(font: TTFont) -> None:
     """Keep distributed font metadata consistent with the complete LICENSE."""
-    license_text = (Path(__file__).resolve().parent.parent / "LICENSE").read_text(
-        encoding="utf-8"
-    )
+    license_text = (Path(__file__).resolve().parent.parent / "LICENSE").read_text(encoding="utf-8")
     notices = license_text.split("\n\n", 1)[0]
     values = {0: notices, 13: license_text, 14: "https://openfontlicense.org/"}
     names = font["name"]
     for name_id, value in values.items():
         for record in list(names.names):
             if record.nameID == name_id:
-                names.setName(
-                    value, name_id, record.platformID, record.platEncID, record.langID
-                )
+                names.setName(value, name_id, record.platformID, record.platEncID, record.langID)
         names.setName(value, name_id, 3, 1, 0x409)
+
+
+def build_font(input_path: Path, output_path: Path) -> None:
+    """Build a Zhongdou font from the checked-in upstream variable font."""
+    font = TTFont(input_path, recalcTimestamp=False)
+    use_half_width_quotes_by_default(font)
+    add_midline_ellipsis(font)
+    harmonize_horizontal_metrics(font)
+    use_zh_tw_locl_for_zh_cn(font)
+    center_zh_cn_vertical_punctuation(font)
+    center_default_language_punctuation(font)
+    refine_punctuation_glyphs(font)
+    subset_to_supported_characters(font)
+    ensure_zh_cn_language_system(font)
+    rename_family(font)
+    set_version(font)
+    embed_license(font)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    font.save(output_path)
 
 
 def main() -> None:
@@ -672,21 +659,7 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    font = TTFont(args.input, recalcTimestamp=False)
-    use_half_width_quotes_by_default(font)
-    add_midline_ellipsis(font)
-    harmonize_horizontal_metrics(font)
-    use_zh_tw_locl_for_zh_cn(font)
-    center_zh_cn_vertical_punctuation(font)
-    center_default_language_punctuation(font)
-    refine_punctuation_glyphs(font)
-    subset_to_supported_characters(font)
-    ensure_zh_cn_language_system(font)
-    rename_family(font)
-    set_version(font)
-    embed_license(font)
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    font.save(args.output)
+    build_font(args.input, args.output)
 
 
 if __name__ == "__main__":
