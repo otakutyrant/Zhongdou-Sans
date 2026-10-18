@@ -4,3 +4,5 @@
 *（自动存储）.*
 
 /build/
+__pycache__/
+*.py[cod]

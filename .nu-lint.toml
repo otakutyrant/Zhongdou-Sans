@@ -1,0 +1,27 @@
+# Keep nu-lint focused on parser failures and project naming conventions. Its
+# broader advisory rules are intentionally disabled because this repository
+# does not use nufmt and wraps many fallible commands at the task boundary.
+[groups]
+idioms = "off"
+parsing = "off"
+filesystem = "off"
+runtime-errors = "off"
+type-safety = "off"
+dead-code = "off"
+iteration = "off"
+filtering = "off"
+documentation = "off"
+naming = "warning"
+upstream = "error"
+performance = "off"
+formatting = "off"
+effects = "off"
+external = "off"
+
+[rules]
+# Short command wrappers do not benefit from URL-bearing diagnostic records.
+add_url_to_error = "off"
+add_label_to_error = "off"
+add_span_to_label = "off"
+add_help_to_error = "off"
+no_trailing_spaces = "error"

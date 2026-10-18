@@ -4,12 +4,17 @@
   inputs = {
     # Pin nixpkgs so Chromium, fontTools, fonts, and the PNG encoder stay stable.
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+    # nu-lint is not packaged in nixpkgs yet, so pin its own flake alongside
+    # the rest of the development environment.
+    nu-lint.url = "git+https://codeberg.org/wvhulle/nu-lint";
   };
 
   outputs =
     {
       self,
       nixpkgs,
+      nu-lint,
       ...
     }:
     let
@@ -32,6 +37,10 @@
         }
       );
 
+      # nixfmt-tree applies the official Nix style to every Nix file and also
+      # provides a non-mutating CI mode used by the Nur command catalog.
+      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
+
       devShells = forAllSystems (
         system:
         let
@@ -40,6 +49,10 @@
             # fontTools uses Brotli when it writes the site's compact WOFF2 subsets.
             pythonPackages.brotli
             pythonPackages.fonttools
+            # Keep Python checks in the same interpreter environment as the
+            # font scripts so Pylint and pytest can resolve FontTools imports.
+            pythonPackages.pylint
+            pythonPackages.pytest
           ]);
 
           # Cairo support makes hb-view available alongside hb-shape, allowing
@@ -81,6 +94,10 @@
         {
           default = pkgs.mkShell {
             packages = [
+              # Biome checks the framework-free JavaScript and CSS without
+              # introducing a separate Node package graph.
+              pkgs.biome
+              pkgs.basedpyright
               pkgs.chromium
               pkgs.fontconfig
               pkgs.git
@@ -90,11 +107,18 @@
               # development output additionally supplies hb-view.
               pkgs.harfbuzz
               harfbuzzView
+              # Kitty hosts the optional Panoptor workspace; all pane commands
+              # still enter through Nur tasks.
+              pkgs.kitty
+              pkgs.nixfmt-tree
               pkgs.nushell
               pkgs.oxipng
+              pkgs.ruff
               # The public site embeds only the glyphs used by its inscription
               # and prose, but the build starts from the official SC face.
               pkgs.sarasa-gothic
+              pkgs.watchexec
+              nu-lint.packages.${system}.default
               nur
               python
             ];

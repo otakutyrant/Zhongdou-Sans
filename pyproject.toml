@@ -1,0 +1,60 @@
+[tool.ruff]
+line-length = 100
+extend-exclude = ["build"]
+
+[tool.ruff.lint]
+select = ["B", "D", "E", "F", "I", "PERF", "PTH", "RUF", "SIM", "UP"]
+ignore = [
+  # The scripts are private command-line entrypoints rather than a published API.
+  "D100",
+  "D103",
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "pep257"
+
+[tool.ruff.lint.per-file-ignores]
+"tools/check_punctuation.py" = ["RUF001"]
+"tests/**" = ["D"]
+
+[tool.ruff.format]
+docstring-code-format = true
+line-ending = "lf"
+
+[tool.pylint.main]
+ignore-paths = ["^build/"]
+init-hook = "import sys; sys.path.append('.')"
+jobs = 0
+py-version = "3.14"
+
+[tool.pylint.messages_control]
+disable = [
+  # Ruff owns formatting, naming, import ordering, and docstring presence.
+  "C",
+  "duplicate-code",
+  "fixme",
+  "invalid-name",
+  "missing-function-docstring",
+  "missing-module-docstring",
+  "too-few-public-methods",
+  "too-many-arguments",
+  "too-many-branches",
+  "too-many-locals",
+  "too-many-positional-arguments",
+  "too-many-statements",
+  # FontTools constructs OpenType table members dynamically at runtime.
+  "no-member",
+  # The glyph coordinate API is intentionally private but has no public peer.
+  "protected-access",
+]
+
+[tool.pyright]
+include = ["tools", "tests"]
+exclude = ["build"]
+typeCheckingMode = "strict"
+reportMissingTypeStubs = false
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+pythonpath = ["."]
+testpaths = ["tests"]
