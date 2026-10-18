@@ -107,12 +107,12 @@
               # development output additionally supplies hb-view.
               pkgs.harfbuzz
               harfbuzzView
-              # Kitty hosts the optional Panoptor session; all pane commands
-              # still enter through Nur tasks.
-              pkgs.kitty
               pkgs.nixfmt-tree
               pkgs.nushell
               pkgs.oxipng
+              # Process Compose hosts each worktree's headless Panoptor
+              # session; Nur remains the public task and control interface.
+              pkgs.process-compose
               pkgs.ruff
               # The public site embeds only the glyphs used by its inscription
               # and prose, but the build starts from the official SC face.

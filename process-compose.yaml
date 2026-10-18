@@ -1,0 +1,30 @@
+version: "0.5"
+is_strict: true
+log_level: info
+log_length: 2000
+
+# Process Compose owns process lifecycles and observation. Nur remains the
+# public command catalog and owns the actual server and validation commands.
+processes:
+  site:
+    command: "nur site watch --port ${PANOPTOR_SITE_PORT}"
+    working_dir: "${PANOPTOR_PROJECT_ROOT}"
+    availability:
+      restart: on_failure
+      backoff_seconds: 2
+    readiness_probe:
+      http_get:
+        host: 127.0.0.1
+        port: ${PANOPTOR_SITE_PORT}
+        path: /
+      initial_delay_seconds: 1
+      period_seconds: 1
+      timeout_seconds: 1
+      failure_threshold: 30
+
+  checks:
+    command: "nur check watch"
+    working_dir: "${PANOPTOR_PROJECT_ROOT}"
+    availability:
+      restart: on_failure
+      backoff_seconds: 2
