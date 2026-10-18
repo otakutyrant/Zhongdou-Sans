@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   check:
-    name: Check generated image
+    name: Check repository
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
@@ -25,11 +25,8 @@ jobs:
       - name: Install Nix
         uses: DeterminateSystems/determinate-nix-action@v3
 
-      - name: Render the demo
-        run: nix develop -c nur demo render
-
-      - name: Check that the committed images are current
-        run: git diff --exit-code -- images/demo.png images/Title.light.svg images/Title.dark.svg
+      - name: Run the complete project check
+        run: nix develop -c nur check
 
   update:
     name: Update generated image
