@@ -7,48 +7,78 @@ const RELEASE_CHECK_SCRIPT = $PROJECT_ROOT | path join tools check_release.py
 const PUNCTUATION_CHECK_SCRIPT = $PROJECT_ROOT | path join tools check_punctuation.py
 const BUILD_SITE_SCRIPT = $PROJECT_ROOT | path join tools build_site.py
 const SITE_LAYOUT_CHECK_SCRIPT = $PROJECT_ROOT | path join tools check-site-layout.nu
+const RENDER_DEMO_SCRIPT = $PROJECT_ROOT | path join tools render-demo.nu
+const RENDER_TITLE_SCRIPT = $PROJECT_ROOT | path join tools render-title.nu
+const PANOPTOR_SESSION = $PROJECT_ROOT | path join tools panoptor.kitty-session
 const SOURCE_FONT = $PROJECT_ROOT | path join fonts variable ZhudouSansVF.ttf
 const BUILT_FONT = $PROJECT_ROOT | path join build ZhongdouSansVF.ttf
 const DEMO_PAGE = $PROJECT_ROOT | path join demo index.html
 
-# Build the derivative variable font consumed by the HTML specimen.
-export def "nur demo build" [] {
+def panoptor-address []: nothing -> string {
+    let runtime_dir = $env.XDG_RUNTIME_DIR? | default ($env.TMPDIR? | default "/tmp")
+    $"unix:(($runtime_dir | path join 'zhongdou-sans-panoptor'))"
+}
+
+# Build the derivative variable font consumed by every specimen and web task.
+export def "nur font build" [] {
     mkdir ($PROJECT_ROOT | path join build)
     ^python $BUILD_SCRIPT $SOURCE_FONT $BUILT_FONT
 }
 
-# Build the distributable font and ensure its metadata matches the release tag.
-export def "nur release build" [tag: string] {
-    # A release must pass the complete punctuation geometry and shaping audit.
-    nur punctuation check
-    # Chromium catches CSS grid regressions that font geometry cannot detect.
-    nur site check-layout
-    ^python $RELEASE_CHECK_SCRIPT $tag $BUILT_FONT
+# Preserve the original public task name for existing documentation and habits.
+export def "nur demo build" [] {
+    nur font build
 }
 
-# Build the font and open the editable specimen in Chromium.
+# Build the font and open the compact README specimen in Chromium.
 export def "nur demo preview" [] {
-    nur demo build
+    nur font build
     ^chromium $"file://($DEMO_PAGE)"
 }
 
-# Regenerate the PNG embedded at the top of the README.
+# Regenerate every image committed under images/.
+export def "nur specimens render" [] {
+    ^nu $RENDER_DEMO_SCRIPT
+}
+
+# Preserve the original public rendering task as an alias.
 export def "nur demo render" [] {
-    ^nu ($PROJECT_ROOT | path join tools render-demo.nu)
+    nur specimens render
+}
+
+# Rebuild only the README's light and dark title specimens.
+export def "nur title render" [] {
+    nur font build
+    ^nu $RENDER_TITLE_SCRIPT
+}
+
+# Render to build/ and compare bytes so verification never edits tracked files.
+export def "nur specimens check" [] {
+    let output_dir = $PROJECT_ROOT | path join build specimens
+    if ($output_dir | path exists) {
+        rm -r $output_dir
+    }
+    ^nu $RENDER_DEMO_SCRIPT --output-dir $output_dir
+
+    for name in [demo.png Title.light.svg Title.dark.svg] {
+        let expected = $PROJECT_ROOT | path join images $name
+        let actual = $output_dir | path join $name
+        if (open --raw $expected) != (open --raw $actual) {
+            error make {
+                msg: $"Generated specimen is stale: images/($name). Run `nur specimens render`."
+            }
+        }
+    }
+
+    print "Committed specimens match a clean render."
 }
 
 # Check every encoded punctuation mark at all variable-font extremes and
 # render focused horizontal and vertical specimens for visual review.
 export def "nur punctuation check" [] {
-    nur demo build
+    nur font build
     let render_dir = $PROJECT_ROOT | path join build assessment punctuation
     ^python $PUNCTUATION_CHECK_SCRIPT $BUILT_FONT --render-dir $render_dir
-}
-
-# Rebuild the README's light and dark title specimens from the current font.
-export def "nur title render" [] {
-    nur demo build
-    ^nu ($PROJECT_ROOT | path join tools render-title.nu)
 }
 
 # Build the public site and reduce both webfonts to the characters it uses.
@@ -62,15 +92,215 @@ export def "nur site build" [] {
     ^python $BUILD_SITE_SCRIPT --project-root $PROJECT_ROOT --sarasa-ttc $env.SARASA_REGULAR_TTC
 }
 
-# Ask Chromium to calculate the actual punctuation-grid tracks and fail when
-# any mark's layout box no longer shares the center of its painted cell.
-export def "nur site check-layout" [] {
+# Exercise actual Chromium layout and all interactive playground controls.
+export def "nur site check" [] {
     nur site build
     ^nu $SITE_LAYOUT_CHECK_SCRIPT
+}
+
+# Preserve the more specific historic task name as an alias.
+export def "nur site check-layout" [] {
+    nur site check
 }
 
 # Build and serve the GitHub Pages site locally.
 export def "nur site preview" [--port: int = 8000] {
     nur site build
     ^python -m http.server $port --directory ($PROJECT_ROOT | path join build site)
+}
+
+# Restart the local site whenever its source, font, or builder changes.
+export def "nur site watch" [--port: int = 8000] {
+    let watch_arguments = [
+        --restart
+        --debounce
+        "300ms"
+        --watch
+        site
+        --watch
+        tools
+        --watch
+        fonts
+        --shell
+        none
+        --
+        nur
+        site
+        preview
+        --port
+        $port
+    ]
+    ^watchexec ...$watch_arguments
+}
+
+# Run Ruff's import, correctness, modernization, and style diagnostics.
+export def "nur python ruff" [] {
+    ^ruff check tools tests
+}
+
+# Run the independent Python diagnostics that complement Ruff.
+export def "nur python pylint" [] {
+    ^pylint tools tests
+}
+
+# Check strict static types, including test code.
+export def "nur python typecheck" [] {
+    ^basedpyright
+}
+
+# Run focused unit tests and one built-font integration fixture.
+export def "nur python test" [] {
+    ^pytest
+}
+
+# Format maintained Python sources and tests.
+export def "nur python format" [] {
+    ^ruff format tools tests
+}
+
+# Verify Python formatting without changing files.
+export def "nur python format-check" [] {
+    ^ruff format --check tools tests
+}
+
+# Run Python diagnostics and tests before the non-mutating format check.
+export def "nur python check" [] {
+    nur python ruff
+    nur python pylint
+    nur python typecheck
+    nur python test
+    nur python format-check
+}
+
+# Diagnose JavaScript and CSS while leaving authored HTML alone.
+export def "nur web lint" [] {
+    ^biome lint site demo
+}
+
+# Format only the JavaScript and CSS selected in biome.json.
+export def "nur web format" [] {
+    ^biome format --write site demo
+}
+
+# Verify JavaScript and CSS formatting without changing files.
+export def "nur web format-check" [] {
+    ^biome format site demo
+}
+
+export def "nur web check" [] {
+    nur web lint
+    nur web format-check
+}
+
+# Parse and lint the task catalog and all Nushell automation.
+export def "nur nu check" [] {
+    ^nur --help | ignore
+    ^nu-lint --config .nu-lint.toml --format compact nurfile tools
+}
+
+# Check the flake's evaluation without rebuilding all derivations.
+export def "nur nix check" [] {
+    ^nix flake check --no-build
+}
+
+# Apply the flake's official nixfmt-tree formatter.
+export def "nur nix format" [] {
+    ^treefmt
+}
+
+# Verify Nix formatting without changing files.
+export def "nur nix format-check" [] {
+    ^treefmt --ci
+}
+
+# Build the distributable package without creating a result symlink.
+export def "nur package build" [] {
+    ^nix build --no-link
+}
+
+# Keep the watch loop quick enough for continuous local feedback.
+export def "nur check fast" [] {
+    nur nu check
+    nur python check
+    nur web check
+    nur nix check
+    nur nix format-check
+}
+
+# Run every repository-owned check, including render and package verification.
+export def "nur check" [] {
+    nur check fast
+    nur punctuation check
+    nur site check
+    nur package build
+    nur specimens check
+}
+
+# Re-run the fast check after maintained source or configuration changes.
+export def "nur check watch" [] {
+    ^watchexec --debounce 300ms --watch . --ignore build --shell none -- nur check fast
+}
+
+# Build the distributable font and ensure its metadata matches the release tag.
+export def "nur release build" [tag: string] {
+    nur check
+    ^python $RELEASE_CHECK_SCRIPT $tag $BUILT_FONT
+}
+
+# Start the two-pane Kitty workspace with a project-only control socket.
+export def "nur panoptor start" [] {
+    let address = panoptor-address
+    let remote_control = "allow_remote_control=socket-only"
+    let running = (^kitten @ --to $address ls | complete)
+    if $running.exit_code == 0 {
+        error make { msg: "Panoptor is already running. Use `nur panoptor status`." }
+    }
+    let kitty_arguments = [
+        --detach
+        --directory
+        $PROJECT_ROOT
+        --listen-on
+        $address
+        --override
+        $remote_control
+        --session
+        $PANOPTOR_SESSION
+    ]
+    ^kitty ...$kitty_arguments
+    print "Started Panoptor: site preview and fast checks are running in Kitty."
+}
+
+# Report whether the project-specific Kitty workspace can be reached.
+export def "nur panoptor status" [] {
+    let result = (^kitten @ --to (panoptor-address) ls | complete)
+    if $result.exit_code == 0 {
+        print "Panoptor is running."
+    } else {
+        print "Panoptor is stopped."
+    }
+}
+
+# Read recent output from one Panoptor role without entering the terminal UI.
+export def "nur panoptor inspect" [role: string, --lines: int = 80] {
+    if $role not-in [site checks] {
+        error make { msg: "Role must be `site` or `checks`." }
+    }
+    let title = $"zhongdou-($role)"
+    let result = (
+        ^kitten @ --to (panoptor-address) get-text --match $"title:^($title)$" --extent all
+        | complete
+    )
+    if $result.exit_code != 0 {
+        error make { msg: ($result.stderr | str trim) }
+    }
+    $result.stdout
+        | lines
+        | last $lines
+        | str join (char newline)
+        | print
+}
+
+# Stop only this project's Kitty workspace through its private socket.
+export def "nur panoptor stop" [] {
+    ^kitten @ --to (panoptor-address) close-window --match all
 }

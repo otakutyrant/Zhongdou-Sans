@@ -3,8 +3,13 @@
 # Embed the built variable font in the two README title specimens. Keeping the
 # font inside each SVG makes the punctuation reproducible on GitHub and on
 # systems that do not have Zhongdou Sans installed.
-def main [] {
+def main [--output-dir: path] {
   let project_root = (^git rev-parse --show-toplevel | str trim)
+  let destination = if ($output_dir | is-empty) {
+    $project_root | path join "images"
+  } else {
+    $output_dir | path expand
+  }
   let template_path = ($project_root | path join "demo" "title.svg")
   let font_path = ($project_root | path join "build" "ZhongdouSansVF.ttf")
 
@@ -12,6 +17,7 @@ def main [] {
     error make { msg: "The built font is missing. Run `nur demo build` first." }
   }
 
+  mkdir $destination
   let font_data = (open --raw $font_path | encode base64)
   let template = (open --raw $template_path | str replace "@@FONT_DATA@@" $font_data)
   let themes = [
@@ -49,7 +55,7 @@ def main [] {
       | str replace "@@LINE@@" $theme.line
       | str replace "@@WASH_START@@" $theme.wash_start
       | str replace "@@WASH_END@@" $theme.wash_end)
-    let output_path = ($project_root | path join "images" $"Title.($theme.name).svg")
+    let output_path = ($destination | path join $"Title.($theme.name).svg")
     $rendered | save --force $output_path
     print $"Rendered ($output_path)"
   }

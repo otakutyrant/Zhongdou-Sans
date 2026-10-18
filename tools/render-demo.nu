@@ -1,10 +1,15 @@
 #!/usr/bin/env nu
 
 # Build the derivative font and render its committed README specimen.
-def main [] {
+def main [--output-dir: path] {
   let project_root = (^git rev-parse --show-toplevel | str trim)
   let build_dir = ($project_root | path join "build")
-  let output_path = ($project_root | path join "images" "demo.png")
+  let destination = if ($output_dir | is-empty) {
+    $project_root | path join "images"
+  } else {
+    $output_dir | path expand
+  }
+  let output_path = ($destination | path join "demo.png")
   let input_font = ($project_root | path join "fonts" "variable" "ZhudouSansVF.ttf")
   let output_font = ($build_dir | path join "ZhongdouSansVF.ttf")
   let demo_page = ($project_root | path join "demo" "index.html")
@@ -15,9 +20,9 @@ def main [] {
     }
   }
 
-  mkdir $build_dir
+  mkdir $build_dir $destination
   ^python ($project_root | path join "tools" "build_font.py") $input_font $output_font
-  ^nu ($project_root | path join "tools" "render-title.nu")
+  ^nu ($project_root | path join "tools" "render-title.nu") --output-dir $destination
 
   # A fresh profile prevents extensions and user preferences from affecting pixels.
   let chromium_profile = (^mktemp -d --tmpdir "zhongdou-demo.XXXXXX" | str trim)

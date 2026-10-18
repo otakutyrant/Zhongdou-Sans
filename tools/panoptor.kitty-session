@@ -1,0 +1,7 @@
+# Panoptor keeps the live site and rapid validation visible together.
+new_tab Zhongdou Sans
+layout splits
+cd .
+launch --title zhongdou-site nur site watch
+launch --title zhongdou-checks --location=vsplit nur check watch
+focus_matching_window title:zhongdou-site
