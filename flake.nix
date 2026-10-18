@@ -134,7 +134,9 @@
             SARASA_REGULAR_TTC = "${pkgs.sarasa-gothic}/share/fonts/truetype/Sarasa-Regular.ttc";
 
             shellHook = ''
-              echo "Zhongdou Sans dev shell ready: use 'nur --help' to list project tasks."
+              # Keep stdout available for machine-readable task output such as
+              # `nur --quiet panoptor status --json`.
+              echo "Zhongdou Sans dev shell ready: use 'nur --help' to list project tasks." >&2
             '';
           };
         }

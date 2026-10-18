@@ -9,15 +9,11 @@ const BUILD_SITE_SCRIPT = $PROJECT_ROOT | path join tools build_site.py
 const SITE_LAYOUT_CHECK_SCRIPT = $PROJECT_ROOT | path join tools check-site-layout.nu
 const RENDER_DEMO_SCRIPT = $PROJECT_ROOT | path join tools render-demo.nu
 const RENDER_TITLE_SCRIPT = $PROJECT_ROOT | path join tools render-title.nu
-const PANOPTOR_SESSION = $PROJECT_ROOT | path join tools panoptor.kitty-session
 const SOURCE_FONT = $PROJECT_ROOT | path join fonts variable ZhudouSansVF.ttf
 const BUILT_FONT = $PROJECT_ROOT | path join build ZhongdouSansVF.ttf
 const DEMO_PAGE = $PROJECT_ROOT | path join demo index.html
 
-def panoptor-address []: nothing -> string {
-    let runtime_dir = $env.XDG_RUNTIME_DIR? | default ($env.TMPDIR? | default "/tmp")
-    $"unix:(($runtime_dir | path join 'zhongdou-sans-panoptor'))"
-}
+use tasks/panoptor.nu *
 
 # Build the derivative variable font consumed by every specimen and web task.
 export def "nur font build" [] {
@@ -126,11 +122,22 @@ export def "nur site watch" [--port: int = 8000] {
         --
         nur
         site
-        preview
+        preview-status
         --port
         $port
     ]
     ^watchexec ...$watch_arguments
+}
+
+# Serve the site while publishing Panoptor-readable lifecycle status.
+export def "nur site preview-status" [--port: int = 8000] {
+    run-with-panoptor-snapshot site [
+        nur
+        site
+        preview
+        --port
+        ($port | into string)
+    ]
 }
 
 # Run Ruff's import, correctness, modernization, and style diagnostics.
@@ -187,6 +194,7 @@ export def "nur web format-check" [] {
     ^biome format site demo
 }
 
+# Run framework-free JavaScript and CSS diagnostics and formatting checks.
 export def "nur web check" [] {
     nur web lint
     nur web format-check
@@ -195,7 +203,7 @@ export def "nur web check" [] {
 # Parse and lint the task catalog and all Nushell automation.
 export def "nur nu check" [] {
     ^nur --help | ignore
-    ^nu-lint --config .nu-lint.toml --format compact nurfile tools
+    ^nu-lint --config .nu-lint.toml --format compact nurfile tasks tools
 }
 
 # Check the flake's evaluation without rebuilding all derivations.
@@ -238,69 +246,16 @@ export def "nur check" [] {
 
 # Re-run the fast check after maintained source or configuration changes.
 export def "nur check watch" [] {
-    ^watchexec --debounce 300ms --watch . --ignore build --shell none -- nur check fast
+    ^watchexec --debounce 300ms --watch . --ignore build --shell none -- nur check snapshot
+}
+
+# Run the fast gate while publishing Panoptor-readable lifecycle status.
+export def "nur check snapshot" [] {
+    run-with-panoptor-snapshot checks [nur check fast]
 }
 
 # Build the distributable font and ensure its metadata matches the release tag.
 export def "nur release build" [tag: string] {
     nur check
     ^python $RELEASE_CHECK_SCRIPT $tag $BUILT_FONT
-}
-
-# Start the two-pane Kitty workspace with a project-only control socket.
-export def "nur panoptor start" [] {
-    let address = panoptor-address
-    let remote_control = "allow_remote_control=socket-only"
-    let running = (^kitten @ --to $address ls | complete)
-    if $running.exit_code == 0 {
-        error make { msg: "Panoptor is already running. Use `nur panoptor status`." }
-    }
-    let kitty_arguments = [
-        --detach
-        --directory
-        $PROJECT_ROOT
-        --listen-on
-        $address
-        --override
-        $remote_control
-        --session
-        $PANOPTOR_SESSION
-    ]
-    ^kitty ...$kitty_arguments
-    print "Started Panoptor: site preview and fast checks are running in Kitty."
-}
-
-# Report whether the project-specific Kitty workspace can be reached.
-export def "nur panoptor status" [] {
-    let result = (^kitten @ --to (panoptor-address) ls | complete)
-    if $result.exit_code == 0 {
-        print "Panoptor is running."
-    } else {
-        print "Panoptor is stopped."
-    }
-}
-
-# Read recent output from one Panoptor role without entering the terminal UI.
-export def "nur panoptor inspect" [role: string, --lines: int = 80] {
-    if $role not-in [site checks] {
-        error make { msg: "Role must be `site` or `checks`." }
-    }
-    let title = $"zhongdou-($role)"
-    let result = (
-        ^kitten @ --to (panoptor-address) get-text --match $"title:^($title)$" --extent all
-        | complete
-    )
-    if $result.exit_code != 0 {
-        error make { msg: ($result.stderr | str trim) }
-    }
-    $result.stdout
-        | lines
-        | last $lines
-        | str join (char newline)
-        | print
-}
-
-# Stop only this project's Kitty workspace through its private socket.
-export def "nur panoptor stop" [] {
-    ^kitten @ --to (panoptor-address) close-window --match all
 }

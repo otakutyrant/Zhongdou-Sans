@@ -2,6 +2,6 @@
 new_tab Zhongdou Sans
 layout splits
 cd .
-launch --title zhongdou-site nur site watch
-launch --title zhongdou-checks --location=vsplit nur check watch
+launch --hold --var panoptor_role=site --title zhongdou-site nur panoptor role-run site
+launch --hold --var panoptor_role=checks --title zhongdou-checks --location=vsplit nur panoptor role-run checks
 focus_matching_window title:zhongdou-site

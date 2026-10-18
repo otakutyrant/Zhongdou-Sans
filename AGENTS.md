@@ -1,107 +1,97 @@
 # Zhongdou Sans project instructions
 
-## Working environment
+## Project foundation
 
-- Enter the pinned toolchain with `nix develop`; run repository tasks through
-  the root `nurfile`. Use Nushell for scripts and pipelines.
-- Check `git status --short` before editing and preserve unrelated user work.
-- Do not repeatedly use `nix run nixpkgs#…`. Add recurring tools to `flake.nix`
-  with a comment explaining why the project needs them, then update the lock.
-- Keep the root task catalog self-contained while the project remains small.
-- Use strict Conventional Commits: `type(scope): imperative summary`. Prefer
-  `feat`, `fix`, `docs`, `refactor`, `test`, `build`, `ci`, and `chore`; mark
-  breaking changes with `!` and a `BREAKING CHANGE:` footer.
+Zhongdou Sans is a CJK punctuation fallback variable font, its build and QA
+tooling, generated specimens, Nix package, and framework-free static website. It
+is intentionally not based on an application framework. Maintained code uses
+Python 3.14, Nushell, Nix, JavaScript, CSS, and HTML.
 
-## Task catalog
-
-Run commands below from the repository root inside `nix develop`.
-
-- `nur check fast`: Nushell, Python, web, flake-evaluation, and formatting
-  checks. Use this during normal editing.
-- `nur check`: the complete gate, including punctuation shaping, real Chromium
-  interaction/layout checks, the Nix package build, and specimen freshness.
-- `nur check watch`: rerun the fast gate when maintained files change.
-- `nur python check`, `nur web check`, `nur nu check`, and `nur nix check`:
-  focused diagnostic groups. Their sibling `format` tasks apply formatting.
-- `nur font build`: produce `build/ZhongdouSansVF.ttf` from the upstream font.
-- `nur punctuation check`: inspect all encoded punctuation at weights 250, 400,
-  and 900 in horizontal and vertical shaping.
-- `nur site build`, `nur site check`, and `nur site preview`: build, exercise in
-  Chromium, or serve the public homepage.
-- `nur specimens check`: render into `build/` and compare against tracked
-  specimens without modifying them. `nur specimens render` updates them.
-- `nur package build`: build the distributable Nix package without a `result`
-  symlink. `nur release build <tag>` runs the full gate before metadata checks.
-
-Pull requests run `nur check`. Before handing off a change, run the narrowest
-relevant task during development and the complete gate when practical.
-
-## Panoptor workspace
-
-- `nur panoptor start` opens a two-pane Kitty workspace: the site watcher and
-  the fast-check watcher. It uses a project-specific Unix socket with
-  socket-only remote control.
-- `nur panoptor status` reports whether it is available.
-- `nur panoptor inspect site` and `nur panoptor inspect checks` read recent pane
-  output; use `--lines` to change the amount.
-- `nur panoptor stop` closes only this project's Kitty workspace.
+Work from the repository root. Enter the pinned environment with `nix develop`,
+use Nushell for scripts and pipelines, and preserve unrelated worktree changes.
+Use `nur --help` and focused `nur <task> --help` output to discover the current
+validation, formatting, build, server, release, and Panoptor interfaces. Use the
+Nur-owned workflow when one exists instead of duplicating its commands.
 
 ## Source and generated artifacts
 
-- `fonts/variable/ZhudouSansVF.ttf` is upstream input. The derivative font,
-  website, QA images, and temporary specimens belong under ignored `build/`.
+- `fonts/variable/ZhudouSansVF.ttf` is the upstream input to the automated
+  build. Treat files under `source/` as font-editor and historical reference
+  artifacts, not as automated build inputs unless the task catalog says
+  otherwise.
+- Derived fonts, website output, QA images, and temporary specimens belong
+  under ignored `build/`.
 - `images/demo.png`, `images/Title.light.svg`, and `images/Title.dark.svg` are
-  tracked outputs. Regenerate them only with `nur specimens render`, review the
-  diff, and never hide stale output by editing generated files directly.
-- Keep `demo/index.html` as the compact README specimen and `site/` as the
-  separate public homepage.
-- Biome owns JavaScript and CSS formatting; authored HTML remains hand-formatted.
-  Ruff owns Python formatting. `nixfmt-tree` owns Nix formatting. The project
-  intentionally does not use a Nushell formatter.
+  tracked generated outputs. Regenerate them only through their owning Nur
+  task, review the diff, and never hide stale output by editing them directly.
+- `demo/` owns the compact README specimen; `site/` owns the separate public
+  homepage. Keep those responsibilities distinct.
+- Biome owns JavaScript and CSS formatting; authored HTML remains
+  hand-formatted. Ruff owns Python formatting, and `nixfmt-tree` owns Nix
+  formatting. The project intentionally does not use a Nushell formatter.
 - Pyright is strict by default. File-local basic-mode suppressions are reserved
   for FontTools' runtime-generated OpenType table interfaces; do not broaden
   them to ordinary project code.
+- Do not alter license declarations or reserved-font-name behavior unless the
+  user explicitly requests it. Check `LICENSE` before changing distribution,
+  naming, embedding, or derivative-font behavior.
 
 ## Font-editing invariants
 
-- Trace the complete shaping path before changing a glyph: Unicode `cmap`, the
-  default glyph, language-specific `locl`, vertical `vert`, and GSUB lookup
-  order can all select different outlines. A code point alone does not identify
-  what a renderer displays.
+- Trace the complete shaping path before changing a glyph: Unicode `cmap`,
+  default glyphs, language-specific `locl`, vertical `vert`, variation
+  selectors, and GSUB lookup order may select different outlines. A code point
+  alone does not identify what renders.
 - Keep glyph geometry in the font. CSS may select language, writing mode, and
-  line-breaking behavior, but must not use transforms, offsets, or spacing to
-  hide faulty outlines or metrics.
+  line breaking, but must not use transforms, offsets, or spacing to disguise
+  faulty outlines or metrics.
 - Treat ink bounds, advance width, side bearings, vertical origin, and vertical
   advance as separate quantities. Centering an outline does not imply changing
   its full-width advance.
-- When moving a base glyph, inspect every composite that references it. A
-  horizontal translation is rotated into another axis by rotated vertical
-  composites. Update dependent geometry and both metric directions deliberately.
-- Apply changes to every variable-font master and inspect variation deltas.
+- When moving a base glyph, inspect every referencing composite. Rotated
+  vertical composites may turn horizontal movement into movement on another
+  axis; update dependent geometry and both metric directions deliberately.
+- Apply edits to every variable-font master and inspect variation deltas.
   Transformations must be idempotent and reject unexpected upstream bounds
-  instead of silently stacking another translation.
-- Check paired punctuation together: opening and closing, horizontal and
-  vertical, every supported weight, and relevant language systems.
-- Keep the deliberately small OpenType surface. Do not restore unrelated
+  rather than stacking silently.
+- Check paired punctuation together in horizontal and vertical shaping, at
+  default and extreme weights, and for every relevant language system.
+- Preserve the deliberately small OpenType surface. Do not restore unrelated
   inherited features or removed characters while repairing `locl` or `vert`.
-- Do not alter license declarations unless the user explicitly requests it.
 
-## Font and renderer verification
+## Verification and rendering
 
-- Verify the built font, not only source data or build-script intent. Rebuild
-  before drawing conclusions about a renderer.
-- Use FontTools for bounds, `hmtx`/`vmtx`, components, and GSUB; use `hb-shape`
-  for selected glyphs and advances; use `hb-view` for focused specimens.
-- Render the real Chromium demo/site after metric or substitution changes and
-  inspect the output. A single cropped screenshot demonstrates a bug but is not
-  sufficient verification of a fix.
-- Test the default and extreme weights. Put vertical punctuation in a phrase
-  with adjacent Han characters so displacement inside the em is visible.
-- Do not infer one renderer from another. Chromium, GTK Text Editor, and Kitty
-  have different fallback and shaping behavior. A computed CSS family does not
+Use Nur's focused tasks during development and its complete deterministic gate
+before handoff when practical. Verify the built font, not just source data or
+script intent, and rebuild before diagnosing renderer behavior.
+
+- Use FontTools for bounds, metrics, components, and GSUB; HarfBuzz shaping for
+  selected glyphs and advances; and focused renders for visual assessment.
+- Exercise the real Chromium demo or site after substitution, metric, or
+  layout changes. A cropped screenshot may demonstrate a defect but cannot by
+  itself verify the fix.
+- Put vertical punctuation beside Han characters so displacement within the em
+  is visible, and test default and extreme weights.
+- Do not infer one renderer from another. Chromium, GTK/Pango, and Kitty have
+  different shaping and fallback behavior, and a computed CSS family does not
   prove which physical face rendered a character.
-- Emoji fonts may contain ordinary digits for keycap sequences, so Fontconfig
-  fallback order can affect plain digits even when the requested family seems
-  unrelated to emoji.
-- Custom line breaking is valid for the intended rigid inscription layout, but
-  it must not compensate for faulty glyph geometry.
+- Emoji fonts may include ordinary digits for keycap sequences, so fallback
+  order can affect plain digits.
+- Custom line breaking is valid for the intended inscription layout, but must
+  not compensate for faulty glyph geometry.
+
+## Panoptor and collaboration
+
+The project supports one isolated Panoptor per active worktree. Each human or
+agent may use the Nur-discovered Panoptor interface in its own worktree to
+supervise automatic validations and the long-running site server. Never control
+another worktree's session or claim its live state as validation of this
+checkout. Use the task runner's status, output, and interactive controls to
+diagnose, interrupt, stop, start, restart, rerun, or temporarily replace a
+role. Session-only diagnostic changes must not silently modify the declared
+task or session configuration.
+
+Use Git with strict Conventional Commits: `type(scope): imperative summary`.
+Keep each commit independently reviewable and revertible; split a large change
+into small, coherent, decoupled commits when useful. Do not commit unless the
+user requests it.
