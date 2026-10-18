@@ -7,11 +7,14 @@ tooling, generated specimens, Nix package, and framework-free static website. It
 is intentionally not based on an application framework. Maintained code uses
 Python 3.14, Nushell, Nix, JavaScript, CSS, and HTML.
 
-Work from the repository root. Enter the pinned environment with `nix develop`,
-use Nushell for scripts and pipelines, and preserve unrelated worktree changes.
-Use `nur --help` and focused `nur <task> --help` output to discover the current
-validation, formatting, build, server, release, and Panoptor interfaces. Use the
-Nur-owned workflow when one exists instead of duplicating its commands.
+Work from the repository root. Allow the tracked `.envrc` once by running
+`direnv allow`; nix-direnv then loads the pinned `nix develop` environment. Run
+non-interactive commands through `direnv exec` when the shell hook has not
+already loaded it. Use Nushell for scripts and pipelines, and preserve
+unrelated worktree changes. Use `nur --help` and focused `nur <task> --help`
+output to discover the current validation, formatting, build, server, release,
+and Panoptor interfaces. Use the Nur-owned workflow when one exists instead of
+duplicating its commands.
 
 ## Source and generated artifacts
 
@@ -84,14 +87,14 @@ script intent, and rebuild before diagnosing renderer behavior.
 
 The project supports one isolated Panoptor per active worktree. Each human or
 agent may use the Nur-discovered Panoptor interface in its own worktree to
-supervise automatic validations and the long-running site server. Panoptor is a
-persistent session that starts hidden; showing or hiding its Kitty OS window
+supervise automatic validations and the long-running site server. Panoptor is
+a persistent, headless Process Compose session; attaching or detaching its TUI
 does not start or stop its roles. Never control another worktree's session or
 claim its live state as validation of this checkout. Use the task runner's
-status, output, visibility, and interactive controls to diagnose, interrupt,
-stop, start, restart, rerun, or temporarily replace a role. Session-only
-diagnostic changes must not silently modify the declared task or session
-configuration.
+discoverable status, logs, readiness, attachment, and lifecycle controls rather
+than calling Process Compose directly. Treat Process Compose's role lifecycle
+and the latest recorded validation result as distinct signals when diagnosing
+the session.
 
 Use Git with strict Conventional Commits: `type(scope): imperative summary`.
 Keep each commit independently reviewable and revertible; split a large change
