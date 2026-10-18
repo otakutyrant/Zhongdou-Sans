@@ -1,4 +1,4 @@
-# Panoptor keeps the live site and rapid validation visible together.
+# Panoptor keeps the live site and rapid validation in one persistent session.
 new_tab Zhongdou Sans
 layout splits
 cd .

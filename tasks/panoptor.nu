@@ -1,5 +1,5 @@
 # nu-lint-ignore-file: unhandled_external_error
-# Per-worktree Kitty workspace discovery, status, and interactive role control.
+# Per-worktree Kitty session discovery, visibility, and interactive role control.
 
 const PROJECT_ROOT = path self | path dirname | path dirname
 const SESSION_FILE = $PROJECT_ROOT | path join tools panoptor.kitty-session
@@ -48,8 +48,8 @@ def panoptor-address []: nothing -> string {
     $"unix:(socket-path)"
 }
 
-def workspace-path []: nothing -> string {
-    runtime-directory | path join workspace.json
+def session-state-path []: nothing -> string {
+    runtime-directory | path join session.json
 }
 
 def role-config-path [role: string]: nothing -> string {
@@ -88,11 +88,11 @@ def default-port []: nothing -> int {
 }
 
 def configured-port []: nothing -> int {
-    let workspace = read-record (workspace-path)
-    if $workspace == null {
+    let session = read-record (session-state-path)
+    if $session == null {
         default-port
     } else {
-        $workspace.port | into int
+        $session.port | into int
     }
 }
 
@@ -168,7 +168,7 @@ def role-windows [role: string]: nothing -> list<record> {
     }
 }
 
-def require-workspace [] {
+def require-session [] {
     let result = remote [ls]
     if $result.exit_code != 0 {
         error make {
@@ -179,7 +179,7 @@ def require-workspace [] {
 }
 
 def require-one-window [role: string]: nothing -> record {
-    require-workspace
+    require-session
     let windows = role-windows $role
     if ($windows | length) != 1 {
         error make {
@@ -260,8 +260,8 @@ def role-summary [role: record]: nothing -> record {
 
 def panoptor-status []: nothing -> record {
     let result = remote [ls]
-    let workspace_state = if $result.exit_code == 0 { "running" } else { "stopped" }
-    let roles = if $workspace_state == "running" {
+    let session_state = if $result.exit_code == 0 { "running" } else { "stopped" }
+    let roles = if $session_state == "running" {
         declared-roles (configured-port) | each {|role| role-summary $role }
     } else {
         declared-roles (configured-port) | each {|role|
@@ -282,7 +282,7 @@ def panoptor-status []: nothing -> record {
         project: $PROJECT_NAME
         worktree: (repository-root)
         worktree_id: (worktree-id)
-        workspace: $workspace_state
+        session: $session_state
         socket: (socket-path)
         port: (configured-port)
         roles: $roles
@@ -304,7 +304,7 @@ def check-port [port: int] {
     }
 }
 
-def wait-for-workspace [] {
+def wait-for-session [] {
     for _ in 1..40 {
         if (remote [ls]).exit_code == 0 {
             return
@@ -362,7 +362,7 @@ def run-streaming [command: list<string>]: nothing -> int {
 }
 
 def launch-role [role: string command: list<string>] {
-    require-workspace
+    require-session
     let definition = declared-role $role
     let old_windows = role-windows $role
     save-active-command $role $command
@@ -402,7 +402,7 @@ def launch-role [role: string command: list<string>] {
 }
 
 def launch-held-role [role: string] {
-    require-workspace
+    require-session
     let definition = declared-role $role
     let old_windows = role-windows $role
     let message = $"print 'Role `($role)` is stopped. Use `nur panoptor start-role ($role)`.'"
@@ -519,7 +519,7 @@ export def "nur panoptor role-run" [role: string] {
     }
 }
 
-# Start this worktree's isolated Panoptor workspace.
+# Start this worktree's isolated Panoptor session without displaying a window.
 export def "nur panoptor start" [--port: int] {
     if (remote [ls]).exit_code == 0 {
         error make { msg: "Panoptor is already running. Use `nur panoptor status`." }
@@ -527,7 +527,7 @@ export def "nur panoptor start" [--port: int] {
     let selected_port = $port | default (default-port)
     check-port $selected_port
     mkdir (runtime-directory)
-    atomic-save (workspace-path) {
+    atomic-save (session-state-path) {
         project: $PROJECT_NAME
         worktree: (repository-root)
         worktree_id: (worktree-id)
@@ -569,22 +569,52 @@ export def "nur panoptor start" [--port: int] {
     } {
         ^kitty ...$kitty_arguments
     }
-    wait-for-workspace
-    print $"Started Panoptor for worktree `(worktree-id)` on port ($selected_port)."
+    wait-for-session
+    # Initializing the Wayland surface before hiding it avoids a Kitty crash when
+    # an initially hidden surface is first shown on some compositors.
+    remote [resize-os-window --match all --action hide --no-response] | ignore
+    print $"Started hidden Panoptor session `(worktree-id)` on port ($selected_port)."
 }
 
-# Report workspace and per-role state; pair --json with Nur's --quiet flag.
+# Report session and per-role state; pair --json with Nur's --quiet flag.
 export def "nur panoptor status" [--json] {
     let status = panoptor-status
     if $json {
         $status | to json | print
     } else {
-        print $"Panoptor: ($status.workspace)"
+        print $"Panoptor session: ($status.session)"
         print $"Worktree: ($status.worktree_id)  Site port: ($status.port)"
         $status.roles
             | select role kind state process_state pid active_command
             | table
             | print
+    }
+}
+
+# Show the existing Panoptor session without restarting any role.
+export def "nur panoptor show" [] {
+    require-session
+    let result = remote [resize-os-window --match all --action show --no-response]
+    if $result.exit_code != 0 {
+        error make { msg: ($result.stderr | str trim) }
+    }
+}
+
+# Hide the Panoptor session while keeping every role alive.
+export def "nur panoptor hide" [] {
+    require-session
+    let result = remote [resize-os-window --match all --action hide --no-response]
+    if $result.exit_code != 0 {
+        error make { msg: ($result.stderr | str trim) }
+    }
+}
+
+# Toggle the existing Panoptor session's visibility without restarting roles.
+export def "nur panoptor toggle" [] {
+    require-session
+    let result = remote [resize-os-window --match all --action toggle-visibility --no-response]
+    if $result.exit_code != 0 {
+        error make { msg: ($result.stderr | str trim) }
     }
 }
 
@@ -657,9 +687,9 @@ export def "nur panoptor replace" [role: string command: string ...arguments: st
     launch-role $role $replacement
 }
 
-# Stop only this worktree's Panoptor workspace.
+# Stop only this worktree's Panoptor session and all of its roles.
 export def "nur panoptor stop" [] {
-    require-workspace
+    require-session
     let port = configured-port
     let result = remote [close-window --match all]
     if $result.exit_code != 0 {

@@ -84,12 +84,14 @@ script intent, and rebuild before diagnosing renderer behavior.
 
 The project supports one isolated Panoptor per active worktree. Each human or
 agent may use the Nur-discovered Panoptor interface in its own worktree to
-supervise automatic validations and the long-running site server. Never control
-another worktree's session or claim its live state as validation of this
-checkout. Use the task runner's status, output, and interactive controls to
-diagnose, interrupt, stop, start, restart, rerun, or temporarily replace a
-role. Session-only diagnostic changes must not silently modify the declared
-task or session configuration.
+supervise automatic validations and the long-running site server. Panoptor is a
+persistent session that starts hidden; showing or hiding its Kitty OS window
+does not start or stop its roles. Never control another worktree's session or
+claim its live state as validation of this checkout. Use the task runner's
+status, output, visibility, and interactive controls to diagnose, interrupt,
+stop, start, restart, rerun, or temporarily replace a role. Session-only
+diagnostic changes must not silently modify the declared task or session
+configuration.
 
 Use Git with strict Conventional Commits: `type(scope): imperative summary`.
 Keep each commit independently reviewable and revertible; split a large change

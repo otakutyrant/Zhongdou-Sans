@@ -107,7 +107,7 @@
               # development output additionally supplies hb-view.
               pkgs.harfbuzz
               harfbuzzView
-              # Kitty hosts the optional Panoptor workspace; all pane commands
+              # Kitty hosts the optional Panoptor session; all pane commands
               # still enter through Nur tasks.
               pkgs.kitty
               pkgs.nixfmt-tree
