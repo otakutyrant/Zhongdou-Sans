@@ -1,30 +1,98 @@
 version: "0.5"
+name: zhongdou-sans-panoptor
 is_strict: true
+ordered_shutdown: true
 log_level: info
-log_length: 2000
+log_length: 1000
 
-# Process Compose owns process lifecycles and observation. Nur remains the
-# public command catalog and owns the actual server and validation commands.
+shell:
+  shell_command: nu
+  shell_argument: --commands
+
+# Nur owns every command; Process Compose owns watches, logs, readiness, and
+# lifecycle for this worktree's persistent development topology.
 processes:
-  site:
-    command: "nur site watch --port ${PANOPTOR_SITE_PORT}"
-    working_dir: "${PANOPTOR_PROJECT_ROOT}"
+  python_check:
+    command: nur python check
+    namespace: validation
     availability:
-      restart: on_failure
-      backoff_seconds: 2
+      restart: "no"
+    watch:
+      debounce: 500ms
+      paths:
+        - path: tools
+          include: ["*.py"]
+        - path: tests
+          include: ["*.py"]
+        - path: fonts/variable
+          include: ["*.ttf"]
+        - path: .
+          include: ["pyproject.toml"]
+          exclude: ["build/**"]
+
+  web_check:
+    command: nur web check
+    namespace: validation
+    availability:
+      restart: "no"
+    watch:
+      debounce: 500ms
+      paths:
+        - path: site
+          include: ["*.js", "*.css"]
+        - path: demo
+          include: ["*.css"]
+        - path: .
+          include: ["biome.json"]
+          exclude: ["build/**"]
+
+  nushell_check:
+    command: nur nu check
+    namespace: validation
+    availability:
+      restart: "no"
+    watch:
+      debounce: 500ms
+      paths:
+        - path: .
+          include: ["*.nu", "nurfile", ".nu-lint.toml"]
+          exclude: ["build/**"]
+
+  nix_check:
+    command: nur nix validate
+    namespace: validation
+    availability:
+      restart: "no"
+    watch:
+      debounce: 500ms
+      paths:
+        - path: .
+          include: ["*.nix", "flake.lock"]
+          exclude: ["build/**"]
+
+  site:
+    command: "nur site preview --port ${PANOPTOR_SITE_PORT}"
+    namespace: services
+    availability:
+      restart: "no"
     readiness_probe:
       http_get:
         host: 127.0.0.1
-        port: ${PANOPTOR_SITE_PORT}
+        port: "${PANOPTOR_SITE_PORT}"
         path: /
       initial_delay_seconds: 1
       period_seconds: 1
       timeout_seconds: 1
       failure_threshold: 30
-
-  checks:
-    command: "nur check watch"
-    working_dir: "${PANOPTOR_PROJECT_ROOT}"
-    availability:
-      restart: on_failure
-      backoff_seconds: 2
+    shutdown:
+      signal: 2
+      timeout_seconds: 10
+    watch:
+      debounce: 500ms
+      paths:
+        - path: site
+          include: ["*.html", "*.js", "*.css", "*.svg", "*.txt"]
+        - path: tools
+          include: ["build_site.py"]
+        - path: fonts/variable
+          include: ["*.ttf"]

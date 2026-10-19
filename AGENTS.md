@@ -87,14 +87,17 @@ script intent, and rebuild before diagnosing renderer behavior.
 
 The project supports one isolated Panoptor per active worktree. Each human or
 agent may use the Nur-discovered Panoptor interface in its own worktree to
-supervise automatic validations and the long-running site server. Panoptor is
-a persistent, headless Process Compose session; attaching or detaching its TUI
-does not start or stop its roles. Never control another worktree's session or
-claim its live state as validation of this checkout. Use the task runner's
-discoverable status, logs, readiness, attachment, and lifecycle controls rather
-than calling Process Compose directly. Treat Process Compose's role lifecycle
-and the latest recorded validation result as distinct signals when diagnosing
-the session.
+supervise automatic validations and the long-running site server. Before
+launching a covered validation or service, check for that worktree's session.
+When it is running, use the Nur controls to inspect role state, readiness, and
+bounded output and to freshly rerun or restart affected roles; do not launch
+duplicate watchers or services. A running role or previously successful result
+is not evidence for later edits. Use standalone one-shot tasks when Panoptor is
+absent, lacks a suitable role, or the complete deterministic workflow requires
+them. Panoptor is persistent and headless: attaching or detaching its TUI does
+not start or stop its roles. Never control another worktree's session or claim
+its live state as validation of this checkout, and do not call Process Compose
+directly.
 
 Use Git with strict Conventional Commits: `type(scope): imperative summary`.
 Keep each commit independently reviewable and revertible; split a large change

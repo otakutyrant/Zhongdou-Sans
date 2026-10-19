@@ -105,41 +105,6 @@ export def "nur site preview" [--port: int = 8000] {
     ^python -m http.server $port --directory ($PROJECT_ROOT | path join build site)
 }
 
-# Restart the local site whenever its source, font, or builder changes.
-export def "nur site watch" [--port: int = 8000] {
-    let watch_arguments = [
-        --restart
-        --debounce
-        "300ms"
-        --watch
-        site
-        --watch
-        tools
-        --watch
-        fonts
-        --shell
-        none
-        --
-        nur
-        site
-        preview-status
-        --port
-        $port
-    ]
-    ^watchexec ...$watch_arguments
-}
-
-# Serve the site while publishing Panoptor-readable lifecycle status.
-export def "nur site preview-status" [--port: int = 8000] {
-    run-with-panoptor-snapshot site [
-        nur
-        site
-        preview
-        --port
-        ($port | into string)
-    ]
-}
-
 # Run Ruff's import, correctness, modernization, and style diagnostics.
 export def "nur python ruff" [] {
     ^ruff check tools tests
@@ -221,6 +186,12 @@ export def "nur nix format-check" [] {
     ^treefmt --ci
 }
 
+# Validate flake evaluation and checked-in Nix formatting.
+export def "nur nix validate" [] {
+    nur nix check
+    nur nix format-check
+}
+
 # Build the distributable package without creating a result symlink.
 export def "nur package build" [] {
     ^nix build --no-link
@@ -231,8 +202,7 @@ export def "nur check fast" [] {
     nur nu check
     nur python check
     nur web check
-    nur nix check
-    nur nix format-check
+    nur nix validate
 }
 
 # Run every repository-owned check, including render and package verification.
@@ -242,16 +212,6 @@ export def "nur check" [] {
     nur site check
     nur package build
     nur specimens check
-}
-
-# Re-run the fast check after maintained source or configuration changes.
-export def "nur check watch" [] {
-    ^watchexec --debounce 300ms --watch . --ignore build --shell none -- nur check snapshot
-}
-
-# Run the fast gate while publishing Panoptor-readable lifecycle status.
-export def "nur check snapshot" [] {
-    run-with-panoptor-snapshot checks [nur check fast]
 }
 
 # Build the distributable font and ensure its metadata matches the release tag.

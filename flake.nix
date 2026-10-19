@@ -117,7 +117,6 @@
               # The public site embeds only the glyphs used by its inscription
               # and prose, but the build starts from the official SC face.
               pkgs.sarasa-gothic
-              pkgs.watchexec
               nu-lint.packages.${system}.default
               nur
               python
@@ -135,7 +134,7 @@
 
             shellHook = ''
               # Keep stdout available for machine-readable task output such as
-              # `nur --quiet panoptor status --json`.
+              # `nur --quiet panoptor list --json`.
               echo "Zhongdou Sans dev shell ready: use 'nur --help' to list project tasks." >&2
             '';
           };
