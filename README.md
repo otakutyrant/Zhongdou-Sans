@@ -131,7 +131,7 @@ nix develop -c nur check        # 运行字体、网页、代码与样张的完�
 
 这些任务会先从原始字体生成中豆黑体；首页样张采用固定的 2560×1440 画布，标题图则把构建后的字体嵌入 SVG，因而不依赖读者本机安装中豆黑体。Nix flake 锁定 Nur、渲染工具和备用字体的版本。`nur specimens check` 会在 `build/` 中另行渲染并比较结果，不改动已跟踪文件。拉取请求会运行完整的 `nur check`；推送到 `main` 后，持续集成则会在样张变化时自动创建 `docs: update generated specimens` 提交，不变时不会提交。
 
-独立的[官方网站](https://otakutyrant.github.io/Zhongdou-Sans/)源码位于 [`site/`](./site/)。`nix develop -c nur site build` 会从页面实际出现的字符生成中豆黑体与更纱黑体 SC 的 WOFF2 子集；推送到 `main` 后，GitHub Pages 工作流会构建并发布网站。使用 `nix develop -c nur site preview` 可以在本机预览；使用 `nix develop -c nur panoptor start` 可以打开同时运行网站与快速检查监听器的 Kitty 双窗格工作区。
+独立的[官方网站](https://otakutyrant.github.io/Zhongdou-Sans/)源码位于 [`site/`](./site/)。`nix develop -c nur site build` 会从页面实际出现的字符生成中豆黑体与更纱黑体 SC 的 WOFF2 子集；推送到 `main` 后，GitHub Pages 工作流会构建并发布网站。使用 `nix develop -c nur site preview` 可以在本机预览；使用 `nix develop -c nur panoptor start` 可以在后台启动同时运行网站与快速检查监听器的 Panoptor 会话，需要观察或控制各进程时再运行 `nix develop -c nur panoptor attach` 连接 Process Compose TUI。
 
 ## 授权信息
 
