@@ -99,7 +99,6 @@ not start or stop its roles. Never control another worktree's session or claim
 its live state as validation of this checkout, and do not call Process Compose
 directly.
 
-Use Git with strict Conventional Commits: `type(scope): imperative summary`.
-Keep each commit independently reviewable and revertible; split a large change
-into small, coherent, decoupled commits when useful. Do not commit unless the
-user requests it.
+Use Git with Conventional Commits (`type[optional scope]: imperative summary`).
+Keep commits atomic and independently revertible, and commit only when
+explicitly requested.
