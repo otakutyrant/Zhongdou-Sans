@@ -59,6 +59,38 @@
           # focused PNG specimens of the exact glyph sequence HarfBuzz shapes.
           harfbuzzView = (pkgs.harfbuzz.override { withCairo = true; }).dev;
 
+          # Keep the launcher in this trusted flake so entering the sandbox is
+          # one command after nix-direnv has populated the development PATH.
+          # The policy remains in dotfiles rather than becoming project-owned.
+          fenceEnter = pkgs.writeTextFile {
+            name = "fence-enter";
+            destination = "/bin/fence-enter";
+            executable = true;
+            text = ''
+              #!${pkgs.nushell}/bin/nu
+
+              def --wrapped main [...command: string] {
+                let policy = "/home/otakutyrant/Projects/dotfiles/home/files/fence/maximum.jsonc"
+                if not ($policy | path exists) {
+                  error make { msg: $"Trusted Fence policy not found: ($policy)" }
+                }
+
+                if ($command | is-empty) {
+                  # Nushell needs writable configuration and history paths, but
+                  # the maximum policy deliberately hides the caller's home.
+                  with-env {
+                    HOME: "/tmp/fence-home"
+                    XDG_CONFIG_HOME: "/tmp/fence-home/.config"
+                  } {
+                    ^${pkgs.fence}/bin/fence --settings $policy -- ${pkgs.nushell}/bin/nu
+                  }
+                } else {
+                  ^${pkgs.fence}/bin/fence --force-new-session --settings $policy -- ...$command
+                }
+              }
+            '';
+          };
+
           # Nur bundles a matching Nushell runtime. Pin its official binary so
           # contributors do not need the task runner in their global profile.
           nurVersion = "0.30.2+0.115.1";
@@ -98,6 +130,10 @@
               # introducing a separate Node package graph.
               pkgs.biome
               pkgs.basedpyright
+              # Fence applies the trusted dotfiles policy around project tasks;
+              # its Linux package brings the required isolation backend.
+              pkgs.fence
+              fenceEnter
               pkgs.chromium
               pkgs.fontconfig
               pkgs.git
@@ -110,6 +146,7 @@
               pkgs.nixfmt-tree
               pkgs.nushell
               pkgs.oxipng
+              pkgs.prettier
               # Process Compose hosts each worktree's headless Panoptor
               # session; Nur remains the public task and control interface.
               pkgs.process-compose
@@ -135,7 +172,7 @@
             shellHook = ''
               # Keep stdout available for machine-readable task output such as
               # `nur --quiet panoptor list --json`.
-              echo "Zhongdou Sans dev shell ready: use 'nur --help' to list project tasks." >&2
+              echo "Zhongdou Sans dev shell ready: run 'fence-enter' or 'fence-enter <command>'." >&2
             '';
           };
         }

@@ -13,6 +13,14 @@ const SOURCE_FONT = $PROJECT_ROOT | path join fonts variable ZhudouSansVF.ttf
 const BUILT_FONT = $PROJECT_ROOT | path join build ZhongdouSansVF.ttf
 const DEMO_PAGE = $PROJECT_ROOT | path join demo index.html
 
+def markdown-files [] {
+    ^git ls-files --cached --others --exclude-standard -- '*.md'
+    | lines
+    | where {|path| ($path | path exists) }
+    | sort
+    | uniq
+}
+
 use tasks/panoptor.nu *
 
 # Build the derivative variable font consumed by every specimen and web task.
@@ -144,6 +152,22 @@ export def "nur python check" [] {
     nur python format-check
 }
 
+# Format maintained Markdown files with the shared Prettier configuration.
+export def "nur markdown format" [] {
+    let files = (markdown-files)
+    if ($files | is-not-empty) {
+        ^prettier --write ...$files
+    }
+}
+
+# Verify Markdown formatting without changing files.
+export def "nur markdown format-check" [] {
+    let files = (markdown-files)
+    if ($files | is-not-empty) {
+        ^prettier --check ...$files
+    }
+}
+
 # Diagnose JavaScript and CSS while leaving authored HTML alone.
 export def "nur web lint" [] {
     ^biome lint site demo
@@ -200,6 +224,7 @@ export def "nur package build" [] {
 # Keep the watch loop quick enough for continuous local feedback.
 export def "nur check fast" [] {
     nur nu check
+    nur markdown format-check
     nur python check
     nur web check
     nur nix validate

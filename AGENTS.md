@@ -10,11 +10,19 @@ Python 3.14, Nushell, Nix, JavaScript, CSS, and HTML.
 Work from the repository root. Allow the tracked `.envrc` once by running
 `direnv allow`; nix-direnv then loads the pinned `nix develop` environment. Run
 non-interactive commands through `direnv exec` when the shell hook has not
-already loaded it. Use Nushell for scripts and pipelines, and preserve
-unrelated worktree changes. Use `nur --help` and focused `nur <task> --help`
-output to discover the current validation, formatting, build, server, release,
-and Panoptor interfaces. Use the Nur-owned workflow when one exists instead of
+already loaded it. Use Nushell for scripts and pipelines, and preserve unrelated
+worktree changes. Use `nur --help` and focused `nur <task> --help` output to
+discover the current validation, formatting, build, server, release, and
+Panoptor interfaces. Use the Nur-owned workflow when one exists instead of
 duplicating its commands.
+
+Run repository-controlled commands through Fence with the trusted policy at
+`../dotfiles/home/files/fence/maximum.jsonc`. After the development environment
+is loaded, use the flake-provided `fence-enter <command>` for non-interactive
+work or `fence-enter` for interactive Nushell. The launcher handles session and
+temporary-home differences while keeping policy ownership outside this
+repository. Do not replace the trusted policy with repository-local Fence
+settings.
 
 ## Source and generated artifacts
 
@@ -22,11 +30,11 @@ duplicating its commands.
   build. Treat files under `source/` as font-editor and historical reference
   artifacts, not as automated build inputs unless the task catalog says
   otherwise.
-- Derived fonts, website output, QA images, and temporary specimens belong
-  under ignored `build/`.
+- Derived fonts, website output, QA images, and temporary specimens belong under
+  ignored `build/`.
 - `images/demo.png`, `images/Title.light.svg`, and `images/Title.dark.svg` are
-  tracked generated outputs. Regenerate them only through their owning Nur
-  task, review the diff, and never hide stale output by editing them directly.
+  tracked generated outputs. Regenerate them only through their owning Nur task,
+  review the diff, and never hide stale output by editing them directly.
 - `demo/` owns the compact README specimen; `site/` owns the separate public
   homepage. Keep those responsibilities distinct.
 - Biome owns JavaScript and CSS formatting; authored HTML remains
@@ -70,9 +78,9 @@ script intent, and rebuild before diagnosing renderer behavior.
 
 - Use FontTools for bounds, metrics, components, and GSUB; HarfBuzz shaping for
   selected glyphs and advances; and focused renders for visual assessment.
-- Exercise the real Chromium demo or site after substitution, metric, or
-  layout changes. A cropped screenshot may demonstrate a defect but cannot by
-  itself verify the fix.
+- Exercise the real Chromium demo or site after substitution, metric, or layout
+  changes. A cropped screenshot may demonstrate a defect but cannot by itself
+  verify the fix.
 - Put vertical punctuation beside Han characters so displacement within the em
   is visible, and test default and extreme weights.
 - Do not infer one renderer from another. Chromium, GTK/Pango, and Kitty have
